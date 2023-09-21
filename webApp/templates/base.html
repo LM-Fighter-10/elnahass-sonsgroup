@@ -1,0 +1,655 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elnahass Sons Group</title>
+    <!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!--GOOGLE FONTS-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/x-icon" href="{% static 'Media/logo.png' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    {% block head %}{% endblock head %}
+</head>
+<body style="position: relative">
+    {% if nav %}
+        <nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top bg-transparent" style="position: absolute;">
+            <div id="nav" class="container">
+                <a href="{% url 'homePage' %}"><img draggable="false" src="{% static 'Media/logo.png' %}" width="80"/></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav" style="flex-grow: 0;width: inherit;">
+                    <div id="nav-tabs" class="container" style="width: max-content">
+                        <ul class="navbar-nav ml-auto" id="nav-list" style="font-size: larger">
+                            {% if request.user.is_superuser %}
+                                <li class="nav-item">
+                                    <a target="_blank" draggable="false" id="navbtn" class="nav-link" href="/admin/">Admin</a>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a draggable="false" id="navbtn" class="nav-link" href="{% url 'projectsPage' %}">Projects</a>
+                            </li>
+                            <li class="nav-item">
+                                <a draggable="false" id="navbtn" class="nav-link" href="{% url 'aboutPage' %}">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a draggable="false" id="navbtn" class="nav-link" href="{% url 'contactPage' %}">Contact</a>
+                            </li>
+                            <li class="nav-item">
+                                <a draggable="false" id="join-btn" class="nav-link">Join Us
+                                    <i id="arrow"  class="fa-solid fa-arrow-right fa-sm arrow-icon"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <form autocomplete="off" id="contact-form" method="POST" action="{% url 'sendPage' %}">
+            <div id="contact-bdy">
+                <div class="loader" id="loading">
+                    <div class="justify-content-center jimu-primary-loading"></div>
+                </div>
+                <div class="loader" id="done" style="display: none">
+                    <div class="container">
+                        <svg id="checkmark1" class="checkmark justify-content-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark__check" fill="none" d="M14.1 29.5l7.1 7.2L37.9 17.4"/>
+                        </svg>
+                        <svg id="crossmark1" class="crossmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="crossmark_circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="crossmark_check" fill="none" d="M14.1 14.1l23.8 23.8 m0,-23.8 l-23.8,23.8"/>
+                        </svg>
+                        <div class="mail-sent" style="display: none">Mail Sent</div>
+                    </div>
+                </div>
+                <h1 id="contact-title">Join Us</h1>
+                <div style="width: auto">
+                    <div class="alert alert-success" role="alert" id="success_msg">
+                        Mail Sent Successfully, Please Check your Inbox
+                    </div>
+                </div>
+                <div id="form_content">
+                    <div class="info">
+                        <label class="nameLable">Name</label>
+                        <input class="name" type="text" name="name" autocomplete="nothing">
+                        <div class="error-message name-error"></div> <!-- Add error message element -->
+
+                        <label class="emailLable">Email</label>
+                        <input class="email" type="email" name="email" autocomplete="nothing">
+                        <div class="error-message email-error"></div> <!-- Add error message element -->
+
+                        <label class="phoneLable">Phone Number</label>
+                        <input class="phone" type="text" name="phone" autocomplete="nothing">
+                        <div class="error-message phone-error"></div> <!-- Add error message element -->
+                    </div>
+
+                    <label class="descLable">Outline Description (max 200 Words)</label>
+                    <div>
+                        <textarea class="desc" rows="4" name="outline_desc" autocomplete="nothing"></textarea>
+                        <div class="error-message desc-error"></div> <!-- Add error message element -->
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center joinus-btn-div" style="margin-top: 10px;margin-bottom: 10px">
+                    <button type="button" class="joinus-btn" id="joinBTN">Send</button>
+                </div>
+            </div>
+        </form>
+    {% endif %}
+{% block content %}{% endblock content %}
+    {% if footer %}
+    <footer id="footer-sec" class="footer-distributed">
+        <div class="container">
+            <div class="footer-center">
+
+                <div>
+                    <a href="https://goo.gl/maps/gmeL1TZerMb9RJ8e6" target="_blank">
+                        <i id="loc-ico" class="fa-solid fa-location-dot"></i>
+                    </a>
+                    <p><span>18 Omaraat Emdaad wy Tamween</span> Makram-Ebid Ext, Nasr City, Cairo, Egypt</p>
+                </div>
+
+                <div>
+                    <a href="tel:+201000026223" target="_blank">
+                        <i id="phone-ico" class="fa-solid fa-phone fa-2xs"></i>
+                    </a>
+                    <p>+201000026223</p>
+                </div>
+
+                <div>
+                    <a href="mailto:info@elnahass.com" target="_blank">
+                        <i id="mail-ico" style="font-size: 20px;" class="fa fa-envelope"></i>
+                    </a>
+                    <p>info@elnahass.com</p>
+                </div>
+
+            </div>
+            <div class="footer-right" style="margin-left: 44%;">
+
+                <p class="footer-company-about">
+                    <span style="font-size: 16px">About the company</span>
+                <div id="footer-about">Elnahass Sons Group: A top player in Construction,
+                    Mechanical & Computer Projects. Committed to excellence, innovation, and client satisfaction.</div>
+                </p>
+
+                <div class="footer-icons">
+                    <div class="container" style="width: max-content;margin-left: 30px;">
+                        <a href="#">
+                            <i id="fa-ico" class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://wa.me/+201000026223" target="_blank" style="margin-left: 20px">
+                            <i id="what-ico" style="display: inline-table; font-size: 30px"
+                               class="fa-brands fa-whatsapp fa-lg"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div><p id="copyRights">All rights reserved © Elnahass Sons Group 2023</p></div>
+        </div>
+    </footer>
+    {% endif %}
+    <!-- Font Awesome Icons -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    {% if nav %}
+        <script>
+            $(document).ready(function () {
+                $(".phone, .phoneLable").on('click', function (){
+                    $(".phoneLable").css('top', '-4px');
+                    $(".phone").css('height', '46px');
+                    $("#contact-form").on('mousedown', function (ev){
+                        if (!$(ev.target).closest('.phone, .phoneLable').length && $(".phone").val() === "") {
+                            $(".phoneLable").css('top', '29.5px');
+                            $(".phone").css('height', '38px');
+                        }
+                    })
+                });
+
+                $(".phoneLable, .nameLable, .emailLable, .descLable").each(function (){
+                    $(this).on('click', function (){
+                        var selectedInput = "." + $(this).attr('class').replace("Lable","");
+                        $(selectedInput).focus();
+                    })
+                });
+
+                $(".name, .nameLable").on('click', function (){
+                    $(".nameLable").css('top', '-4px');
+                    $(".name").css('height', '46px');
+                    $("#contact-form").on('mousedown', function (ev){
+                        if (!$(ev.target).closest('.name, .nameLable').length && $(".name").val() === "") {
+                            $(".nameLable").css('top', '29.5px');
+                            $(".name").css('height', '38px');
+                        }
+                    })
+                });
+
+                $(".email, .emailLable").on('click', function (){
+                    $(".emailLable").css('top', '-4px');
+                    $(".email").css('height', '46px');
+                    $("#contact-form").on('mousedown', function (ev){
+                        if (!$(ev.target).closest('.email, .emailLable').length && $(".email").val() === "") {
+                            $(".emailLable").css('top', '29.5px');
+                            $(".email").css('height', '38px');
+                        }
+                    })
+                });
+
+                $(".name, .email, .phone, .desc").on("mousedown", function (){
+                    $(this).each(function (){
+                        $("." + $(this).attr('class') + "Lable").trigger('click');
+                    })
+                })
+
+                $(".desc, .descLable").on('click', function (){
+                    $(".descLable").css('top', '-4px');
+                    $(".desc").css('height', '150px');
+                    $("#contact-form").on('mousedown', function (ev){
+                        if (!$(ev.target).closest('.desc, .descLable').length && $(".desc").val() === "") {
+                            $(".descLable").css('top', '29.5px');
+                            $(".desc").css('height', '38px');
+                        }
+                    })
+                });
+
+                function resetErrorMsgs() {
+                    $(".name-error, .phone-error, .email-error, .desc-error").css('margin-bottom', '0').hide();
+                    $(".name, .phone, .email, .desc").css('margin-bottom', '15px');
+
+                }
+
+                function validateName() {
+                    const nameInput = $(".name");
+                    const name = nameInput.val();
+                    const nameError = $(".name-error");
+
+                    if (name.trim() === "") {
+                        nameError.text("").hide();
+                        nameError.css('margin-bottom', '0');
+                        return true;
+                    }
+
+                    if (/\d/.test(name)){
+                        nameError.text("Name must not contains numbers").show();
+                        nameError.css('margin-bottom', '10px');
+                        return false;
+                    }
+
+                    nameError.css('margin-bottom', '0');
+                    nameError.hide();
+                    return true;
+                }
+
+                // Validation function for the email input
+                function validateEmail() {
+                    const emailInput = $(".email");
+                    const email = emailInput.val();
+                    const emailError = $(".email-error");
+                    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+                    if (email.trim() === "") {
+                        emailError.text("").hide();
+                        emailError.css('margin-bottom', '0');
+                        return true;
+                    }
+
+                    if (!emailPattern.test(email)) {
+                        emailError.text("Please enter a valid email address").show();
+                        emailError.css('margin-bottom', '10px');
+                        return false;
+                    }
+                    emailError.css('margin-bottom', '0');
+                    emailError.hide();
+                    return true;
+                }
+
+                // Validation function for the phone input
+                function validatePhone() {
+                    const phoneInput = $(".phone");
+                    const phone = phoneInput.val();
+                    const phoneError = $(".phone-error");
+                    const phonePattern = /^\d{11}$/; // Allow up to 15 digits
+
+                    if (phone.trim() === "") {
+                        phoneError.text("").hide();
+                        phoneError.css('margin-bottom', '0');
+                        return true;
+                    }
+
+                    if (isNaN(phone)){
+                        phoneError.text("Phone number must be numeric only").show();
+                        phoneError.css('margin-bottom', '10px');
+                        return false;
+                    }
+
+                    if (!phonePattern.test(phone)) {
+                        phoneError.text("Please enter a valid phone number with 11 digits").show();
+                        phoneError.css('margin-bottom', '10px');
+                        return false;
+                    }
+
+                    phoneError.css('margin-bottom', '0');
+                    phoneError.hide();
+                    return true;
+                }
+
+                // Validation function for the description textarea
+                function validateDescription() {
+                    const descTextarea = $(".desc");
+                    const desc = descTextarea.val();
+                    const descError = $(".desc-error");
+
+                    if (desc.length > 200) {
+                        descError.text("Please don't exceed 200 characters").show();
+                        descError.css('margin-bottom', '10px');
+                        return false;
+                    }
+                    descError.css('margin-bottom', '0');
+                    descError.hide();
+                    return true;
+                }
+
+                $(".name, .email, .phone, .desc").on("input", function (){
+                    $(this).each(function (){
+                        if ($(this).attr('class') === "name"){
+                            if(!validateName()){
+                                $(this).css({
+                                    'border-color': 'red',
+                                    'margin-bottom': '0',
+                                });
+                            }else{
+                                $(this).css({
+                                    'border-color': '',
+                                    'margin-bottom': '15px',
+                                });
+                            }
+                        }else if ($(this).attr('class') === "email"){
+                            if(!validateEmail()){
+                                $(this).css({
+                                    'border-color': 'red',
+                                    'margin-bottom': '0',
+                                });
+                            }else{
+                                $(this).css({
+                                    'border-color': '',
+                                    'margin-bottom': '15px',
+                                });
+                            }
+                        }else if ($(this).attr('class') === "phone"){
+                            if(!validatePhone()){
+                                $(this).css({
+                                    'border-color': 'red',
+                                    'margin-bottom': '0',
+                                });
+                            }else{
+                                $(this).css({
+                                    'border-color': '',
+                                    'margin-bottom': '15px',
+                                });
+                            }
+                        }else{
+                            if(!validateDescription()){
+                                $(this).css({
+                                    'border-color': 'red',
+                                    'margin-bottom': '0',
+                                });
+                            }else{
+                                $(this).css({
+                                    'border-color': '',
+                                    'margin-bottom': '15px',
+                                });
+                            }
+                        }
+                    })
+                })
+
+                // Validate if Any Field is Left Blank
+                function isBlank(){
+                    var nameBlank = false,
+                        emailBlank = false,
+                        phoneBlank = false,
+                        descBlank = false;
+                    $(".name, .email, .phone, .desc").each(function (){
+                        if ($(this).val() === ""){
+                            $("." + $(this).attr('class') + "-error").text("This field is required").show();
+                            $("." + $(this).attr('class') + "-error").css('margin-bottom', '10px');
+                            $("." + $(this).attr('class')).css('margin-bottom', '0');
+                            if ($(this).attr('class') === 'name'){
+                                nameBlank = true;
+                            }else if ($(this).attr('class') === 'email'){
+                                emailBlank = true;
+                            }else if ($(this).attr('class') === 'phone'){
+                                phoneBlank = true;
+                            }else{
+                                descBlank = true;
+                            }
+                        }else{
+                            $("." + $(this).attr('class') + "-error").text("").hide();
+                            $("." + $(this).attr('class') + "-error").css('margin-bottom', '0');
+                            $("." + $(this).attr('class')).css('margin-bottom', '15px');
+                            if ($(this).attr('class') === 'name'){
+                                nameBlank = false;
+                            }else if ($(this).attr('class') === 'email'){
+                                emailBlank = false;
+                            }else if ($(this).attr('class') === 'phone'){
+                                phoneBlank = false;
+                            }else{
+                                descBlank = false;
+                            }
+                        }
+                    })
+                    return nameBlank || emailBlank || phoneBlank || descBlank;
+                }
+
+                var mailSentTime = 5000;
+
+                $("#joinBTN").on('click', function (){
+                    const isNameValid = validateName();
+                    const isEmailValid = validateEmail();
+                    const isPhoneValid = validatePhone();
+                    const isDescValid = validateDescription();
+                    const isBlankValidation = isBlank();
+                    if (isNameValid && isEmailValid && isPhoneValid && isDescValid && !isBlankValidation) {
+                        $("#form_content").css({
+                            'opacity': '0',
+                            'position': 'relative',
+                            'z-index': '-1',
+                        });
+                        if ($("#success_msg").css('opacity') === "1") {
+                            $("#success_msg").css({
+                                'opacity': '0',
+                            });
+                            $("#form_content").animate({
+                                marginTop: '-52px'
+                            }, 200)
+                        }
+                        $(".joinus-btn-div").css('opacity', '0');
+                        $(".joinus-btn, input, textarea").attr('disabled', 'true');
+                        $("#loading").css('opacity', '1');
+                        var failed = false;
+                        const form = document.getElementById('contact-form');
+                        const formData = new FormData(form);
+                        formData.append('name', $(".name").val());
+                        formData.append('email', $(".email").val());
+                        formData.append('phone', $(".phone").val());
+                        formData.append('outline_desc', $(".desc").val());
+                        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                        var duplicated = false;
+                        fetch('/fetchCustomer?name=' + $(".name").val() + '&email=' + $(".email").val()
+                            + '&phone=' + $(".phone").val() + '&desc=' + $(".desc").val())
+                            .then(response => response.json())
+                            .then(data => {
+                                // Process the JSON data here
+                                const customers = data.customers;
+                                for (const customer of customers) {
+                                    duplicated = customer.duplicated;
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                        fetch('/send/', {
+                            method: 'POST',
+                            body: formData,
+                        })
+                            .then(response => {
+                                if (response.status === 200 && !duplicated) {
+                                    $(".mail-sent").text("Mail Sent");
+                                    $("#success_msg").text("Mail Sent Successfully, Please Check your Inbox");
+                                    $("#crossmark1").css('display', 'none');
+                                    $("#checkmark1").css('display', '');
+                                } else if (duplicated) {
+                                    failed = true;
+                                    $(".mail-sent").text("Mail Failed To Be Sent");
+                                    $("#success_msg").text("Mail Failed To Be Sent, Your Email Has Already Been Registered");
+                                    $("#crossmark1").css('display', '');
+                                    $("#checkmark1").css('display', 'none');
+                                } else {
+                                    $(".mail-sent").text("Mail Failed To Be Sent");
+                                    $("#success_msg").text("Mail Failed To Be Sent, Please Validate Your Email!");
+                                    $("#crossmark1").css('display', '');
+                                    $("#checkmark1").css('display', 'none');
+                                }
+                            })
+                        setTimeout(function () {
+                            $("#loading").css('opacity', '0');
+                            $("#done").css({
+                                'opacity': '1',
+                                'display': '',
+                            });
+                            $(".mail-sent").css({
+                                'display': '',
+                            });
+                        }, mailSentTime / 2)
+                        $(".name, .email, .phone, .desc").each(function (){
+                            $(this).val("");
+                            $("#contact-form").trigger('mousedown');
+                        })
+                        setTimeout(function () {
+                            $("#form_content").css({
+                                'opacity': '1',
+                                'position': '',
+                                'z-index': '',
+                            });
+                            $("#form_content").animate({
+                                marginTop: '10px'
+                            }, 200)
+                            $(".joinus-btn-div").css('opacity', '1');
+                            $(".joinus-btn, input, textarea").removeAttr('disabled');
+                            $("#loading").css('opacity', '0');
+                            $("#done").css({
+                                'opacity': '0',
+                                'display': 'none',
+                            });
+                            $(".mail-sent").css({
+                                'display': 'none',
+                            });
+                            if (!duplicated) {
+                                $("#success_msg").attr('class', 'alert alert-success');
+                            } else {
+                                $("#success_msg").attr('class', 'alert alert-danger');
+                            }
+                            $("#success_msg").css({
+                                'opacity': '1',
+                            });
+                            setTimeout(function () {
+                                $("#success_msg").css({
+                                    'opacity': '0',
+                                });
+                                $("#form_content").animate({
+                                    marginTop: '-52px'
+                                }, 200)
+                            }, 5000);
+                        }, mailSentTime)
+                    }
+                })
+
+                // Open contact form when "Join Us" button is clicked
+                $("#join-btn").on("click", function () {
+                    animateContactForm(false);
+                });
+                let contactFormWidth = "";
+                function animateContactForm(html) {
+                    const contactForm = $("#contact-form");
+                    if (contactForm.width() > 10 && !html) {
+                        contactForm.animate({
+                            width: "2%" // Shrinking the form
+                        }, 400);
+                        contactForm.hide(250);
+                        $("#contact-bdy").hide(300);
+                    }else if(html && contactForm.width() > 10){
+                        contactForm.animate({
+                            width: "2%" // Shrinking the form
+                        }, 400);
+                        contactForm.hide(250);
+                        $("#contact-bdy").hide(300);
+                    }
+                    else if(!html) {
+                        contactForm.animate({
+                            width: "28%" // Expanding the form
+                        }, 280);
+                        contactForm.show(200);
+                        $("#contact-bdy").show(200);
+                        setTimeout(function (){
+                            contactFormWidth = contactForm.css("width");
+                        }, 500);
+                    }
+                }
+                $(document).on('mousedown', function (e){
+                    if (!$(e.target).closest('#contact-form, .carousel-indicators').length) {
+                        resetErrorMsgs();
+                        animateContactForm(true);
+                        $(".phone, .name, .email, .desc").each(function () {
+                            if ($(this).val() === ""){
+                                $(this).css('height', '38px');
+                                $("." + $(this).attr('class') + "Lable").css('top', '29.5px');
+                            }
+                        })
+                    }
+                })
+                function animateHoverForm() {
+                    const windowHeight = $(window).height();
+                    const scrollPosition = $(window).scrollTop();
+
+                    // Calculate the position at which the animation should start (85% from the top of the window)
+                    const animateStart = windowHeight * 1.3;
+
+                    // Check each element to see if it should be animated
+                    $("#contact-form").each(function () {
+                        const elementOffset = $(this).offset().top;
+
+                        if (elementOffset < scrollPosition + windowHeight - animateStart) {
+                            if ($("#contact-form").css('display') === "block"){
+                                animateContactForm(true);
+                            }
+                        }
+                    });
+                }
+                animateHoverForm();
+                $(window).on("scroll", function () {
+                    if ($("#contact-form").css('width') === contactFormWidth){
+                        animateHoverForm();
+                    }
+                });
+            });
+        </script>
+    {% endif %}
+    {% if footer %}
+    <script>
+        $(document).ready(function () {
+            $("#phone-ico, #mail-ico, #loc-ico, #what-ico, #fa-ico").css({
+                'color': 'rgb(255,255,255)',
+                'background-color': '#33383b',
+                'transition': 'all 300ms',
+                'cursor': 'pointer',
+            })
+            $("#mail-ico, #phone-ico").mouseenter(function () {
+                $(this).css('transform', 'rotate(20deg)');
+            })
+            $("#mail-ico, #phone-ico").mouseleave(function () {
+                $(this).css('transform', 'rotate(0)');
+            })
+            $("#loc-ico").mouseenter(function () {
+                $(this).css('line-height', '35px');
+            })
+            $("#loc-ico").mouseleave(function () {
+                $(this).css('line-height', '42px');
+            })
+            $("#phone-ico, #mail-ico, #loc-ico, #what-ico, #fa-ico").mouseenter(function () {
+                $(this).css({
+                    'color': 'black',
+                    'background-color': 'rgb(235 126 57)',
+                })
+            })
+            $("#phone-ico, #mail-ico, #loc-ico, #what-ico, #fa-ico").mouseleave(function () {
+                $(this).css({
+                    'color': 'white',
+                    'background-color': '#33383b',
+                })
+            })
+        });
+    </script>
+    {% endif %}
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>
+        {# For Google Fonts #}
+        WebFont.load({
+            google: {
+                families: ['Hammersmith+One']
+            }
+        });
+        {#------------------#}
+    </script>
+    {% block additional %}{% endblock additional %}
+</body>
+</html>

@@ -1,0 +1,574 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,300,700); /*Slider*/
+html,
+body {
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0);
+}
+.tcb-bs-fullscreen{
+    height: 100%;
+}
+.carousel, .item, .active {
+    height: 100%;
+}
+.carousel-inner {
+    height: 100%;
+}
+/*----------Join Us Form----------*/
+#contact-form {
+    position: absolute;
+    z-index: 6;
+    top: 100px;
+    right: 20px;
+    width: 0;
+    border-radius: 20px;
+    padding: 25px;
+    margin: 25px;
+    margin-right: 0;
+    box-shadow: 0 2px 5px #f5f5f5;
+    background: #f5f5f5;
+}
+#contact-title{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.fas {
+    margin: 25px 10px 0;
+    font-size: 72px;
+    color: #fff;
+}
+.fa-envelope {
+    transform: rotate(-20deg);
+}
+.fa-at , .fa-mail-bulk{
+    transform: rotate(10deg);
+}
+input, textarea {
+    width: calc(100% - 18px);
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #1c87c9;
+    outline: none;
+}
+input::placeholder {
+    color: #666;
+}
+#contact {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #1c87c9;
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+}
+#contact:hover {
+    background: #2371a0;
+}
+@media (min-width: 568px) {
+    .main-block {
+        flex-direction: row;
+    }
+    .left-part{
+        width: 50%;
+    }
+    .fa-envelope {
+        margin-top: 0;
+        margin-left: 20%;
+    }
+    .fa-at {
+        margin-top: -10%;
+        margin-left: 65%;
+    }
+    .fa-mail-bulk {
+        margin-top: 2%;
+        margin-left: 28%;
+    }
+}
+/*--------------------------------*/
+/****************************
+USE BACKGROUND IMAGES IN CAROUSEL SLIDER
+*****************************/
+.item {
+    background-color: rgba(255, 255, 255, 0);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 360px;
+}
+/*--------------End-Slider--------------*/
+
+/* Transparent Navbar */
+.navbar {
+    background-color: transparent;
+}
+
+/* Navbar Hover Animation */
+.nav-link:hover::after {
+    transform: scale(1.1);
+    width: 100%;
+}
+
+.nav-link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: #007bff;
+    transition: width 0.3s;
+}
+
+#join-btn{
+    cursor: pointer;
+}
+
+#navbtn, #join-btn {
+    color: #ff883d;
+}
+
+/* Hamburger Icon Color */
+.navbar-toggler-icon {
+    background-color: #ffffff;
+}
+
+.background-cover {
+    height: 100%;
+    width: 100%;
+    background-size: cover
+}
+
+#projects,
+.py-2 {
+    position: relative;
+    z-index: 1;
+}
+
+#projects-title,
+#p1-img,
+#p1-txt,
+#p2-img,
+#p2-txt,
+#join-section,
+.expand-form{
+    opacity: 0 !important;
+    transform: translateY(20px) !important;
+    transition: opacity 0.5s, transform 0.5s !important;
+}
+
+#p1,
+#p2 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#p1-img,
+#p2-img {
+    order: 1;
+    flex-basis: 100%;
+}
+
+#p1-txt,
+#p2-txt {
+    order: 2;
+    flex-basis: 100%;
+}
+
+.animated {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.button {
+    width: 28%;
+    height: 45%;
+    cursor: pointer;
+    padding: 1em 1em;
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #eb7e39;
+    transition: all 500ms;
+    font-size: 12px;
+    position: relative;
+    overflow: hidden;
+    outline: 2px solid #eb7e39;
+}
+
+.button:hover {
+    color: black;
+    font-weight: bold;
+    transform: scale(1.1);
+    outline: 2px solid #eb7e39;
+    box-shadow: 4px 5px 17px -4px #eb7e39;
+}
+
+.button::before {
+    content: "";
+    position: absolute;
+    left: -50px;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background-color: #eb7e39;
+    transform: skewX(45deg);
+    z-index: -1;
+    transition: width 500ms;
+}
+
+.button:hover::before {
+    width: 250%;
+}
+
+
+/* Add spacing between sections */
+
+#nav {
+    background-color: #bebebeab;
+    border-radius: 50px;
+    padding: 0 20px;
+}
+
+#join-section, #footer, #join_sec{
+    position: relative;
+    z-index: 5;
+}
+
+#joinUs-title{
+    width: 40%;
+    margin: auto auto 20px;
+    color: white;
+    background-color: #eb7e39;
+    font-family: cursive;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 50px;
+}
+
+#joinUs-body{
+    margin-bottom: 30px !important;
+}
+
+#joinus-btn {
+    width: 10em;
+    height: 3em;
+    border-radius: 30em;
+    font-size: 16px;
+    font-family: inherit;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 5;
+    box-shadow: 6px 6px 12px #ff8c0099, -6px -6px 12px #ff8c0099;
+}
+
+#joinus-btn::before {
+    content: '';
+    width: 0;
+    height: 3em;
+    border-radius: 30em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(to right, #eb7e39 0%, #f9f047 100%);
+    transition: .5s ease;
+    display: block;
+    z-index: -1;
+}
+
+#joinus-btn:hover::before {
+    width: 11em;
+}
+#joinus-btn:hover {
+    color: black;
+    font-weight: 700;
+}
+#joinus-btn-div{
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+#contact-bdy, #contact-form{
+    display: none;
+}
+
+#p-details{
+    text-align: center;
+}
+
+.row{
+    margin: 56px -15px !important;
+}
+
+.w-100{
+    border-radius: 40px !important;
+}
+.col{
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+}
+.col-md-6{
+    display: flex !important;
+    justify-content: center !important;
+}
+
+#welcome-box {
+    text-align: center;
+    position: absolute;
+    top: 40%;
+    background-color: #3a3a3aa3;
+    border-radius: 50px;
+    padding: 15px 60px;
+}
+
+#welcome {
+    font-family: cursive;
+    font-weight: 900;
+    font-size: 70px;
+    color: white;
+}
+
+#slider-pics{
+    position: fixed;
+}
+
+#nav-tabs {
+    background-color: #252525d9;
+    border-radius: 50px;
+    margin-right: 0;
+    transition: width 220ms;
+}
+
+.nav-item{
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+/* Add a background color with low opacity to the hamburger icon list */
+.navbar-toggler-icon {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Additional styling for footer */
+/*.footer-social {*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
+/*.footer-icon {*/
+/*    font-size: 24px;*/
+/*    margin-right: 10px;*/
+/*    color: #fff;*/
+/*}*/
+
+.footer-distributed{
+    position: relative;
+    z-index: 5;
+    background: #666;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+    width: 100%;
+    text-align: left;
+    font: bold 16px sans-serif;
+    padding: 30px 50px;
+}
+
+.footer-left{
+    margin-top: -10px;
+}
+
+#copyRights{
+    text-align: center;
+    font-family: sans-serif;
+    margin-top: 15px;
+    margin-bottom: 0;
+    color: #ffffffcc;
+    font-size: 15px;
+}
+
+.footer-distributed .footer-left,
+.footer-distributed .footer-center,
+.footer-distributed .footer-right{
+    display: inline-block;
+    vertical-align: top;
+}
+
+/* Footer left */
+
+.footer-distributed .footer-left{
+    width: 40%;
+}
+
+/* The company logo */
+
+.footer-distributed h3{
+    color:  #ffffff;
+    font: normal 36px 'Open Sans', cursive;
+    margin: 0;
+}
+
+.footer-distributed h3 span{
+    color:  lightseagreen;
+}
+
+/* Footer links */
+
+.footer-distributed .footer-links{
+    color:  #ffffff;
+    margin: 20px 0 12px;
+    padding: 0;
+}
+
+.footer-distributed .footer-links a{
+    display:inline-block;
+    line-height: 1.8;
+    font-weight:400;
+    text-decoration: none;
+    color:  inherit;
+}
+
+.footer-distributed .footer-company-name{
+    color:  #222;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+}
+
+/* Footer Center */
+
+#fa-ico, #what-ico{
+    border-radius: 50px !important;
+    width: 42px !important;
+    line-height: 42px !important;
+    height: 42px !important;
+}
+
+#mail-ico{
+    transform: rotate(0);
+}
+
+.footer-distributed .footer-center{
+    width: 35%;
+}
+
+.footer-distributed .footer-center i{
+    background-color:  #33383b;
+    color: #ffffff;
+    font-size: 25px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 42px;
+    margin: 10px 15px;
+    vertical-align: middle;
+}
+
+.footer-distributed .footer-center i.fa-envelope{
+    font-size: 17px;
+}
+
+.footer-distributed .footer-center p{
+    display: inline-block;
+    color: #ffffff;
+    font-weight:400;
+    vertical-align: middle;
+    margin:0;
+}
+
+.footer-distributed .footer-center p span{
+    display:block;
+    font-weight: normal;
+    font-size:14px;
+    line-height:2;
+}
+
+.footer-distributed .footer-center p a{
+    color:  lightseagreen;
+    text-decoration: none;;
+}
+
+.footer-distributed .footer-links a:before {
+    content: "|";
+    font-weight:300;
+    font-size: 20px;
+    left: 0;
+    color: #fff;
+    display: inline-block;
+    padding-right: 5px;
+}
+
+.footer-distributed .footer-links .link-1:before {
+    content: none;
+}
+
+/* Footer Right */
+
+.footer-distributed .footer-right{
+    width: 20%;
+}
+
+.footer-distributed .footer-company-about{
+    line-height: 20px;
+    color:  #92999f;
+    font-size: 13px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.footer-distributed .footer-company-about span{
+    display: block;
+    color:  #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.footer-distributed .footer-icons{
+    margin-top: 25px;
+}
+
+.footer-distributed .footer-icons a{
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+
+    margin-right: 3px;
+    margin-bottom: 5px;
+}
+
+#footer-about{
+    color: #ffffffd1 !important;
+    font-size: 12px !important;
+    font-weight: lighter !important;
+    font-family: cursive;
+}
+
+/* If you don't want the footer to be responsive, remove these media queries */
+
+@media (max-width: 880px) {
+
+    .footer-distributed{
+        font: bold 14px sans-serif;
+    }
+
+    .footer-distributed .footer-left,
+    .footer-distributed .footer-center,
+    .footer-distributed .footer-right{
+        display: block;
+        width: 100%;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .footer-distributed .footer-center i{
+        margin-left: 0;
+    }
+
+}

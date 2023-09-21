@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'CSS/about.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/home.css' %}">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,
+    300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+{% endblock head %}
+{% block content %}
+    <img draggable="false" class="about-img" src="{% static 'Media/about_cover.png' %}">
+    <div class="container title-container">
+        <h3 id="title">About Page</h3>
+    </div>
+    <section class="work-section">
+        <div class="work-section-div">
+            <h2 class="work-title" id="section1-title">Professional Journey</h2>
+            <p class="work-body" id="section1-body">Elnahass Sons Group For Construction is a leading force
+                in the industry, dedicated to excellence in every project. With a rich history and a commitment
+                to innovation, we craft enduring infrastructure. Our experienced team ensures success in residential
+                and commercial projects. We prioritize quality, safety, and sustainability as we shape the future
+                of construction.
+            </p>
+            <div>
+                <div class="u-layout" id="counter">
+                    <div class="work-data-layout-row">
+                        <div class="work-data-layout-row-div">
+                            <div class="work-data-layout-row-container">
+                                <h1 class="work-data-layout-row-container-num" id="clientsNum">0</h1>
+                                <p class="work-data-layout-row-container-lable">clients</p>
+                            </div>
+                        </div>
+                        <div class="work-data-layout-row-div">
+                            <div class="work-data-layout-row-container">
+                                <h1 class="work-data-layout-row-container-num" id="projectsNum">0</h1>
+                                <p class="work-data-layout-row-container-lable">Projects Done</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="work-section">
+        <div class="work-section-div">
+            <h2 class="work-title work-title2" id="section2-title">Introducing Elnahass Sons Group</h2>
+            <h3 class="work-subtitle" id="section2-subtitle">A New Era in Construction Excellence</h3>
+            <p class="work-body work-body2" id="section2-body">With a legacy of innovation, Eng Alaa Elnahass,
+                founder of Modern Concrete in 2009, has embarked on a new journey. In the past year, he introduced
+                Elnahass Sons Group, a testament to his commitment to excellence in construction. While Modern Concrete
+                has a rich history, Elnahass Sons Group represents the next chapter, dedicated to crafting enduring
+                infrastructure. With an experienced team, we consistently deliver success in residential and commercial
+                projects. Quality, safety, and sustainability are our top priorities as we shape the future of
+                construction with every project.
+            </p>
+        </div>
+    </section>
+{% endblock content %}
+{% block additional %}
+    <script>
+        $(document).ready(function () {
+            const clientsNum = 200, projectsNum = 400;
+            function animateCounters(){
+                $("#clientsNum").text("0");
+                $("#projectsNum").text("0")
+                setInterval(function () {
+                    if ($("#clientsNum").text().includes('+')){
+                        clearInterval();
+                    }
+                    else if (parseInt($("#clientsNum").text()) < clientsNum) {
+                        $("#clientsNum").text(parseInt($("#clientsNum").text()) + 1);
+                        if (parseInt($("#clientsNum").text()) === clientsNum){
+                            $("#clientsNum").text($("#clientsNum").text() + "+");
+                        }
+                    }
+                }, 10)
+                setInterval(function () {
+                    if ($("#projectsNum").text().includes('+')){
+                        clearInterval();
+                    }
+                    else if (parseInt($("#projectsNum").text()) < projectsNum) {
+                        $("#projectsNum").text(parseInt($("#projectsNum").text()) + 1);
+                        if (parseInt($("#projectsNum").text()) === projectsNum){
+                            $("#projectsNum").text($("#projectsNum").text() + "+");
+                        }
+                    }
+                }, 10)
+            }
+            $(".title-container").css({
+                'top': ($(".about-img").css('height').replace('px', '')/2) - ($(".title-container").css('height').
+                replace('px', '')/2) + 'px',
+            })
+            $(window).on('resize', function () {
+                $(".title-container").css({
+                    'top': ($(".about-img").css('height').replace('px', '')/2) - ($(".title-container").css('height').
+                    replace('px', '')/2) + 'px',
+                })
+            })
+            {###### Animtion For Divs ######}
+            function animateDivs() {
+                const windowHeight = $(window).height();
+                const scrollPosition = $(window).scrollTop();
+
+                // Calculate the position at which the animation should start (85% from the top of the window)
+                const animateStart = windowHeight * 0.3;
+
+                // Check each element to see if it should be animated
+                $("#section1-title, #section1-body, #counter, #section2-title, #section2-subtitle, #section2-body").each(function () {
+                    const elementOffset = $(this).offset().top;
+
+                    if (elementOffset < scrollPosition + windowHeight - animateStart) {
+                        $(this).addClass("animated");
+                    }else {
+                        $(this).removeClass("animated");
+                    }
+                });
+            }
+
+            animateDivs();
+            animateCounters();
+
+            $(window).on("scroll", function () {
+                animateDivs();
+            });
+            {###############################}
+        });
+        {###############################}
+    </script>
+{% endblock additional %}

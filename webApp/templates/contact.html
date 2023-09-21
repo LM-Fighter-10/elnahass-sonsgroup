@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'CSS/contact.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/home.css' %}">
+{% endblock head %}
+{% block content %}
+    <section>
+        <img draggable="false" class="contact-img" src="{% static 'Media/contact_cover.png' %}">
+        <div class="container title-container">
+            <h3 id="title">Contact Us</h3>
+        </div>
+        <section class="contact-section">
+            <div class="contact-section-div">
+                <h2 class="contact-title">Get in Touch</h2>
+                <div class="container container-edited">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <iframe id="googleMap" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d215.80061287682278!2d31.3452604!3d30.0709858!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e0dcbed46cb%3A0x2bb80af243931486!2z2YXZiNiv2LHZhiDZg9mI2YbZg9ix2YrYqiDZhNmE2YXZgtin2YjZhNin2Ko!5e0!3m2!1sen!2seg!4v1694284860364!5m2!1sen!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div class="col-sm-5 sec2">
+                            <h2 class="findUs">Find Us in</h2>
+                            <p class="contact-body">
+                                <b>Location:</b> <span class="details">
+                                18 Omaraat Emdaad wy Tamween, Makram-Ebid Ext, Nasr City, Cairo, Egypt
+                                </span>
+                                <br>
+                                <b>Tel:</b> <span class="details">+201000026223</span>
+                                <br>
+                                <b>Fax:</b> <span class="details">0223052416</span>
+                                <br>
+                                <b>Email:</b> <span class="details">info@elnahass.com</span>
+                            </p>
+                        </div>
+                </div>
+            </div>
+        </section>
+    </section>
+{% endblock content %}
+{% block additional %}
+    <script>
+        document.getElementById('googleMap').addEventListener('load', function () {
+            // Find and remove the "View Large Map" div
+            const iframeDocument = this.contentDocument || this.contentWindow.document;
+            const largeMapDiv = iframeDocument.querySelector('.place-card-large');
+            if (largeMapDiv) {
+                largeMapDiv.remove();
+            }
+        });
+        $(".title-container").css({
+            'top': ($(".contact-img").css('height').replace('px', '')/2) - ($(".title-container").css('height').
+            replace('px', '')/2) + 'px',
+        })
+        $(window).on('resize', function () {
+            $(".title-container").css({
+                'top': ($(".contact-img").css('height').replace('px', '')/2) - ($(".title-container").css('height').
+                replace('px', '')/2) + 'px',
+            })
+        })
+        {###### Animtion For Divs ######}
+        function animateDivs() {
+            const windowHeight = $(window).height();
+            const scrollPosition = $(window).scrollTop();
+
+            // Calculate the position at which the animation should start (85% from the top of the window)
+            const animateStart = windowHeight * 0.3;
+
+            // Check each element to see if it should be animated
+            $(".contact-title, #googleMap, .sec2").each(function () {
+                const elementOffset = $(this).offset().top;
+
+                if (elementOffset < scrollPosition + windowHeight - animateStart) {
+                    $(this).addClass("animated");
+                }else {
+                    $(this).removeClass("animated");
+                }
+            });
+        }
+
+        animateDivs();
+
+        $(window).on("scroll", function () {
+            animateDivs();
+        });
+        {###############################}
+    </script>
+{% endblock additional %}

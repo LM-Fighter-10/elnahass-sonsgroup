@@ -1,0 +1,79 @@
+#googleMap{
+    position: relative;
+    border-radius: 40px;
+    box-shadow: 0 0 20px 2px #0000001c;
+    width: 100%;
+}
+#googleMap .place-card-large {
+    display: none !important;
+}
+#title{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 65px;
+    font-weight: 900;
+}
+.title-container{
+    position: absolute;
+    color: white;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #3a3a3aa3;
+    border-radius: 50px;
+}
+.contact-img{
+    width: 100%;
+}
+.contact-section-div{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+.contact-title{
+    text-align: center;
+    background: #eb7e39;
+    border-radius: 50px;
+    width: 325px;
+    color: white;
+    font-weight: bold;
+    font-size: 40px;
+    margin: 50px auto 40px;
+}
+.contact-body{
+    font-size: 21px;
+    margin: 40px auto;
+}
+.sec2{
+    border-radius: 40px;
+    box-shadow: 0 0 20px 2px #0000001c;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: auto;
+}
+.container-edited{
+    padding: 0;
+    margin-bottom: 50px;
+}
+.findUs{
+    font-size: 32px;
+    text-decoration: underline;
+    font-weight: bold;
+    font-style: italic;
+}
+.details{
+    font-size: 18px;
+}
+.contact-title,
+#googleMap,
+.sec2{
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s ;
+}
