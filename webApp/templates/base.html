@@ -64,11 +64,11 @@
                 </div>
                 <div class="loader" id="done" style="display: none">
                     <div class="container">
-                        <svg id="checkmark1" class="checkmark justify-content-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <svg id="checkmark1" class="checkmark justify-content-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" style="display: none">
                             <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
                             <path class="checkmark__check" fill="none" d="M14.1 29.5l7.1 7.2L37.9 17.4"/>
                         </svg>
-                        <svg id="crossmark1" class="crossmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <svg id="crossmark1" class="crossmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" style="display: none">
                             <circle class="crossmark_circle" cx="26" cy="26" r="25" fill="none"/>
                             <path class="crossmark_check" fill="none" d="M14.1 14.1l23.8 23.8 m0,-23.8 l-23.8,23.8"/>
                         </svg>
@@ -488,32 +488,51 @@
                         })
                             .then(response => {
                                 if (response.status === 200 && !duplicated) {
-                                    $(".mail-sent").text("Mail Sent");
-                                    $("#success_msg").text("Mail Sent Successfully, Please Check your Inbox");
-                                    $("#crossmark1").css('display', 'none');
-                                    $("#checkmark1").css('display', '');
+                                    failed = false;
                                 } else if (duplicated) {
                                     failed = true;
-                                    $(".mail-sent").text("Mail Failed To Be Sent");
-                                    $("#success_msg").text("Mail Failed To Be Sent, Your Email Has Already Been Registered");
-                                    $("#crossmark1").css('display', '');
-                                    $("#checkmark1").css('display', 'none');
                                 } else {
-                                    $(".mail-sent").text("Mail Failed To Be Sent");
-                                    $("#success_msg").text("Mail Failed To Be Sent, Please Validate Your Email!");
-                                    $("#crossmark1").css('display', '');
-                                    $("#checkmark1").css('display', 'none');
+                                    failed = true;
                                 }
                             })
                         setTimeout(function () {
-                            $("#loading").css('opacity', '0');
-                            $("#done").css({
-                                'opacity': '1',
-                                'display': '',
-                            });
-                            $(".mail-sent").css({
-                                'display': '',
-                            });
+                            if (duplicated){
+                                $("#loading").css('opacity', '0');
+                                $("#done").css({
+                                    'opacity': '1',
+                                    'display': '',
+                                }).promise().then(function () {
+                                    $(".mail-sent").text("Mail Failed To Be Sent").css('display', '');
+                                    $("#success_msg").text("Mail Failed To Be Sent, Your Email Has Already Been Registered");
+                                    $("#checkmark1").hide().promise().then(function () {
+                                        $("#crossmark1").show();
+                                    })
+                                })
+                            }else if (failed){
+                                $("#loading").css('opacity', '0');
+                                $("#done").css({
+                                    'opacity': '1',
+                                    'display': '',
+                                }).promise().then(function () {
+                                    $(".mail-sent").text("Mail Failed To Be Sent").css('display', '');
+                                    $("#success_msg").text("Mail Failed To Be Sent, Please Validate Your Email!");
+                                    $("#checkmark1").hide().promise().then(function () {
+                                        $("#crossmark1").show();
+                                    })
+                                })
+                            }else{
+                                $("#loading").css('opacity', '0');
+                                $("#done").css({
+                                    'opacity': '1',
+                                    'display': '',
+                                }).promise().then(function () {
+                                    $(".mail-sent").text("Mail Sent").css('display', '');
+                                    $("#success_msg").text("Mail Sent Successfully, Please Check your Inbox");
+                                    $("#crossmark1").hide().promise().then(function () {
+                                        $("#checkmark1").show();
+                                    })
+                                })
+                            }
                         }, mailSentTime / 2)
                         $(".name, .email, .phone, .desc").each(function (){
                             $(this).val("");
