@@ -158,7 +158,7 @@
             {% if i.isHome %}
             {% for j in i.images.all %}
                 {% if j.thumbnail %}
-                    arr.push("{{ j.url }}");
+                    arr.push("/{{ j.url }}");
                 {% endif %}
             {% endfor %}
                 if (counter%2 !== 0){

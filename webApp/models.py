@@ -60,7 +60,7 @@ class Project(models.Model):
 
 
 class Image(models.Model):
-    url = models.ImageField(upload_to='webApp/static/database/')
+    url = models.ImageField(upload_to='elnahass-sonsgroup/staticfiles/database/')
     thumbnail = models.BooleanField(default=False)
 
     @property

@@ -2,10 +2,14 @@
 html,
 body {
     height: 100%;
-    background-color: rgba(255, 255, 255, 0);
+    user-select: none;
+    transition: background-color 0.3s ease-in-out;
+}
+.lead{
+    user-select: text!important;
 }
 .tcb-bs-fullscreen{
-    height: 100%;
+    height: 100vh;
 }
 .carousel, .item, .active {
     height: 100%;
@@ -13,7 +17,307 @@ body {
 .carousel-inner {
     height: 100%;
 }
+.project{
+    margin: 40px -15px !important;
+}
+/******* Main Loader *******/
+.webPage{
+    background-color: white !important;
+    opacity: 0;
+}
+.spinner {
+    --size: 30px;
+    --color: #ff6300;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.spinner::after,.spinner::before {
+    box-sizing: border-box;
+    position: absolute;
+    content: "";
+    width: var(--size);
+    height: var(--size);
+    top: 50%;
+    animation: up 2.4s cubic-bezier(0, 0, 0.24, 1.21) infinite;
+    left: 50%;
+    background: var(--color);
+    box-shadow: 0 0 calc(var(--size) / 3) rgba(0, 0, 0, 0.25);
+}
+
+.spinner::after {
+    background: var(--color);
+    top: calc(50% - var(--size));
+    left: calc(50% - var(--size));
+    animation: down 2.4s cubic-bezier(0, 0, 0.24, 1.21) infinite;
+}
+
+@keyframes down {
+    0%, 100% {
+        transform: none;
+    }
+
+    25% {
+        transform: translateX(100%);
+    }
+
+    50% {
+        transform: translateX(100%) translateY(100%);
+    }
+
+    75% {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes up {
+    0%, 100% {
+        transform: none;
+    }
+
+    25% {
+        transform: translateX(-100%);
+    }
+
+    50% {
+        transform: translateX(-100%) translateY(-100%);
+    }
+
+    75% {
+        transform: translateY(-100%);
+    }
+}
+
+/******** End Loader *******/
 /*----------Join Us Form----------*/
+
+/*-----------Loader-----------*/
+.loader {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.jimu-primary-loading:before,
+.jimu-primary-loading:after {
+    position: absolute;
+    top: 0;
+    content: '';
+}
+
+.jimu-primary-loading:before {
+    left: -19.992px;
+}
+
+.jimu-primary-loading:after {
+    left: 19.992px;
+    -webkit-animation-delay: 0.32s !important;
+    animation-delay: 0.32s !important;
+}
+
+.jimu-primary-loading:before,
+.jimu-primary-loading:after,
+.jimu-primary-loading {
+    background: #ff6300;
+    -webkit-animation: loading-keys-app-loading 0.8s infinite ease-in-out;
+    animation: loading-keys-app-loading 0.8s infinite ease-in-out;
+    width: 13.6px;
+    height: 32px;
+}
+
+.jimu-primary-loading {
+    text-indent: -9999em;
+    margin: auto;
+    position: absolute;
+    right: calc(50% - 6.8px);
+    top: calc(50% - 16px);
+    -webkit-animation-delay: 0.16s !important;
+    animation-delay: 0.16s !important;
+}
+
+@-webkit-keyframes loading-keys-app-loading {
+
+    0%,
+    80%,
+    100% {
+        opacity: .75;
+        box-shadow: 0 0 #eb7e39;
+        height: 32px;
+    }
+
+    40% {
+        opacity: 1;
+        box-shadow: 0 -8px #eb7e39;
+        height: 40px;
+    }
+}
+
+@keyframes loading-keys-app-loading {
+
+    0%,
+    80%,
+    100% {
+        opacity: .75;
+        box-shadow: 0 0 #ff6300;
+        height: 32px;
+    }
+
+    40% {
+        opacity: 1;
+        box-shadow: 0 -8px #ff6300;
+        height: 40px;
+    }
+}
+/*-----------EndLoader-----------*/
+
+/*************Check Mark*************/
+#done, #done2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+#success_msg, #success_msg2{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    margin-bottom: 0 !important;
+    opacity: 0;
+    z-index: -1;
+    transition: all 0.2s ease-in-out;
+}
+.mail-sent, .mail-sent2 {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 24px;
+    opacity: 0;
+    animation: textAnimation 0.4s ease-in-out 1s forwards;
+}
+.mail-sent2{
+    color: white;
+}
+
+@keyframes textAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.checkmark__circle{
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: #7ac142;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards
+}
+.checkmark{
+    margin-left: auto;
+    margin-right: auto;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0 0 0 #7ac142;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both
+}
+.checkmark__check{
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards
+}
+@keyframes stroke{
+    100%{stroke-dashoffset: 0}
+}@keyframes scale{
+     0%, 100%{
+         transform: none
+     }
+     50%{
+         transform: scale3d(1.1, 1.1, 1)
+     }
+ }
+@keyframes fill{
+    100%{
+        box-shadow: inset 0 0 0 30px #7ac142
+    }
+}
+
+.crossmark {
+    margin: auto;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0 0 0 #7ac142;
+    animation: fill2 .4s ease-in-out .4s forwards, scale2 .3s ease-in-out .9s both;
+}
+
+.crossmark_circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: red;
+    fill: none;
+    animation: stroke2 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.crossmark_check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke2 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke2 {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+@keyframes scale2 {
+    0%, 100% {
+        transform: none;
+    }
+    50% {
+        transform: scale3d(1.1, 1.1, 1);
+    }
+}
+@keyframes fill2 {
+    100% {
+        box-shadow: inset 0 0 0 30px red;
+    }
+}
+/************************************/
+
+#form_content, #form_content2{
+    margin-bottom: 30px;
+    margin-top: -52px;
+    opacity: 1;
+    transition: opacity 0.3ms ease-in-out;
+}
+
 #contact-form {
     position: absolute;
     z-index: 6;
@@ -22,14 +326,50 @@ body {
     width: 0;
     border-radius: 20px;
     padding: 25px;
-    margin: 25px;
-    margin-right: 0;
-    box-shadow: 0 2px 5px #f5f5f5;
+    margin: 25px 0 25px 25px;
+    box-shadow: 0 0 15px 8px #0000005c;
     background: #f5f5f5;
 }
+.row-edited{
+    margin: 56px -15px 0;
+}
+.form-row2{
+    width: 525px;
+    margin: 56px auto;
+}
+.expand-form{
+    overflow: hidden;
+    height: 0;
+    border-radius: 40px;
+    margin-top: 10px;
+    background-image: url("/static/Media/joinus-cover.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#contact-form2 {
+    width: 100%;
+    position: relative;
+    z-index: 6;
+    border-radius: 20px;
+    padding: 25px;
+    margin: auto;
+    background: transparent;
+}
+#contact-title2{
+    color: white;
+    font-size: 46px;
+    font-weight: bolder;
+    margin-top: 10px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+.contact-bdy2{
+    display: flex;
+}
+
 #contact-title{
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
     text-align: center;
 }
 .fas {
@@ -46,8 +386,8 @@ body {
 input, textarea {
     width: calc(100% - 18px);
     padding: 8px;
-    margin-bottom: 20px;
-    border: 1px solid #1c87c9;
+    margin-bottom: 15px;
+    border: 1px solid #eb7e39;
     outline: none;
 }
 input::placeholder {
@@ -86,6 +426,73 @@ input::placeholder {
     }
 }
 /*--------------------------------*/
+/*Contact Form Validation*/
+.nameLable,
+.emailLable,
+.phoneLable,
+.descLable,
+.phoneLable2,
+.nameLable2,
+.emailLable2,
+.descLable2 {
+    color: #333; /* Default label color */
+    transition: color 0.3s ease;
+}
+
+/* Style for the label when a field is invalid */
+.nameLable.invalid,
+.emailLable.invalid,
+.phoneLable.invalid,
+.descLable.invalid,
+.phoneLable2.invalid,
+.nameLable2.invalid,
+.emailLable2.invalid,
+.descLable2.invalid {
+    color: red; /* Red color for invalid fields */
+}
+
+/* Style for the input field when a field is invalid */
+.name:invalid,
+.email:invalid,
+.phone:invalid,
+.desc:invalid,
+.phone2.invalid,
+.name2.invalid,
+.email2.invalid,
+.desc2.invalid {
+    border-color: red; /* Red border for invalid fields */
+}
+
+/* Style for the input field when a field is valid */
+.name:valid,
+.email:valid,
+.phone:valid,
+.desc:valid,
+.phone2, .name2, .email2, .desc2 {
+    border-color: #ccc; /* Default border color for valid fields */
+}
+
+/* Style for validation messages */
+.validation-message {
+    color: red; /* Red color for validation messages */
+    font-size: 12px;
+    display: none; /* Hidden by default */
+}
+
+/* Style for the asterisk (*) for required fields */
+.required {
+    color: red;
+    font-size: 16px;
+    margin-left: 5px;
+}
+.error-message {
+    margin-left: 8px;
+    display: none;
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+/*-----------------------*/
 /****************************
 USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 *****************************/
@@ -132,9 +539,7 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 }
 
 .background-cover {
-    height: 100%;
-    width: 100%;
-    background-size: cover
+    background-size: cover;
 }
 
 #projects,
@@ -144,33 +549,22 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 }
 
 #projects-title,
-#p1-img,
-#p1-txt,
-#p2-img,
-#p2-txt,
 #join-section,
 .expand-form{
-    opacity: 0 !important;
-    transform: translateY(20px) !important;
-    transition: opacity 0.5s, transform 0.5s !important;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s ;
 }
 
-#p1,
-#p2 {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-#p1-img,
-#p2-img {
-    order: 1;
-    flex-basis: 100%;
-}
-
-#p1-txt,
-#p2-txt {
-    order: 2;
-    flex-basis: 100%;
+#projects-title{
+    background: #eb7e39;
+    border-radius: 50px;
+    width: 246px;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    font-weight: bold;
+    font-size: 40px;
 }
 
 .animated {
@@ -178,49 +572,67 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     transform: translateY(0) !important;
 }
 
-.button {
-    width: 28%;
-    height: 45%;
-    cursor: pointer;
-    padding: 1em 1em;
-    border: none;
-    border-radius: 30px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #eb7e39;
-    transition: all 500ms;
-    font-size: 12px;
+/*////////////////////////////////////*/
+.detailsbtn {
+    padding: 0.8em 1.7em;
+    background-color: transparent;
+    border-radius: 40px;
     position: relative;
     overflow: hidden;
-    outline: 2px solid #eb7e39;
+    cursor: pointer;
+    transition: .5s;
+    font-weight: 400;
+    font-size: 17px;
+    border: 1px solid;
+    font-family: inherit;
+    text-transform: uppercase;
+    color: #eb7e39;
+    z-index: 1;
 }
 
-.button:hover {
-    color: black;
-    font-weight: bold;
-    transform: scale(1.1);
-    outline: 2px solid #eb7e39;
-    box-shadow: 4px 5px 17px -4px #eb7e39;
-}
-
-.button::before {
-    content: "";
+.detailsbtn::before, .detailsbtn::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 50px;
+    transform: translate(-50%, -50%);
     position: absolute;
-    left: -50px;
-    top: 0;
-    width: 0;
-    height: 100%;
-    background-color: #eb7e39;
-    transform: skewX(45deg);
+    border-radius: 50%;
     z-index: -1;
-    transition: width 500ms;
+    background-color: #eb7e39;
+    transition: 0.7s ease;
 }
 
-.button:hover::before {
-    width: 250%;
+.detailsbtn::before {
+    top: -1em;
+    left: -1em;
 }
 
+.detailsbtn::after {
+    left: calc(100% + 1em);
+    top: calc(100% + 1em);
+}
+
+.detailsbtn:hover::before, .detailsbtn:hover::after {
+    height: 410px;
+    width: 410px;
+}
+
+.detailsbtn:hover {
+    color: black;
+    border-color: #eb7e39;
+    font-weight: 700;
+}
+
+.detailsbtn:active {
+    filter: brightness(.8);
+}
+
+.detailsbtn:focus {
+    outline: none;
+}
+
+/*////////////////////////////////////*/
 
 /* Add spacing between sections */
 
@@ -230,9 +642,16 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     padding: 0 20px;
 }
 
+#nav:before, #nav:after{
+    content: none !important;
+}
 #join-section, #footer, #join_sec{
     position: relative;
     z-index: 5;
+}
+
+#join_sec{
+    padding-bottom: 56px !important;
 }
 
 #joinUs-title{
@@ -240,7 +659,6 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     margin: auto auto 20px;
     color: white;
     background-color: #eb7e39;
-    font-family: cursive;
     font-weight: bold;
     text-align: center;
     border-radius: 50px;
@@ -250,7 +668,7 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     margin-bottom: 30px !important;
 }
 
-#joinus-btn {
+.joinus-btn, .joinus-btn-cancel {
     width: 10em;
     height: 3em;
     border-radius: 30em;
@@ -261,9 +679,10 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     overflow: hidden;
     z-index: 5;
     box-shadow: 6px 6px 12px #ff8c0099, -6px -6px 12px #ff8c0099;
+    transition: color 0.3s ease-in-out;
 }
 
-#joinus-btn::before {
+.joinus-btn::before, .joinus-btn-cancel::before {
     content: '';
     width: 0;
     height: 3em;
@@ -277,14 +696,30 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     z-index: -1;
 }
 
-#joinus-btn:hover::before {
+.joinus-btn:hover::before, .joinus-btn-cancel:hover::before {
     width: 11em;
 }
-#joinus-btn:hover {
+.joinus-btn:hover, .joinus-btn-cancel:hover {
     color: black;
     font-weight: 700;
 }
-#joinus-btn-div{
+.joinus-btn:focus, .joinus-btn-cancel:focus {
+    outline: none;
+}
+
+.joinus-btn-cancel{
+    box-shadow: 6px 6px 12px #ff00006e, -6px -6px 12px #ff00006e;
+}
+.joinus-btn-cancel::before {
+    background-image: linear-gradient(to right, #dd0c2b 0%, rgb(255 6 6 / 84%) 100%);
+}
+.joinus-btn-cancel:hover {
+    color: white;
+}
+
+.joinus-btn-div, .joinus-btn-div2{
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
     margin-top: 10px !important;
     margin-bottom: 10px !important;
 }
@@ -293,15 +728,36 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     display: none;
 }
 
+.phone, .name, .email, .desc,
+.phone2, .name2, .email2, .desc2{
+    width: 100%;
+    border-radius: 18px;
+    height: 38px;
+    padding-left: 15px;
+    background-color: #edf3fd;
+    transition: height 0.2s ease-in-out;
+}
+
+.desc{
+    resize: none;
+}
+
+.phoneLable, .nameLable, .emailLable, .descLable,
+.phoneLable2, .nameLable2, .emailLable2, .descLable2{
+    cursor: text;
+    margin-bottom: -91px;
+    position: relative;
+    left: 15px;
+    top: 27px;
+    transition: top 0.2s ease-in-out, color 0.2s cubic-bezier(0.6, -0.08, 0.41, 1.05)
+}
+
 #p-details{
     text-align: center;
 }
 
-.row{
-    margin: 56px -15px !important;
-}
-
 .w-100{
+    height: 90% !important;
     border-radius: 40px !important;
 }
 .col{
@@ -311,6 +767,7 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 .col-md-6{
     display: flex !important;
     justify-content: center !important;
+    align-items: center !important;
 }
 
 #welcome-box {
@@ -323,9 +780,9 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 }
 
 #welcome {
-    font-family: cursive;
+    font-family: Sans-serif, serif;
     font-weight: 900;
-    font-size: 70px;
+    font-size: 60px;
     color: white;
 }
 
@@ -351,16 +808,16 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     background-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Additional styling for footer */
-/*.footer-social {*/
-/*    margin-bottom: 10px;*/
-/*}*/
+.arrow-icon {
+    transition: margin-left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    margin-left: -15px!important;
+    opacity: 0;
+}
 
-/*.footer-icon {*/
-/*    font-size: 24px;*/
-/*    margin-right: 10px;*/
-/*    color: #fff;*/
-/*}*/
+.nav-item:hover .arrow-icon {
+    margin-left: 5px!important;
+    opacity: 1;
+}
 
 .footer-distributed{
     position: relative;
@@ -404,7 +861,7 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 
 .footer-distributed h3{
     color:  #ffffff;
-    font: normal 36px 'Open Sans', cursive;
+    font: normal 36px 'Open Sans', Sans-serif;
     margin: 0;
 }
 
@@ -547,8 +1004,72 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     color: #ffffffd1 !important;
     font-size: 12px !important;
     font-weight: lighter !important;
-    font-family: cursive;
 }
+
+/*    Join US Form    */
+.jnFormBtn {
+    all: unset;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0.6em 2em;
+    border: mediumspringgreen solid 0.15em;
+    border-radius: 0.25em;
+    color: mediumspringgreen;
+    font-size: 1.5em;
+    font-weight: 600;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border 300ms, color 300ms;
+    user-select: none;
+}
+
+.jnFormBtn p {
+    z-index: 1;
+}
+
+.jnFormBtn:hover {
+    color: #212121;
+}
+
+.jnFormBtn:active {
+    border-color: teal;
+}
+
+.jnFormBtn::after, .button::before {
+    content: "";
+    position: absolute;
+    width: 9em;
+    aspect-ratio: 1;
+    background: mediumspringgreen;
+    opacity: 50%;
+    border-radius: 50%;
+    transition: transform 500ms, background 300ms;
+}
+
+.jnFormBtn::before {
+    left: 0;
+    transform: translateX(-8em);
+}
+
+.jnFormBtn::after {
+    right: 0;
+    transform: translateX(8em);
+}
+
+.jnFormBtn:hover:before {
+    transform: translateX(-1em);
+}
+
+.jnFormBtn:hover:after {
+    transform: translateX(1em);
+}
+
+.jnFormBtn:active:before,
+.jnFormBtn:active:after {
+    background: teal;
+}
+/***********************/
 
 /* If you don't want the footer to be responsive, remove these media queries */
 

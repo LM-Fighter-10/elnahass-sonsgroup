@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet">
 
-    <link rel="icon" type="image/x-icon" href="{% static 'Media/logo.png' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'Media/logo.webp' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     {% block head %}{% endblock head %}
 </head>
@@ -26,7 +26,7 @@
     {% if nav %}
         <nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top bg-transparent" style="position: absolute;">
             <div id="nav" class="container">
-                <a href="{% url 'homePage' %}"><img draggable="false" src="{% static 'Media/logo.png' %}" width="80"/></a>
+                <a href="{% url 'homePage' %}"><img draggable="false" src="{% static 'Media/logo.webp' %}" width="80"/></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
