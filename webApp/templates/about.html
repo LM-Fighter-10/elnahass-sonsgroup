@@ -57,72 +57,74 @@
 {% endblock content %}
 {% block additional %}
     <script>
-        $(document).ready(function () {
-            const clientsNum = 200, projectsNum = 400;
-            function animateCounters(){
-                $("#clientsNum").text("0");
-                $("#projectsNum").text("0")
-                setInterval(function () {
-                    if ($("#clientsNum").text().includes('+')){
-                        clearInterval();
-                    }
-                    else if (parseInt($("#clientsNum").text()) < clientsNum) {
-                        $("#clientsNum").text(parseInt($("#clientsNum").text()) + 1);
-                        if (parseInt($("#clientsNum").text()) === clientsNum){
-                            $("#clientsNum").text($("#clientsNum").text() + "+");
+        setTimeout(function () {
+            $(document).ready(function () {
+                const clientsNum = 200, projectsNum = 400;
+                function animateCounters(){
+                    $("#clientsNum").text("0");
+                    $("#projectsNum").text("0")
+                    setInterval(function () {
+                        if ($("#clientsNum").text().includes('+')){
+                            clearInterval();
                         }
-                    }
-                }, 10)
-                setInterval(function () {
-                    if ($("#projectsNum").text().includes('+')){
-                        clearInterval();
-                    }
-                    else if (parseInt($("#projectsNum").text()) < projectsNum) {
-                        $("#projectsNum").text(parseInt($("#projectsNum").text()) + 1);
-                        if (parseInt($("#projectsNum").text()) === projectsNum){
-                            $("#projectsNum").text($("#projectsNum").text() + "+");
+                        else if (parseInt($("#clientsNum").text()) < clientsNum) {
+                            $("#clientsNum").text(parseInt($("#clientsNum").text()) + 1);
+                            if (parseInt($("#clientsNum").text()) === clientsNum){
+                                $("#clientsNum").text($("#clientsNum").text() + "+");
+                            }
                         }
-                    }
-                }, 10)
-            }
-            $(".title-container").css({
-                'top': ($(".about-img").css('height').replace('px', '')/2) - ($(".title-container").css('height').
-                replace('px', '')/2) + 'px',
-            })
-            $(window).on('resize', function () {
+                    }, 10)
+                    setInterval(function () {
+                        if ($("#projectsNum").text().includes('+')){
+                            clearInterval();
+                        }
+                        else if (parseInt($("#projectsNum").text()) < projectsNum) {
+                            $("#projectsNum").text(parseInt($("#projectsNum").text()) + 1);
+                            if (parseInt($("#projectsNum").text()) === projectsNum){
+                                $("#projectsNum").text($("#projectsNum").text() + "+");
+                            }
+                        }
+                    }, 10)
+                }
                 $(".title-container").css({
                     'top': ($(".about-img").css('height').replace('px', '')/2) - ($(".title-container").css('height').
                     replace('px', '')/2) + 'px',
                 })
-            })
-            {###### Animtion For Divs ######}
-            function animateDivs() {
-                const windowHeight = $(window).height();
-                const scrollPosition = $(window).scrollTop();
+                $(window).on('resize', function () {
+                    $(".title-container").css({
+                        'top': ($(".about-img").css('height').replace('px', '')/2) - ($(".title-container").css('height').
+                        replace('px', '')/2) + 'px',
+                    })
+                })
+                {###### Animtion For Divs ######}
+                function animateDivs() {
+                    const windowHeight = $(window).height();
+                    const scrollPosition = $(window).scrollTop();
 
-                // Calculate the position at which the animation should start (85% from the top of the window)
-                const animateStart = windowHeight * 0.3;
+                    // Calculate the position at which the animation should start (85% from the top of the window)
+                    const animateStart = windowHeight * 0.3;
 
-                // Check each element to see if it should be animated
-                $("#section1-title, #section1-body, #counter, #section2-title, #section2-subtitle, #section2-body").each(function () {
-                    const elementOffset = $(this).offset().top;
+                    // Check each element to see if it should be animated
+                    $("#section1-title, #section1-body, #counter, #section2-title, #section2-subtitle, #section2-body").each(function () {
+                        const elementOffset = $(this).offset().top;
 
-                    if (elementOffset < scrollPosition + windowHeight - animateStart) {
-                        $(this).addClass("animated");
-                    }else {
-                        $(this).removeClass("animated");
-                    }
-                });
-            }
+                        if (elementOffset < scrollPosition + windowHeight - animateStart) {
+                            $(this).addClass("animated");
+                        }else {
+                            $(this).removeClass("animated");
+                        }
+                    });
+                }
 
-            animateDivs();
-            animateCounters();
-
-            $(window).on("scroll", function () {
                 animateDivs();
+                animateCounters();
+
+                $(window).on("scroll", function () {
+                    animateDivs();
+                });
+                {###############################}
             });
-            {###############################}
-        });
+        }, loadingTime + 100)
         {###############################}
     </script>
 {% endblock additional %}

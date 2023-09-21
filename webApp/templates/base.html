@@ -20,7 +20,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     {% block head %}{% endblock head %}
 </head>
-<body style="position: relative">
+<body style="position: relative; background-color: black; overflow: hidden">
+    <div class="spinner"></div>
+    <div class="webPage">
     {% if nav %}
         <nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top bg-transparent" style="position: absolute;">
             <div id="nav" class="container">
@@ -159,12 +161,34 @@
         </div>
     </footer>
     {% endif %}
+    </div>
     <!-- Font Awesome Icons -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     {% if nav %}
         <script>
-            $(document).ready(function () {
+            const loadingTime = 2000;
+            $(".spinner").css({
+                'opacity': '1',
+            }).show()
+            $(".webPage").css('display', 'none');
+            setTimeout(function() {
+                $(".spinner").css({
+                    'opacity': '0',
+                }).hide();
+                $(".webPage").animate({
+                    opacity: "1"
+                }, 600).css('display', '');
+                $("body").css({
+                    'overflow': '',
+                });
+            }, loadingTime);
+            setTimeout(function () {
+                setTimeout(function () {
+                    $("body").css({
+                        'background-color': '',
+                    });
+                }, 600);
                 $(".phone, .phoneLable").on('click', function (){
                     $(".phoneLable").css('top', '-4px');
                     $(".phone").css('height', '46px');
@@ -601,7 +625,7 @@
                         animateHoverForm();
                     }
                 });
-            });
+            }, loadingTime + 100)
         </script>
     {% endif %}
     {% if footer %}

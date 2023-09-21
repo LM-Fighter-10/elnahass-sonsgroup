@@ -84,274 +84,276 @@
 {% endblock content %}
 {% block additional %}
     <script>
-        var projects = [], totalProjects = 0.0;
-        {% for i in projects %}
-            projects.push({
-                'id': '{{ i.id }}',
-                'name': '{{ i.name }}',
-                'type': '{{ i.type }}',
-                'img': '{{ i.img }}',
-                'desc': '{{ i.desc }}',
-                'year': '{{ i.year }}',
-            });
-            totalProjects++;
-        {% endfor %}
-        $("#criteria-selected").text("");
-        let factor = 80;
-        for (let x = 1; x <= totalProjects; x++) {
-            $("#p" + projects[x-1]['id']).on('click', function () {
-                window.open("/project_view/" + projects[x-1]['id']);
-            })
-            if (!$("#zoomAnim" + projects[x-1]['id']).hasClass("zoom-animate") && x <= 6) {
-                $("#zoomAnim" + projects[x-1]['id']).show();
-                setTimeout(function () {
-                    $("#zoomAnim" + projects[x-1]['id']).toggleClass('zoom-animate');
-                }, 100 + factor)
-            }else{
-                $("#zoomAnim" + projects[x-1]['id']).hide();
-                $("#zoomAnim" + x).removeClass('zoom-animate');
-            }
-            factor += 60;
-        }
-        function restoreData(dict){
+        setTimeout(function () {
+            var projects = [], totalProjects = 0.0;
+            {% for i in projects %}
+                projects.push({
+                    'id': '{{ i.id }}',
+                    'name': '{{ i.name }}',
+                    'type': '{{ i.type }}',
+                    'img': '{{ i.img }}',
+                    'desc': '{{ i.desc }}',
+                    'year': '{{ i.year }}',
+                });
+                totalProjects++;
+            {% endfor %}
+            $("#criteria-selected").text("");
             let factor = 80;
             for (let x = 1; x <= totalProjects; x++) {
-                $("#zoomAnim" + dict[x-1]['id']).removeClass('zoom-animate');
-            }
-            for (let x = 1; x <= totalProjects; x++) {
-                if (x<=6){
-                    $("#zoomAnim" + dict[x-1]['id']).show();
+                $("#p" + projects[x-1]['id']).on('click', function () {
+                    window.open("/project_view/" + projects[x-1]['id']);
+                })
+                if (!$("#zoomAnim" + projects[x-1]['id']).hasClass("zoom-animate") && x <= 6) {
+                    $("#zoomAnim" + projects[x-1]['id']).show();
                     setTimeout(function () {
-                        if (!$("#zoomAnim" + dict[x-1]['id']).hasClass("zoom-animate")){
+                        $("#zoomAnim" + projects[x-1]['id']).toggleClass('zoom-animate');
+                    }, 100 + factor)
+                }else{
+                    $("#zoomAnim" + projects[x-1]['id']).hide();
+                    $("#zoomAnim" + x).removeClass('zoom-animate');
+                }
+                factor += 60;
+            }
+            function restoreData(dict){
+                let factor = 80;
+                for (let x = 1; x <= totalProjects; x++) {
+                    $("#zoomAnim" + dict[x-1]['id']).removeClass('zoom-animate');
+                }
+                for (let x = 1; x <= totalProjects; x++) {
+                    if (x<=6){
+                        $("#zoomAnim" + dict[x-1]['id']).show();
+                        setTimeout(function () {
+                            if (!$("#zoomAnim" + dict[x-1]['id']).hasClass("zoom-animate")){
+                                $("#zoomAnim" + dict[x-1]['id']).toggleClass('zoom-animate');
+                            }
+                        }, 100 + factor)
+                        factor += 50;
+                    }else{
+                        $("#zoomAnim" + dict[x-1]['id']).hide();
+                        if ($("#zoomAnim" + dict[x-1]['id']).hasClass("zoom-animate")){
                             $("#zoomAnim" + dict[x-1]['id']).toggleClass('zoom-animate');
                         }
-                    }, 100 + factor)
-                    factor += 50;
-                }else{
-                    $("#zoomAnim" + dict[x-1]['id']).hide();
-                    if ($("#zoomAnim" + dict[x-1]['id']).hasClass("zoom-animate")){
-                        $("#zoomAnim" + dict[x-1]['id']).toggleClass('zoom-animate');
                     }
                 }
+                $("#radio1").prop('checked', true);
             }
-            $("#radio1").prop('checked', true);
-        }
-        function defaultRadiobtns(dict){
-            $("#radio-notch").empty();
-            if (totalProjects >= 6) {
-                for (let i = 1; i <= Math.ceil(dict.length/6); i++) {
-                    if (!$("#radio-notch").find(".radio" + i).attr('class')){
-                        $("#radio-notch").append("<div class=\"radio-button\">" +
-                            "<input type=\"radio\" class=\"radio-button__input\" id=\"radio" + i + "\"name=\"radio-group\">" +
-                            "<label class=\"radio-button__label\" for=\"radio" + i + "\">" +
-                            "<span class=\"radio-button__custom\"></span>" +
-                            "</label></div>");
-                    }
-                    $("#radio" + i).off('click');
-                    $("#radio" + i).click(function (){
-                        $('#radio' + i).prop('checked', true);
-                        if (i === 1) {
-                            restoreData(dict);
-                        }else{
-                            let factor = 80;
-                            for (let x = 1; x <= dict.length; x++) {
-                                if (x > 6*(i-1) && x <= i*6){
-                                    $("#zoomAnim" + dict[x-1]['id']).show();
-                                    setTimeout(function () {
-                                        if (!$("#zoomAnim" + dict[x-1]['id']).hasClass("zoom-animate")){
+            function defaultRadiobtns(dict){
+                $("#radio-notch").empty();
+                if (totalProjects >= 6) {
+                    for (let i = 1; i <= Math.ceil(dict.length/6); i++) {
+                        if (!$("#radio-notch").find(".radio" + i).attr('class')){
+                            $("#radio-notch").append("<div class=\"radio-button\">" +
+                                "<input type=\"radio\" class=\"radio-button__input\" id=\"radio" + i + "\"name=\"radio-group\">" +
+                                "<label class=\"radio-button__label\" for=\"radio" + i + "\">" +
+                                "<span class=\"radio-button__custom\"></span>" +
+                                "</label></div>");
+                        }
+                        $("#radio" + i).off('click');
+                        $("#radio" + i).click(function (){
+                            $('#radio' + i).prop('checked', true);
+                            if (i === 1) {
+                                restoreData(dict);
+                            }else{
+                                let factor = 80;
+                                for (let x = 1; x <= dict.length; x++) {
+                                    if (x > 6*(i-1) && x <= i*6){
+                                        $("#zoomAnim" + dict[x-1]['id']).show();
+                                        setTimeout(function () {
+                                            if (!$("#zoomAnim" + dict[x-1]['id']).hasClass("zoom-animate")){
+                                                $("#zoomAnim" + dict[x-1]['id']).toggleClass('zoom-animate');
+                                            }
+                                        }, 100 + factor)
+                                        factor += 50;
+                                    }else{
+                                        $("#zoomAnim" + dict[x-1]['id']).hide();
+                                        if ($("#zoomAnim" + dict[x-1]['id']).hasClass("zoom-animate")){
                                             $("#zoomAnim" + dict[x-1]['id']).toggleClass('zoom-animate');
                                         }
-                                    }, 100 + factor)
-                                    factor += 50;
-                                }else{
-                                    $("#zoomAnim" + dict[x-1]['id']).hide();
-                                    if ($("#zoomAnim" + dict[x-1]['id']).hasClass("zoom-animate")){
-                                        $("#zoomAnim" + dict[x-1]['id']).toggleClass('zoom-animate');
                                     }
                                 }
                             }
+                        });
+                        if (i === 1){
+                            $("#radio" + i).prop('checked', true);
                         }
-                    });
-                    if (i === 1){
-                        $("#radio" + i).prop('checked', true);
-                    }
 
-                }
-            }else{
-                if (check === 0){
-                    if (!$("#radio-notch").find(".radio" + i).attr('class')) {
-                        $("#radio-notch").append("<div class=\"radio-button\">" +
-                            "<input checked type=\"radio\" class=\"radio-button__input\" id=\"radio1\"name=\"radio-group\">" +
-                            "<label class=\"radio-button__label\" for=\"radio1\">" +
-                            "<span class=\"radio-button__custom\"></span>" +
-                            "</label></div>");
-                    }
-                }
-            }
-        }
-        defaultRadiobtns(projects);
-
-        function updateData(criteria, dict) {
-            let factor = 80;
-            for (let j=0; j<dict.length; j++){
-                $("#zoomAnim" + dict[j]['id']).removeClass("zoom-animate");
-                $("#zoomAnim" + dict[j]['id']).hide();
-            }
-            for (let j=0; j<dict.length; j++){
-                if (dict[j]['type'].toLowerCase().includes(criteria)){
-                    $("#zoomAnim" + dict[j]['id']).show();
-                    if (!$("#zoomAnim" + dict[j]['id']).hasClass("zoom-animate")){
-                        setTimeout(function () {
-                                $("#zoomAnim" + dict[j]['id']).toggleClass('zoom-animate');
-                        }, 100 + factor);
-                        factor += 60;
                     }
                 }else{
-                    $("#zoomAnim" + dict[j]['id']).hide();
-                    if ($("#zoomAnim" + dict[j]['id']).hasClass("zoom-animate")){
-                        $("#zoomAnim" + dict[j]['id']).toggleClass('zoom-animate');
+                    if (check === 0){
+                        if (!$("#radio-notch").find(".radio" + i).attr('class')) {
+                            $("#radio-notch").append("<div class=\"radio-button\">" +
+                                "<input checked type=\"radio\" class=\"radio-button__input\" id=\"radio1\"name=\"radio-group\">" +
+                                "<label class=\"radio-button__label\" for=\"radio1\">" +
+                                "<span class=\"radio-button__custom\"></span>" +
+                                "</label></div>");
+                        }
                     }
                 }
             }
-        }
-        $(".popup").on('mouseup', function () {
-            $(".popup-window").toggleClass('maximise');
-            if (!$(".popup-window").hasClass('maximise')){
-                $(".arrow").css('rotate', '0deg');
-            }else{
-                $(".arrow").css('rotate', '180deg');
+            defaultRadiobtns(projects);
+
+            function updateData(criteria, dict) {
+                let factor = 80;
+                for (let j=0; j<dict.length; j++){
+                    $("#zoomAnim" + dict[j]['id']).removeClass("zoom-animate");
+                    $("#zoomAnim" + dict[j]['id']).hide();
+                }
+                for (let j=0; j<dict.length; j++){
+                    if (dict[j]['type'].toLowerCase().includes(criteria)){
+                        $("#zoomAnim" + dict[j]['id']).show();
+                        if (!$("#zoomAnim" + dict[j]['id']).hasClass("zoom-animate")){
+                            setTimeout(function () {
+                                $("#zoomAnim" + dict[j]['id']).toggleClass('zoom-animate');
+                            }, 100 + factor);
+                            factor += 60;
+                        }
+                    }else{
+                        $("#zoomAnim" + dict[j]['id']).hide();
+                        if ($("#zoomAnim" + dict[j]['id']).hasClass("zoom-animate")){
+                            $("#zoomAnim" + dict[j]['id']).toggleClass('zoom-animate');
+                        }
+                    }
+                }
             }
-        })
-        const criteriaArr = [];
-        $(".criteria-card").each(function () {
-            criteriaArr.push($(this));
-            $(document).on('mousedown', function (e){
-                if (!$(e.target).closest(criteriaArr).length) {
-                    for (i of criteriaArr){
-                        i.removeClass('criteria-card-clicked');
-                    }
-                    if ($("#radio-notch").css('display') === 'none' && !$(e.target).closest("#construction," +
-                        " #repair, #landscape").length){
-                        restoreData(projects);
-                        $("#radio-notch").show(200);
-                        $("#radio1").prop('checked', true);
-                    }
+            $(".popup").on('mouseup', function () {
+                $(".popup-window").toggleClass('maximise');
+                if (!$(".popup-window").hasClass('maximise')){
+                    $(".arrow").css('rotate', '0deg');
+                }else{
+                    $(".arrow").css('rotate', '180deg');
                 }
             })
-            $(this).on('mouseup', function (){
+            const criteriaArr = [];
+            $(".criteria-card").each(function () {
+                criteriaArr.push($(this));
+                $(document).on('mousedown', function (e){
+                    if (!$(e.target).closest(criteriaArr).length) {
+                        for (i of criteriaArr){
+                            i.removeClass('criteria-card-clicked');
+                        }
+                        if ($("#radio-notch").css('display') === 'none' && !$(e.target).closest("#construction," +
+                            " #repair, #landscape").length){
+                            restoreData(projects);
+                            $("#radio-notch").show(200);
+                            $("#radio1").prop('checked', true);
+                        }
+                    }
+                })
+                $(this).on('mouseup', function (){
+                    for (let x = 1; x <= totalProjects; x++) {
+                        $("#zoomAnim" + x).removeClass('zoom-animate');
+                    }
+                    $("#radio-notch").hide(200);
+                    for (i of criteriaArr){
+                        if (i.attr('id') === $(this).attr('id')){
+                            i.toggleClass('criteria-card-clicked');
+                        }else{
+                            i.removeClass('criteria-card-clicked');
+                        }
+                    }
+                    if ($("#criteria-selected").text()){
+                        updateData($(this).attr('id'), sortBy($("#criteria-selected").text().toLowerCase()));
+                    }else{
+                        updateData($(this).attr('id'), projects);
+                    }
+                })
+            })
+
+            function restorOrder(dict) {
+                defaultRadiobtns(dict);
+                let factor = 150;
+                $(".project-container").empty();
+                for (let x = 1; x <= dict.length; x++) {
+                    $(".project-container").append(
+                        "<div id=\"zoomAnim" + dict[x-1]['id'] + "\"class=\"zoomAnim\">" +
+                        "<div id=\"p" + dict[x-1]['id'] + "\"class=\"cta\">" +
+                        "<img id=\"p_img" + dict[x-1]['id'] + "\"class=\"p_img\" src=\"/" + dict[x-1]['img'] + "\">" +
+                        "<div class=\"p_body\">" +
+                        "<h2 class=\"p_title\">" + dict[x-1]['name'] + "</h2>" +
+                        "<p class=\"p_desc\">" + dict[x-1]['desc'] + "</p></div></div></div>")
+                    if (x <= 6) {
+                        $("#zoomAnim" + dict[x - 1]['id']).show();
+                        setTimeout(function () {
+                            if (!$("#zoomAnim" + dict[x - 1]['id']).hasClass("zoom-animate")) {
+                                $("#zoomAnim" + dict[x - 1]['id']).toggleClass('zoom-animate');
+                            }
+                        }, 100 + factor)
+                        factor += 80;
+                    } else {
+                        $("#zoomAnim" + dict[x - 1]['id']).hide();
+                        if ($("#zoomAnim" + dict[x - 1]['id']).hasClass("zoom-animate")) {
+                            $("#zoomAnim" + dict[x - 1]['id']).toggleClass('zoom-animate');
+                        }
+                    }
+                    $("#p" + dict[x-1]['id']).on('click', function () {
+                        window.open("/project_view/" + dict[x-1]['id']);
+                    })
+                }
+            }
+
+            function sortBy(criteria){
+                let sortedList = projects.slice();
                 for (let x = 1; x <= totalProjects; x++) {
                     $("#zoomAnim" + x).removeClass('zoom-animate');
                 }
-                $("#radio-notch").hide(200);
-                for (i of criteriaArr){
-                    if (i.attr('id') === $(this).attr('id')){
-                        i.toggleClass('criteria-card-clicked');
-                    }else{
-                        i.removeClass('criteria-card-clicked');
-                    }
+                $(".project-container").empty();
+                if (criteria === "oldest"){
+                    sortedList.sort((a, b) => {
+                        const yearA = parseInt(a.year);
+                        const yearB = parseInt(b.year);
+                        return yearA - yearB;
+                    });
+                }else if (criteria === "newest"){
+                    sortedList.sort((a, b) => {
+                        const yearA = parseInt(a.year);
+                        const yearB = parseInt(b.year);
+                        return yearB - yearA;
+                    });
                 }
-                if ($("#criteria-selected").text()){
-                    updateData($(this).attr('id'), sortBy($("#criteria-selected").text().toLowerCase()));
-                }else{
-                    updateData($(this).attr('id'), projects);
-                }
-            })
-        })
+                restorOrder(sortedList);
+                return sortedList;
+            }
 
-        function restorOrder(dict) {
-            defaultRadiobtns(dict);
-            let factor = 150;
-            $(".project-container").empty();
-            for (let x = 1; x <= dict.length; x++) {
-                $(".project-container").append(
-                    "<div id=\"zoomAnim" + dict[x-1]['id'] + "\"class=\"zoomAnim\">" +
-                    "<div id=\"p" + dict[x-1]['id'] + "\"class=\"cta\">" +
-                    "<img id=\"p_img" + dict[x-1]['id'] + "\"class=\"p_img\" src=\"/" + dict[x-1]['img'] + "\">" +
-                    "<div class=\"p_body\">" +
-                    "<h2 class=\"p_title\">" + dict[x-1]['name'] + "</h2>" +
-                    "<p class=\"p_desc\">" + dict[x-1]['desc'] + "</p></div></div></div>")
-                if (x <= 6) {
-                    $("#zoomAnim" + dict[x - 1]['id']).show();
+            $(".sortby-li").each(function () {
+                $(this).on('mouseup', function () {
+                    $(".popup").animate({
+                        marginLeft: '8px'
+                    }, 200)
                     setTimeout(function () {
-                        if (!$("#zoomAnim" + dict[x - 1]['id']).hasClass("zoom-animate")) {
-                            $("#zoomAnim" + dict[x - 1]['id']).toggleClass('zoom-animate');
-                        }
-                    }, 100 + factor)
-                    factor += 80;
-                } else {
-                    $("#zoomAnim" + dict[x - 1]['id']).hide();
-                    if ($("#zoomAnim" + dict[x - 1]['id']).hasClass("zoom-animate")) {
-                        $("#zoomAnim" + dict[x - 1]['id']).toggleClass('zoom-animate');
+                        $("#criteria-selected").css({
+                            'opacity': '1',
+                        });
+                        $(".removeSort").css({
+                            'opacity': '1',
+                        });
+                    }, 200);
+                    $("#criteria-selected").text($(this).find('.sort-criteria').text());
+                    sortBy($(this).find('.sort-criteria').text().toLowerCase());
+                })
+            });
+            $(".removeSort").click(function () {
+                $(this).css({
+                    'opacity': '0',
+                });
+                $("#criteria-selected").css({
+                    'opacity': '0',
+                });
+                setTimeout(function () {
+                    $("#criteria-selected").text("");
+                    $(".popup").animate({
+                        marginLeft: '-36px'
+                    }, 200)
+                }, 200);
+                restorOrder(projects);
+            });
+            $(document).on('mousedown', function (e){
+                if (!$(e.target).closest(".popup, .popup-window").length) {
+                    if ($(".popup-window").hasClass('maximise')){
+                        $(".popup-window").removeClass('maximise');
+                        $(".arrow").css('rotate', '0deg');
                     }
                 }
-                $("#p" + dict[x-1]['id']).on('click', function () {
-                    window.open("/project_view/" + dict[x-1]['id']);
-                })
-            }
-        }
-
-        function sortBy(criteria){
-            let sortedList = projects.slice();
-            for (let x = 1; x <= totalProjects; x++) {
-                $("#zoomAnim" + x).removeClass('zoom-animate');
-            }
-            $(".project-container").empty();
-            if (criteria === "oldest"){
-                sortedList.sort((a, b) => {
-                    const yearA = parseInt(a.year);
-                    const yearB = parseInt(b.year);
-                    return yearA - yearB;
-                });
-            }else if (criteria === "newest"){
-                sortedList.sort((a, b) => {
-                    const yearA = parseInt(a.year);
-                    const yearB = parseInt(b.year);
-                    return yearB - yearA;
-                });
-            }
-            restorOrder(sortedList);
-            return sortedList;
-        }
-
-        $(".sortby-li").each(function () {
-            $(this).on('mouseup', function () {
-                $(".popup").animate({
-                    marginLeft: '8px'
-                }, 200)
-                setTimeout(function () {
-                    $("#criteria-selected").css({
-                        'opacity': '1',
-                    });
-                    $(".removeSort").css({
-                        'opacity': '1',
-                    });
-                }, 200);
-                $("#criteria-selected").text($(this).find('.sort-criteria').text());
-                sortBy($(this).find('.sort-criteria').text().toLowerCase());
             })
-        });
-        $(".removeSort").click(function () {
-            $(this).css({
-                'opacity': '0',
-            });
-            $("#criteria-selected").css({
-                'opacity': '0',
-            });
-            setTimeout(function () {
-                $("#criteria-selected").text("");
-                $(".popup").animate({
-                    marginLeft: '-36px'
-                }, 200)
-            }, 200);
-            restorOrder(projects);
-        });
-        $(document).on('mousedown', function (e){
-            if (!$(e.target).closest(".popup, .popup-window").length) {
-                if ($(".popup-window").hasClass('maximise')){
-                    $(".popup-window").removeClass('maximise');
-                    $(".arrow").css('rotate', '0deg');
-                }
-            }
-        })
+        }, loadingTime + 100)
     </script>
 {% endblock additional %}

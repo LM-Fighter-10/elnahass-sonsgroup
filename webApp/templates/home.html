@@ -152,6 +152,9 @@
         let counter = 0;
         const onScrollArray = ["#projects-title", "#join-section", "#footer-sec", ".expand-form"], arr = [];
         {% for i in items %}
+            $("#showbtn{{ i.project_id }}").click(function () {
+                window.open("/project_view/{{ i.project_id }}")
+            })
             {% if i.isHome %}
             {% for j in i.images.all %}
                 {% if j.thumbnail %}
@@ -211,21 +214,26 @@
                 if ($(this).attr('class') === "container expand-form"){
                     animateStart = windowHeight * 0.1;
                     if (elementOffset < scrollPosition + windowHeight - animateStart) {
-                        $(this).addClass("animated");
+                        if (!$(this).hasClass("animated")){
+                            $(this).addClass("animated");
+                        }
                     }else {
                         if ($("#joinBTN2").text() === "Cancel"){
                             $("#joinBTN2").trigger('click');
                         }
-                        $(this).removeClass("animated");
                     }
                 }else{
                     if (elementOffset < scrollPosition + windowHeight - animateStart) {
-                        $(this).addClass("animated");
+                        if (!$(this).hasClass("animated")){
+                            $(this).addClass("animated");
+                        }
                     }else {
                         if ($(this).attr('class') === "container expand-form" && $("#joinBTN2").text() === "Cancel"){
                             $("#joinBTN2").trigger('click');
                         }
-                        $(this).removeClass("animated");
+                        if ($(this).hasClass("animated")){
+                            $(this).removeClass("animated");
+                        }
                     }
                 }
             });

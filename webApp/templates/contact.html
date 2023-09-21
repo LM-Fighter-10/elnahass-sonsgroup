@@ -39,49 +39,51 @@
 {% endblock content %}
 {% block additional %}
     <script>
-        document.getElementById('googleMap').addEventListener('load', function () {
-            // Find and remove the "View Large Map" div
-            const iframeDocument = this.contentDocument || this.contentWindow.document;
-            const largeMapDiv = iframeDocument.querySelector('.place-card-large');
-            if (largeMapDiv) {
-                largeMapDiv.remove();
-            }
-        });
-        $(".title-container").css({
-            'top': ($(".contact-img").css('height').replace('px', '')/2) - ($(".title-container").css('height').
-            replace('px', '')/2) + 'px',
-        })
-        $(window).on('resize', function () {
+        setTimeout(function () {
+            document.getElementById('googleMap').addEventListener('load', function () {
+                // Find and remove the "View Large Map" div
+                const iframeDocument = this.contentDocument || this.contentWindow.document;
+                const largeMapDiv = iframeDocument.querySelector('.place-card-large');
+                if (largeMapDiv) {
+                    largeMapDiv.remove();
+                }
+            });
             $(".title-container").css({
                 'top': ($(".contact-img").css('height').replace('px', '')/2) - ($(".title-container").css('height').
                 replace('px', '')/2) + 'px',
             })
-        })
-        {###### Animtion For Divs ######}
-        function animateDivs() {
-            const windowHeight = $(window).height();
-            const scrollPosition = $(window).scrollTop();
+            $(window).on('resize', function () {
+                $(".title-container").css({
+                    'top': ($(".contact-img").css('height').replace('px', '')/2) - ($(".title-container").css('height').
+                    replace('px', '')/2) + 'px',
+                })
+            })
+            {###### Animtion For Divs ######}
+            function animateDivs() {
+                const windowHeight = $(window).height();
+                const scrollPosition = $(window).scrollTop();
 
-            // Calculate the position at which the animation should start (85% from the top of the window)
-            const animateStart = windowHeight * 0.3;
+                // Calculate the position at which the animation should start (85% from the top of the window)
+                const animateStart = windowHeight * 0.3;
 
-            // Check each element to see if it should be animated
-            $(".contact-title, #googleMap, .sec2").each(function () {
-                const elementOffset = $(this).offset().top;
+                // Check each element to see if it should be animated
+                $(".contact-title, #googleMap, .sec2").each(function () {
+                    const elementOffset = $(this).offset().top;
 
-                if (elementOffset < scrollPosition + windowHeight - animateStart) {
-                    $(this).addClass("animated");
-                }else {
-                    $(this).removeClass("animated");
-                }
-            });
-        }
+                    if (elementOffset < scrollPosition + windowHeight - animateStart) {
+                        $(this).addClass("animated");
+                    }else {
+                        $(this).removeClass("animated");
+                    }
+                });
+            }
 
-        animateDivs();
-
-        $(window).on("scroll", function () {
             animateDivs();
-        });
-        {###############################}
+
+            $(window).on("scroll", function () {
+                animateDivs();
+            });
+            {###############################}
+        }, loadingTime + 100)
     </script>
 {% endblock additional %}
