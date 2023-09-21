@@ -290,6 +290,7 @@
                 $(".expand-form").css('height', 'auto')
             })
         }else{
+            resetErrorMsgs();
             $(".expand-form").animate({
                 height: "0"
             }, 400)
@@ -386,8 +387,14 @@
 
         function resetErrorMsgs() {
             $(".name-error2, .phone-error2, .email-error2, .desc-error2").css('margin-bottom', '0').hide();
-            $(".name2, .phone2, .email2, .desc2").css('margin-bottom', '15px');
-
+            $(".name2, .phone2, .email2, .desc2").css({
+                'height': '38px',
+                'margin-bottom': '15px'
+            }).val("");
+            $(".nameLable2, .phoneLable2, .emailLable2, .descLable2").css({
+                'top': '29.5px',
+                'color': 'black'
+            });
         }
 
         function validateName2() {
