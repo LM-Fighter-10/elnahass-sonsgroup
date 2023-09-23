@@ -11,8 +11,6 @@
 .title-container{
     position: absolute;
     color: white;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background-color: #3a3a3aa3;
     border-radius: 50px;
 }

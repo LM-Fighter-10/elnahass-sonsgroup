@@ -25,6 +25,7 @@ def home(request):
     #     location="",
     # )
     context = {
+        'page': "home",
         'items': Project.objects.filter(isHome=True),
         'nav': True,
         'footer': True,
@@ -35,6 +36,7 @@ def home(request):
 def about(request):
     # LogEntry.objects.all().delete()
     context = {
+        'page': "about",
         'nav': True,
         'footer': True,
     }
@@ -44,6 +46,7 @@ def about(request):
 def contact(request):
     # LogEntry.objects.all().delete()
     context = {
+        'page': "contact",
         'nav': True,
         'footer': True,
     }
@@ -53,6 +56,7 @@ def contact(request):
 def projects(request):
     # LogEntry.objects.all().delete()
     context = {
+        'page': "Projects",
         'projects': [],
         'nav': True,
         'footer': True,
@@ -77,6 +81,7 @@ def projects(request):
 def project_view(request, id):
     # LogEntry.objects.all().delete()
     context = {
+        'page': "Project View",
         'nav': True,
         'footer': True,
     }

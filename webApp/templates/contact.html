@@ -6,9 +6,11 @@
 {% endblock head %}
 {% block content %}
     <section>
-        <img draggable="false" class="contact-img" src="{% static 'Media/contact_cover.webp' %}">
-        <div class="container title-container">
-            <h3 id="title">Contact Us</h3>
+        <div class="flex-column d-flex justify-content-center align-items-center">
+            <img draggable="false" class="contact-img" src="{% static 'Media/contact_cover.webp' %}">
+            <div class="container title-container">
+                <h3 id="title">Contact Us</h3>
+            </div>
         </div>
         <section class="contact-section">
             <div class="contact-section-div">
@@ -39,26 +41,7 @@
 {% endblock content %}
 {% block additional %}
     <script>
-        setTimeout(function () {
-            document.getElementById('googleMap').addEventListener('load', function () {
-                // Find and remove the "View Large Map" div
-                const iframeDocument = this.contentDocument || this.contentWindow.document;
-                const largeMapDiv = iframeDocument.querySelector('.place-card-large');
-                if (largeMapDiv) {
-                    largeMapDiv.remove();
-                }
-            });
-            $(".title-container").css({
-                'top': ($(".contact-img").css('height').replace('px', '')/2) - ($(".title-container").css('height').
-                replace('px', '')/2) + 'px',
-            })
-            $(window).on('resize', function () {
-                $(".title-container").css({
-                    'top': ($(".contact-img").css('height').replace('px', '')/2) - ($(".title-container").css('height').
-                    replace('px', '')/2) + 'px',
-                })
-            })
-            {###### Animtion For Divs ######}
+        function contact_script() {
             function animateDivs() {
                 const windowHeight = $(window).height();
                 const scrollPosition = $(window).scrollTop();
@@ -72,7 +55,7 @@
 
                     if (elementOffset < scrollPosition + windowHeight - animateStart) {
                         $(this).addClass("animated");
-                    }else {
+                    } else {
                         $(this).removeClass("animated");
                     }
                 });
@@ -83,7 +66,6 @@
             $(window).on("scroll", function () {
                 animateDivs();
             });
-            {###############################}
-        }, loadingTime + 100)
+        }
     </script>
 {% endblock additional %}

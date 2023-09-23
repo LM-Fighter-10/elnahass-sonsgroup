@@ -110,14 +110,6 @@
 {% block additional %}
     <script type="module" src="{% static 'JS/slider1.mjs' %}"></script>
     <script type='text/javascript'>
-        {#---- For Loading Screen Delay ----#}
-            setTimeout(function () {
-                $(".swiper").hide();
-                setTimeout(function () {
-                    $(".swiper").show();
-                }, 200)
-            }, loadingTime + 200)
-        {#----------------------------------#}
         $(document).ready(function(){
             let x = 0;
             const desc = "{{ project.description }}";
@@ -136,7 +128,7 @@
                     "<p class=\"text-lines" + "\">" + desc + "</p>"
                 )
             }
-            {###  Adding Project's Images  ###}
+            // {###  Adding Project's Images  ###}
                 var sliderList = [];
                 {% for i in project.images.all %}
                     sliderList.push(
@@ -146,7 +138,7 @@
                         "<div class=\"swiper-carousel-animate-opacity\" style=\"opacity: 0.666649; transition-duration: 0ms;\">" +
                         "<img src=/" + "{{ i.url }}" + "></div></div>"
                     )
-                    {# Test Data #}
+                    // {# Test Data #}
                     sliderList.push(
                         "<div class=\"swiper-slide swiper-slide-visible swiper-slide-next\" data-swiper-slide-index=\"" +
                         (parseInt("{{ i.get_Image_num }}")).toString() + "\" " +
@@ -175,7 +167,7 @@
                         "<div class=\"swiper-carousel-animate-opacity\" style=\"opacity: 0.666649; transition-duration: 0ms;\">" +
                         "<img src=/" + "{{ i.url }}" + "></div></div>"
                     )
-                    {#-----------#}
+                    // {#-----------#}
                 {% endfor %}
             function sortWithMiddleFirst(arr) {
                 // Ensure the array has at least one element
@@ -200,7 +192,6 @@
             for (let i = 0; i < sortedList.length; i++) {
                 $(".swiper-wrapper").append(sortedList[i]);
             }
-            {#################################}
         });
     </script>
 {% endblock additional %}

@@ -165,14 +165,79 @@
     <!-- Font Awesome Icons -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    {% if page == "Project View" %}
+    <script>
+        // {#---- For Loading Screen Delay ----#}
+        function resetSlider(){
+            $(".swiper").hide();
+            setTimeout(function () {
+                $(".swiper").show();
+            }, 200)
+        }
+        // {#----------------------------------#}
+    </script>
+    {% endif %}
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    {% block additional %}{% endblock additional %}
     {% if nav %}
         <script>
-            const loadingTime = 2000;
+            var startTime = 0, lastTime = 0;
+            startTime = performance.now();
             $(".spinner").css({
                 'opacity': '1',
             }).show()
             $(".webPage").css('display', 'none');
-            setTimeout(function() {
+            function allImagesLoaded(images) {
+                for (var i = 0; i < images.length; i++) {
+                    if (!images[i].complete) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            var images = document.querySelectorAll('img')
+            function checkImages() {
+                if (allImagesLoaded(images)) {
+                    lastTime = performance.now();
+                    if (lastTime - startTime < 2000){
+                        setTimeout(function () {
+                            base_script();
+                            {% if page == "about" %}
+                                about_script();
+                            {% endif %}
+
+                            {% if page == "contact" %}
+                                contact_script()
+                            {% endif %}
+
+                            {% if page == "Project View" %}
+                                setTimeout(function () {
+                                    resetSlider();
+                                }, 200)
+                            {% endif %}
+                        }, 2000 - (lastTime - startTime))
+                    }else{
+                        base_script();
+                        {% if page == "about" %}
+                            about_script();
+                        {% endif %}
+
+                        {% if page == "contact" %}
+                            contact_script()
+                        {% endif %}
+                        {% if page == "Project View" %}
+                            setTimeout(function () {
+                                resetSlider();
+                            }, 200)
+                        {% endif %}
+                    }
+                } else {
+                    // Wait and check again in 100 milliseconds
+                    setTimeout(checkImages, 100);
+                }
+            }
+            checkImages();
+            function base_script() {
                 $(".spinner").css({
                     'opacity': '0',
                 }).hide();
@@ -182,469 +247,479 @@
                 $("body").css({
                     'overflow': '',
                 });
-            }, loadingTime);
-            setTimeout(function () {
-                setTimeout(function () {
-                    $("body").css({
-                        'background-color': '',
-                    });
-                }, 600);
-                $(".phone, .phoneLable").on('click', function (){
-                    $(".phoneLable").css('top', '-4px');
-                    $(".phone").css('height', '46px');
-                    $("#contact-form").on('mousedown', function (ev){
-                        if (!$(ev.target).closest('.phone, .phoneLable').length && $(".phone").val() === "") {
-                            $(".phoneLable").css('top', '29.5px');
-                            $(".phone").css('height', '38px');
-                        }
-                    })
-                });
-
-                $(".phoneLable, .nameLable, .emailLable, .descLable").each(function (){
-                    $(this).on('click', function (){
-                        var selectedInput = "." + $(this).attr('class').replace("Lable","");
-                        $(selectedInput).focus();
-                    })
-                });
-
-                $(".name, .nameLable").on('click', function (){
-                    $(".nameLable").css('top', '-4px');
-                    $(".name").css('height', '46px');
-                    $("#contact-form").on('mousedown', function (ev){
-                        if (!$(ev.target).closest('.name, .nameLable').length && $(".name").val() === "") {
-                            $(".nameLable").css('top', '29.5px');
-                            $(".name").css('height', '38px');
-                        }
-                    })
-                });
-
-                $(".email, .emailLable").on('click', function (){
-                    $(".emailLable").css('top', '-4px');
-                    $(".email").css('height', '46px');
-                    $("#contact-form").on('mousedown', function (ev){
-                        if (!$(ev.target).closest('.email, .emailLable').length && $(".email").val() === "") {
-                            $(".emailLable").css('top', '29.5px');
-                            $(".email").css('height', '38px');
-                        }
-                    })
-                });
-
-                $(".name, .email, .phone, .desc").on("mousedown", function (){
-                    $(this).each(function (){
-                        $("." + $(this).attr('class') + "Lable").trigger('click');
-                    })
-                })
-
-                $(".desc, .descLable").on('click', function (){
-                    $(".descLable").css('top', '-4px');
-                    $(".desc").css('height', '150px');
-                    $("#contact-form").on('mousedown', function (ev){
-                        if (!$(ev.target).closest('.desc, .descLable').length && $(".desc").val() === "") {
-                            $(".descLable").css('top', '29.5px');
-                            $(".desc").css('height', '38px');
-                        }
-                    })
-                });
-
-                function resetErrorMsgs() {
-                    $(".name-error, .phone-error, .email-error, .desc-error").css('margin-bottom', '0').hide();
-                    $(".name, .phone, .email, .desc").css('margin-bottom', '15px');
-
-                }
-
-                function validateName() {
-                    const nameInput = $(".name");
-                    const name = nameInput.val();
-                    const nameError = $(".name-error");
-
-                    if (name.trim() === "") {
-                        nameError.text("").hide();
-                        nameError.css('margin-bottom', '0');
-                        return true;
-                    }
-
-                    if (/\d/.test(name)){
-                        nameError.text("Name must not contains numbers").show();
-                        nameError.css('margin-bottom', '10px');
-                        return false;
-                    }
-
-                    nameError.css('margin-bottom', '0');
-                    nameError.hide();
-                    return true;
-                }
-
-                // Validation function for the email input
-                function validateEmail() {
-                    const emailInput = $(".email");
-                    const email = emailInput.val();
-                    const emailError = $(".email-error");
-                    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
-                    if (email.trim() === "") {
-                        emailError.text("").hide();
-                        emailError.css('margin-bottom', '0');
-                        return true;
-                    }
-
-                    if (!emailPattern.test(email)) {
-                        emailError.text("Please enter a valid email address").show();
-                        emailError.css('margin-bottom', '10px');
-                        return false;
-                    }
-                    emailError.css('margin-bottom', '0');
-                    emailError.hide();
-                    return true;
-                }
-
-                // Validation function for the phone input
-                function validatePhone() {
-                    const phoneInput = $(".phone");
-                    const phone = phoneInput.val();
-                    const phoneError = $(".phone-error");
-                    const phonePattern = /^\d{11}$/; // Allow up to 15 digits
-
-                    if (phone.trim() === "") {
-                        phoneError.text("").hide();
-                        phoneError.css('margin-bottom', '0');
-                        return true;
-                    }
-
-                    if (isNaN(phone)){
-                        phoneError.text("Phone number must be numeric only").show();
-                        phoneError.css('margin-bottom', '10px');
-                        return false;
-                    }
-
-                    if (!phonePattern.test(phone)) {
-                        phoneError.text("Please enter a valid phone number with 11 digits").show();
-                        phoneError.css('margin-bottom', '10px');
-                        return false;
-                    }
-
-                    phoneError.css('margin-bottom', '0');
-                    phoneError.hide();
-                    return true;
-                }
-
-                // Validation function for the description textarea
-                function validateDescription() {
-                    const descTextarea = $(".desc");
-                    const desc = descTextarea.val();
-                    const descError = $(".desc-error");
-
-                    if (desc.length > 200) {
-                        descError.text("Please don't exceed 200 characters").show();
-                        descError.css('margin-bottom', '10px');
-                        return false;
-                    }
-                    descError.css('margin-bottom', '0');
-                    descError.hide();
-                    return true;
-                }
-
-                $(".name, .email, .phone, .desc").on("input", function (){
-                    $(this).each(function (){
-                        if ($(this).attr('class') === "name"){
-                            if(!validateName()){
-                                $(this).css({
-                                    'border-color': 'red',
-                                    'margin-bottom': '0',
-                                });
-                            }else{
-                                $(this).css({
-                                    'border-color': '',
-                                    'margin-bottom': '15px',
-                                });
-                            }
-                        }else if ($(this).attr('class') === "email"){
-                            if(!validateEmail()){
-                                $(this).css({
-                                    'border-color': 'red',
-                                    'margin-bottom': '0',
-                                });
-                            }else{
-                                $(this).css({
-                                    'border-color': '',
-                                    'margin-bottom': '15px',
-                                });
-                            }
-                        }else if ($(this).attr('class') === "phone"){
-                            if(!validatePhone()){
-                                $(this).css({
-                                    'border-color': 'red',
-                                    'margin-bottom': '0',
-                                });
-                            }else{
-                                $(this).css({
-                                    'border-color': '',
-                                    'margin-bottom': '15px',
-                                });
-                            }
-                        }else{
-                            if(!validateDescription()){
-                                $(this).css({
-                                    'border-color': 'red',
-                                    'margin-bottom': '0',
-                                });
-                            }else{
-                                $(this).css({
-                                    'border-color': '',
-                                    'margin-bottom': '15px',
-                                });
-                            }
-                        }
-                    })
-                })
-
-                // Validate if Any Field is Left Blank
-                function isBlank(){
-                    var nameBlank = false,
-                        emailBlank = false,
-                        phoneBlank = false,
-                        descBlank = false;
-                    $(".name, .email, .phone, .desc").each(function (){
-                        if ($(this).val() === ""){
-                            $("." + $(this).attr('class') + "-error").text("This field is required").show();
-                            $("." + $(this).attr('class') + "-error").css('margin-bottom', '10px');
-                            $("." + $(this).attr('class')).css('margin-bottom', '0');
-                            if ($(this).attr('class') === 'name'){
-                                nameBlank = true;
-                            }else if ($(this).attr('class') === 'email'){
-                                emailBlank = true;
-                            }else if ($(this).attr('class') === 'phone'){
-                                phoneBlank = true;
-                            }else{
-                                descBlank = true;
-                            }
-                        }else{
-                            $("." + $(this).attr('class') + "-error").text("").hide();
-                            $("." + $(this).attr('class') + "-error").css('margin-bottom', '0');
-                            $("." + $(this).attr('class')).css('margin-bottom', '15px');
-                            if ($(this).attr('class') === 'name'){
-                                nameBlank = false;
-                            }else if ($(this).attr('class') === 'email'){
-                                emailBlank = false;
-                            }else if ($(this).attr('class') === 'phone'){
-                                phoneBlank = false;
-                            }else{
-                                descBlank = false;
-                            }
-                        }
-                    })
-                    return nameBlank || emailBlank || phoneBlank || descBlank;
-                }
-
-                var mailSentTime = 5000;
-
-                $("#joinBTN").on('click', function (){
-                    const isNameValid = validateName();
-                    const isEmailValid = validateEmail();
-                    const isPhoneValid = validatePhone();
-                    const isDescValid = validateDescription();
-                    const isBlankValidation = isBlank();
-                    if (isNameValid && isEmailValid && isPhoneValid && isDescValid && !isBlankValidation) {
-                        $("#form_content").css({
-                            'opacity': '0',
-                            'position': 'relative',
-                            'z-index': '-1',
+                    setTimeout(function () {
+                        $("body").css({
+                            'background-color': '',
                         });
-                        if ($("#success_msg").css('opacity') === "1") {
-                            $("#success_msg").css({
-                                'opacity': '0',
-                            });
-                            $("#form_content").animate({
-                                marginTop: '-52px'
-                            }, 200)
+                    }, 600);
+                    $(".phone, .phoneLable").on('click', function () {
+                        $(".phoneLable").css('top', '-4px');
+                        $(".phone").css('height', '46px');
+                        $("#contact-form").on('mousedown', function (ev) {
+                            if (!$(ev.target).closest('.phone, .phoneLable').length && $(".phone").val() === "") {
+                                $(".phoneLable").css('top', '29.5px');
+                                $(".phone").css('height', '38px');
+                            }
+                        })
+                    });
+
+                    $(".phoneLable, .nameLable, .emailLable, .descLable").each(function () {
+                        $(this).on('click', function () {
+                            var selectedInput = "." + $(this).attr('class').replace("Lable", "");
+                            $(selectedInput).focus();
+                        })
+                    });
+
+                    $(".name, .nameLable").on('click', function () {
+                        $(".nameLable").css('top', '-4px');
+                        $(".name").css('height', '46px');
+                        $("#contact-form").on('mousedown', function (ev) {
+                            if (!$(ev.target).closest('.name, .nameLable').length && $(".name").val() === "") {
+                                $(".nameLable").css('top', '29.5px');
+                                $(".name").css('height', '38px');
+                            }
+                        })
+                    });
+
+                    $(".email, .emailLable").on('click', function () {
+                        $(".emailLable").css('top', '-4px');
+                        $(".email").css('height', '46px');
+                        $("#contact-form").on('mousedown', function (ev) {
+                            if (!$(ev.target).closest('.email, .emailLable').length && $(".email").val() === "") {
+                                $(".emailLable").css('top', '29.5px');
+                                $(".email").css('height', '38px');
+                            }
+                        })
+                    });
+
+                    $(".name, .email, .phone, .desc").on("mousedown", function () {
+                        $(this).each(function () {
+                            $("." + $(this).attr('class') + "Lable").trigger('click');
+                        })
+                    })
+
+                    $(".desc, .descLable").on('click', function () {
+                        $(".descLable").css('top', '-4px');
+                        $(".desc").css('height', '150px');
+                        $("#contact-form").on('mousedown', function (ev) {
+                            if (!$(ev.target).closest('.desc, .descLable').length && $(".desc").val() === "") {
+                                $(".descLable").css('top', '29.5px');
+                                $(".desc").css('height', '38px');
+                            }
+                        })
+                    });
+
+                    function resetErrorMsgs() {
+                        $(".name-error, .phone-error, .email-error, .desc-error").css('margin-bottom', '0').hide();
+                        $(".name, .phone, .email, .desc").css('margin-bottom', '15px');
+
+                    }
+
+                    function validateName() {
+                        const nameInput = $(".name");
+                        const name = nameInput.val();
+                        const nameError = $(".name-error");
+
+                        if (name.trim() === "") {
+                            nameError.text("").hide();
+                            nameError.css('margin-bottom', '0');
+                            return true;
                         }
-                        $(".joinus-btn-div").css('opacity', '0');
-                        $(".joinus-btn, input, textarea").attr('disabled', 'true');
-                        $("#loading").css('opacity', '1');
-                        var failed = false;
-                        const form = document.getElementById('contact-form');
-                        const formData = new FormData(form);
-                        formData.append('name', $(".name").val());
-                        formData.append('email', $(".email").val());
-                        formData.append('phone', $(".phone").val());
-                        formData.append('outline_desc', $(".desc").val());
-                        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-                        var duplicated = false;
-                        fetch('/fetchCustomer?name=' + $(".name").val() + '&email=' + $(".email").val()
-                            + '&phone=' + $(".phone").val() + '&desc=' + $(".desc").val())
-                            .then(response => response.json())
-                            .then(data => {
-                                // Process the JSON data here
-                                const customers = data.customers;
-                                for (const customer of customers) {
-                                    duplicated = customer.duplicated;
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                            });
-                        fetch('/send/', {
-                            method: 'POST',
-                            body: formData,
-                        })
-                            .then(response => {
-                                if (response.status === 200 && !duplicated) {
-                                    failed = false;
-                                } else if (duplicated) {
-                                    failed = true;
+
+                        if (/\d/.test(name)) {
+                            nameError.text("Name must not contains numbers").show();
+                            nameError.css('margin-bottom', '10px');
+                            return false;
+                        }
+
+                        nameError.css('margin-bottom', '0');
+                        nameError.hide();
+                        return true;
+                    }
+
+                    // Validation function for the email input
+                    function validateEmail() {
+                        const emailInput = $(".email");
+                        const email = emailInput.val();
+                        const emailError = $(".email-error");
+                        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+                        if (email.trim() === "") {
+                            emailError.text("").hide();
+                            emailError.css('margin-bottom', '0');
+                            return true;
+                        }
+
+                        if (!emailPattern.test(email)) {
+                            emailError.text("Please enter a valid email address").show();
+                            emailError.css('margin-bottom', '10px');
+                            return false;
+                        }
+                        emailError.css('margin-bottom', '0');
+                        emailError.hide();
+                        return true;
+                    }
+
+                    // Validation function for the phone input
+                    function validatePhone() {
+                        const phoneInput = $(".phone");
+                        const phone = phoneInput.val();
+                        const phoneError = $(".phone-error");
+                        const phonePattern = /^\d{11}$/; // Allow up to 15 digits
+
+                        if (phone.trim() === "") {
+                            phoneError.text("").hide();
+                            phoneError.css('margin-bottom', '0');
+                            return true;
+                        }
+
+                        if (isNaN(phone)) {
+                            phoneError.text("Phone number must be numeric only").show();
+                            phoneError.css('margin-bottom', '10px');
+                            return false;
+                        }
+
+                        if (!phonePattern.test(phone)) {
+                            phoneError.text("Please enter a valid phone number with 11 digits").show();
+                            phoneError.css('margin-bottom', '10px');
+                            return false;
+                        }
+
+                        phoneError.css('margin-bottom', '0');
+                        phoneError.hide();
+                        return true;
+                    }
+
+                    // Validation function for the description textarea
+                    function validateDescription() {
+                        const descTextarea = $(".desc");
+                        const desc = descTextarea.val();
+                        const descError = $(".desc-error");
+
+                        if (desc.length > 200) {
+                            descError.text("Please don't exceed 200 characters").show();
+                            descError.css('margin-bottom', '10px');
+                            return false;
+                        }
+                        descError.css('margin-bottom', '0');
+                        descError.hide();
+                        return true;
+                    }
+
+                    $(".name, .email, .phone, .desc").on("input", function () {
+                        $(this).each(function () {
+                            if ($(this).attr('class') === "name") {
+                                if (!validateName()) {
+                                    $(this).css({
+                                        'border-color': 'red',
+                                        'margin-bottom': '0',
+                                    });
                                 } else {
-                                    failed = true;
+                                    $(this).css({
+                                        'border-color': '',
+                                        'margin-bottom': '15px',
+                                    });
                                 }
-                            })
-                        setTimeout(function () {
-                            if (duplicated){
-                                $("#loading").css('opacity', '0');
-                                $("#done").css({
-                                    'opacity': '1',
-                                    'display': '',
-                                }).promise().then(function () {
-                                    $(".mail-sent").text("Mail Failed To Be Sent").css('display', '');
-                                    $("#success_msg").text("Mail Failed To Be Sent, Your Email Has Already Been Registered");
-                                    $("#checkmark1").hide().promise().then(function () {
-                                        $("#crossmark1").show();
-                                    })
-                                })
-                            }else if (failed){
-                                $("#loading").css('opacity', '0');
-                                $("#done").css({
-                                    'opacity': '1',
-                                    'display': '',
-                                }).promise().then(function () {
-                                    $(".mail-sent").text("Mail Failed To Be Sent").css('display', '');
-                                    $("#success_msg").text("Mail Failed To Be Sent, Please Validate Your Email!");
-                                    $("#checkmark1").hide().promise().then(function () {
-                                        $("#crossmark1").show();
-                                    })
-                                })
-                            }else{
-                                $("#loading").css('opacity', '0');
-                                $("#done").css({
-                                    'opacity': '1',
-                                    'display': '',
-                                }).promise().then(function () {
-                                    $(".mail-sent").text("Mail Sent").css('display', '');
-                                    $("#success_msg").text("Mail Sent Successfully, Please Check your Inbox");
-                                    $("#crossmark1").hide().promise().then(function () {
-                                        $("#checkmark1").show();
-                                    })
-                                })
-                            }
-                        }, mailSentTime / 2)
-                        $(".name, .email, .phone, .desc").each(function (){
-                            $(this).val("");
-                            $("#contact-form").trigger('mousedown');
-                        })
-                        setTimeout(function () {
-                            $("#form_content").css({
-                                'opacity': '1',
-                                'position': '',
-                                'z-index': '',
-                            });
-                            $("#form_content").animate({
-                                marginTop: '10px'
-                            }, 200)
-                            $(".joinus-btn-div").css('opacity', '1');
-                            $(".joinus-btn, input, textarea").removeAttr('disabled');
-                            $("#loading").css('opacity', '0');
-                            $("#done").css({
-                                'opacity': '0',
-                                'display': 'none',
-                            });
-                            $(".mail-sent").css({
-                                'display': 'none',
-                            });
-                            if (!duplicated) {
-                                $("#success_msg").attr('class', 'alert alert-success');
+                            } else if ($(this).attr('class') === "email") {
+                                if (!validateEmail()) {
+                                    $(this).css({
+                                        'border-color': 'red',
+                                        'margin-bottom': '0',
+                                    });
+                                } else {
+                                    $(this).css({
+                                        'border-color': '',
+                                        'margin-bottom': '15px',
+                                    });
+                                }
+                            } else if ($(this).attr('class') === "phone") {
+                                if (!validatePhone()) {
+                                    $(this).css({
+                                        'border-color': 'red',
+                                        'margin-bottom': '0',
+                                    });
+                                } else {
+                                    $(this).css({
+                                        'border-color': '',
+                                        'margin-bottom': '15px',
+                                    });
+                                }
                             } else {
-                                $("#success_msg").attr('class', 'alert alert-danger');
+                                if (!validateDescription()) {
+                                    $(this).css({
+                                        'border-color': 'red',
+                                        'margin-bottom': '0',
+                                    });
+                                } else {
+                                    $(this).css({
+                                        'border-color': '',
+                                        'margin-bottom': '15px',
+                                    });
+                                }
                             }
-                            $("#success_msg").css({
-                                'opacity': '1',
+                        })
+                    })
+
+                    // Validate if Any Field is Left Blank
+                    function isBlank() {
+                        var nameBlank = false,
+                            emailBlank = false,
+                            phoneBlank = false,
+                            descBlank = false;
+                        $(".name, .email, .phone, .desc").each(function () {
+                            if ($(this).val() === "") {
+                                $("." + $(this).attr('class') + "-error").text("This field is required").show();
+                                $("." + $(this).attr('class') + "-error").css('margin-bottom', '10px');
+                                $("." + $(this).attr('class')).css('margin-bottom', '0');
+                                if ($(this).attr('class') === 'name') {
+                                    nameBlank = true;
+                                } else if ($(this).attr('class') === 'email') {
+                                    emailBlank = true;
+                                } else if ($(this).attr('class') === 'phone') {
+                                    phoneBlank = true;
+                                } else {
+                                    descBlank = true;
+                                }
+                            } else {
+                                $("." + $(this).attr('class') + "-error").text("").hide();
+                                $("." + $(this).attr('class') + "-error").css('margin-bottom', '0');
+                                $("." + $(this).attr('class')).css('margin-bottom', '15px');
+                                if ($(this).attr('class') === 'name') {
+                                    nameBlank = false;
+                                } else if ($(this).attr('class') === 'email') {
+                                    emailBlank = false;
+                                } else if ($(this).attr('class') === 'phone') {
+                                    phoneBlank = false;
+                                } else {
+                                    descBlank = false;
+                                }
+                            }
+                        })
+                        return nameBlank || emailBlank || phoneBlank || descBlank;
+                    }
+
+                    var mailSentTime = 5000;
+
+                    $("#joinBTN").on('click', function () {
+                        const isNameValid = validateName();
+                        const isEmailValid = validateEmail();
+                        const isPhoneValid = validatePhone();
+                        const isDescValid = validateDescription();
+                        const isBlankValidation = isBlank();
+                        if (isNameValid && isEmailValid && isPhoneValid && isDescValid && !isBlankValidation) {
+                            $("#form_content").css({
+                                'opacity': '0',
+                                'position': 'relative',
+                                'z-index': '-1',
                             });
-                            setTimeout(function () {
+                            if ($("#success_msg").css('opacity') === "1") {
                                 $("#success_msg").css({
                                     'opacity': '0',
                                 });
                                 $("#form_content").animate({
                                     marginTop: '-52px'
                                 }, 200)
-                            }, 5000);
-                        }, mailSentTime)
-                    }
-                })
-
-                // Open contact form when "Join Us" button is clicked
-                $("#join-btn").on("click", function () {
-                    animateContactForm(false);
-                });
-                let contactFormWidth = "";
-                function animateContactForm(html) {
-                    const contactForm = $("#contact-form");
-                    if (contactForm.width() > 10 && !html) {
-                        contactForm.animate({
-                            width: "2%" // Shrinking the form
-                        }, 400);
-                        contactForm.hide(250);
-                        $("#contact-bdy").hide(300);
-                    }else if(html && contactForm.width() > 10){
-                        contactForm.animate({
-                            width: "2%" // Shrinking the form
-                        }, 400);
-                        contactForm.hide(250);
-                        $("#contact-bdy").hide(300);
-                    }
-                    else if(!html) {
-                        contactForm.animate({
-                            width: "28%" // Expanding the form
-                        }, 280);
-                        contactForm.show(200);
-                        $("#contact-bdy").show(200);
-                        setTimeout(function (){
-                            contactFormWidth = contactForm.css("width");
-                        }, 500);
-                    }
-                }
-                $(document).on('mousedown', function (e){
-                    if (!$(e.target).closest('#contact-form, .carousel-indicators').length) {
-                        resetErrorMsgs();
-                        animateContactForm(true);
-                        $(".phone, .name, .email, .desc").each(function () {
-                            if ($(this).val() === ""){
-                                $(this).css('height', '38px');
-                                $("." + $(this).attr('class') + "Lable").css('top', '29.5px');
                             }
-                        })
+                            $(".joinus-btn-div").css('opacity', '0');
+                            $(".joinus-btn, input, textarea").attr('disabled', 'true');
+                            $("#loading").css('opacity', '1');
+                            var failed = false;
+                            const form = document.getElementById('contact-form');
+                            const formData = new FormData(form);
+                            formData.append('name', $(".name").val());
+                            formData.append('email', $(".email").val());
+                            formData.append('phone', $(".phone").val());
+                            formData.append('outline_desc', $(".desc").val());
+                            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                            var duplicated = false;
+                            fetch('/fetchCustomer?name=' + $(".name").val() + '&email=' + $(".email").val()
+                                + '&phone=' + $(".phone").val() + '&desc=' + $(".desc").val())
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Process the JSON data here
+                                    const customers = data.customers;
+                                    for (const customer of customers) {
+                                        duplicated = customer.duplicated;
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                            fetch('/send/', {
+                                method: 'POST',
+                                body: formData,
+                            })
+                                .then(response => {
+                                    if (response.status === 200 && !duplicated) {
+                                        failed = false;
+                                    } else if (duplicated) {
+                                        failed = true;
+                                    } else {
+                                        failed = true;
+                                    }
+                                })
+                            setTimeout(function () {
+                                if (duplicated) {
+                                    $("#loading").css('opacity', '0');
+                                    $("#done").css({
+                                        'opacity': '1',
+                                        'display': '',
+                                    }).promise().then(function () {
+                                        $(".mail-sent").text("Mail Failed To Be Sent").css('display', '');
+                                        $("#success_msg").text("Mail Failed To Be Sent, Your Email Has Already Been Registered");
+                                        $("#checkmark1").hide().promise().then(function () {
+                                            $("#crossmark1").show();
+                                        })
+                                    })
+                                } else if (failed) {
+                                    $("#loading").css('opacity', '0');
+                                    $("#done").css({
+                                        'opacity': '1',
+                                        'display': '',
+                                    }).promise().then(function () {
+                                        $(".mail-sent").text("Mail Failed To Be Sent").css('display', '');
+                                        $("#success_msg").text("Mail Failed To Be Sent, Please Validate Your Email!");
+                                        $("#checkmark1").hide().promise().then(function () {
+                                            $("#crossmark1").show();
+                                        })
+                                    })
+                                } else {
+                                    $("#loading").css('opacity', '0');
+                                    $("#done").css({
+                                        'opacity': '1',
+                                        'display': '',
+                                    }).promise().then(function () {
+                                        $(".mail-sent").text("Mail Sent").css('display', '');
+                                        $("#success_msg").text("Mail Sent Successfully, Please Check your Inbox");
+                                        $("#crossmark1").hide().promise().then(function () {
+                                            $("#checkmark1").show();
+                                        })
+                                    })
+                                }
+                            }, mailSentTime / 2)
+                            $(".name, .email, .phone, .desc").each(function () {
+                                $(this).val("");
+                                $("#contact-form").trigger('mousedown');
+                            })
+                            setTimeout(function () {
+                                $("#form_content").css({
+                                    'opacity': '1',
+                                    'position': '',
+                                    'z-index': '',
+                                });
+                                $("#form_content").animate({
+                                    marginTop: '10px'
+                                }, 200)
+                                $(".joinus-btn-div").css('opacity', '1');
+                                $(".joinus-btn, input, textarea").removeAttr('disabled');
+                                $("#loading").css('opacity', '0');
+                                $("#done").css({
+                                    'opacity': '0',
+                                    'display': 'none',
+                                });
+                                $("#crossmark1").hide();
+                                $("#checkmark1").hide();
+                                $(".mail-sent").css({
+                                    'display': 'none',
+                                });
+                                if (!duplicated) {
+                                    $("#success_msg").attr('class', 'alert alert-success');
+                                } else {
+                                    $("#success_msg").attr('class', 'alert alert-danger');
+                                }
+                                $("#success_msg").css({
+                                    'opacity': '1',
+                                });
+                                setTimeout(function () {
+                                    $("#success_msg").css({
+                                        'opacity': '0',
+                                    });
+                                    $("#form_content").animate({
+                                        marginTop: '-52px'
+                                    }, 200)
+                                }, 5000);
+                            }, mailSentTime)
+                        }
+                    })
+
+                    // Open contact form when "Join Us" button is clicked
+                    $("#join-btn").on("click", function () {
+                        animateContactForm(false);
+                    });
+                    let contactFormWidth = "";
+
+                    function animateContactForm(html) {
+                        const contactForm = $("#contact-form");
+                        if (contactForm.width() > 10 && !html) {
+                            contactForm.animate({
+                                width: "2%" // Shrinking the form
+                            }, 400);
+                            contactForm.hide(250);
+                            $("#contact-bdy").hide(300);
+                        } else if (html && contactForm.width() > 10) {
+                            contactForm.animate({
+                                width: "2%" // Shrinking the form
+                            }, 400);
+                            contactForm.hide(250);
+                            $("#contact-bdy").hide(300);
+                        } else if (!html) {
+                            contactForm.animate({
+                                width: "28%" // Expanding the form
+                            }, 280);
+                            contactForm.show(200);
+                            $("#contact-bdy").show(200);
+                            setTimeout(function () {
+                                contactFormWidth = contactForm.css("width");
+                            }, 500);
+                        }
                     }
-                })
-                function animateHoverForm() {
-                    const windowHeight = $(window).height();
-                    const scrollPosition = $(window).scrollTop();
 
-                    // Calculate the position at which the animation should start (85% from the top of the window)
-                    const animateStart = windowHeight * 1.3;
+                    $(document).on('mousedown', function (e) {
+                        if (!$(e.target).closest('#contact-form, .carousel-indicators').length) {
+                            resetErrorMsgs();
+                            animateContactForm(true);
+                            $(".phone, .name, .email, .desc").each(function () {
+                                if ($(this).val() === "") {
+                                    $(this).css('height', '38px');
+                                    $("." + $(this).attr('class') + "Lable").css('top', '29.5px');
+                                }
+                            })
+                        }
+                    })
 
-                    // Check each element to see if it should be animated
-                    $("#contact-form").each(function () {
-                        const elementOffset = $(this).offset().top;
+                    function animateHoverForm() {
+                        const windowHeight = $(window).height();
+                        const scrollPosition = $(window).scrollTop();
 
-                        if (elementOffset < scrollPosition + windowHeight - animateStart) {
-                            if ($("#contact-form").css('display') === "block"){
-                                animateContactForm(true);
+                        // Calculate the position at which the animation should start (85% from the top of the window)
+                        const animateStart = windowHeight * 1.3;
+
+                        // Check each element to see if it should be animated
+                        $("#contact-form").each(function () {
+                            const elementOffset = $(this).offset().top;
+
+                            if (elementOffset < scrollPosition + windowHeight - animateStart) {
+                                if ($("#contact-form").css('display') === "block") {
+                                    animateContactForm(true);
+                                }
                             }
+                        });
+                    }
+
+                    animateHoverForm();
+                    $(window).on("scroll", function () {
+                        if ($("#contact-form").css('width') === contactFormWidth) {
+                            animateHoverForm();
                         }
                     });
+                    // {# For Google Fonts #}
+                    WebFont.load({
+                        google: {
+                            families: ['Hammersmith+One']
+                        }
+                    });
+                    // {#------------------#}
                 }
-                animateHoverForm();
-                $(window).on("scroll", function () {
-                    if ($("#contact-form").css('width') === contactFormWidth){
-                        animateHoverForm();
-                    }
-                });
-            }, loadingTime + 100)
         </script>
     {% endif %}
     {% if footer %}
@@ -683,16 +758,5 @@
         });
     </script>
     {% endif %}
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
-    <script>
-        {# For Google Fonts #}
-        WebFont.load({
-            google: {
-                families: ['Hammersmith+One']
-            }
-        });
-        {#------------------#}
-    </script>
-    {% block additional %}{% endblock additional %}
 </body>
 </html>
