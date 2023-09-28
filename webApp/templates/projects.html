@@ -6,11 +6,11 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400&display=swap" rel="stylesheet">
 {% endblock head %}
 {% block content %}
-    <div class="image-cover">
-        <img draggable="false" class="project-cover" src="{% static 'Media/projects_cover.webp' %}">
+    <div class="image-cover2">
+        <img draggable="false" class="projects-cover" src="{% static 'Media/projects_cover.webp' %}">
     </div>
-    <div class="container title-container">
-        <h3 id="title">Projects Page</h3>
+    <div class="container projects-title-container">
+        <h3 class="projects-title">Projects Page</h3>
     </div>
     <div class="projects-main">
         <div class="criteria-notch-container">
@@ -69,7 +69,7 @@
                 {% for project in projects %}
                     <div id="zoomAnim{{ project.id }}" class="zoomAnim">
                         <div id="p{{ project.id }}" class="cta">
-                            <img draggable="false" id="p_img{{ project.id }}" class="p_img" src="/{{ project.img }}" alt="">
+                            <img draggable="false" id="p_img{{ project.id }}" class="p_img" src="{{ project.img }}" alt="">
                             <div class="p_body">
                                 <h2 class="p_title">{{ project.name }}</h2>
                                 <p class="p_desc">{{ project.desc }}</p>
@@ -84,7 +84,7 @@
 {% endblock content %}
 {% block additional %}
     <script>
-        $(document).ready(function () {
+        function projects_script(){
             var projects = [], totalProjects = 0.0;
             {%for i in projects %}
             projects.push({
@@ -101,7 +101,7 @@
             let factor = 80;
             for (let x = 1; x <= totalProjects; x++) {
                 $("#p" + projects[x - 1]['id']).on('click', function () {
-                    window.open("/project_view/" + projects[x - 1]['id']);
+                    window.open("/project_view/" + projects[x - 1]['id'], '_self');
                 })
                 if (!$("#zoomAnim" + projects[x - 1]['id']).hasClass("zoom-animate") && x <= 6) {
                     $("#zoomAnim" + projects[x - 1]['id']).show();
@@ -269,7 +269,7 @@
                     $(".project-container").append(
                         "<div id=\"zoomAnim" + dict[x - 1]['id'] + "\"class=\"zoomAnim\">" +
                         "<div id=\"p" + dict[x - 1]['id'] + "\"class=\"cta\">" +
-                        "<img id=\"p_img" + dict[x - 1]['id'] + "\"class=\"p_img\" src=\"/" + dict[x - 1]['img'] + "\">" +
+                        "<img id=\"p_img" + dict[x - 1]['id'] + "\"class=\"p_img\" src=\"" + dict[x - 1]['img'] + "\">" +
                         "<div class=\"p_body\">" +
                         "<h2 class=\"p_title\">" + dict[x - 1]['name'] + "</h2>" +
                         "<p class=\"p_desc\">" + dict[x - 1]['desc'] + "</p></div></div></div>")
@@ -356,6 +356,6 @@
                     }
                 }
             })
-        });
+        }
     </script>
 {% endblock additional %}

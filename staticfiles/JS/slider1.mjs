@@ -31,7 +31,7 @@ import {S as e, A as r, N as s, P as t} from "./slider2.mjs";
         fetch(e.href, r)
     }
 }();
-new e(".swiper",{
+const swiper = new e(".swiper",{
     modules: [r, s, t, function({swiper: e, on: r}) {
         r("beforeInit", (()=>{
                 if ("carousel" !== e.params.effect)
@@ -99,4 +99,16 @@ new e(".swiper",{
         delay: 3000,
         reverseDirection: true
     }
+});
+function autoScrollSlider() {
+            // Trigger the next slide
+    swiper.slidePrev();
+}
+
+// Set an interval to auto-scroll the slider every 5 seconds (adjust the time interval as needed)
+let autoScrollInterval = setInterval(autoScrollSlider, 5000);
+
+// Pause the auto-scrolling when the user interacts with the slider
+swiper.on('click', function (event) {
+    clearInterval(autoScrollInterval);
 });

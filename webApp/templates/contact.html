@@ -8,15 +8,15 @@
     <section>
         <div class="flex-column d-flex justify-content-center align-items-center">
             <img draggable="false" class="contact-img" src="{% static 'Media/contact_cover.webp' %}">
-            <div class="container title-container">
-                <h3 id="title">Contact Us</h3>
+            <div class="container contact-us-container">
+                <h3 class="contact-us-title">Contact Us</h3>
             </div>
         </div>
         <section class="contact-section">
             <div class="contact-section-div">
                 <h2 class="contact-title">Get in Touch</h2>
                 <div class="container container-edited">
-                    <div class="row">
+                    <div class="row contact-row">
                         <div class="col-sm-7">
                             <iframe id="googleMap" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d215.80061287682278!2d31.3452604!3d30.0709858!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e0dcbed46cb%3A0x2bb80af243931486!2z2YXZiNiv2LHZhiDZg9mI2YbZg9ix2YrYqiDZhNmE2YXZgtin2YjZhNin2Ko!5e0!3m2!1sen!2seg!4v1694284860364!5m2!1sen!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
@@ -31,9 +31,10 @@
                                 <br>
                                 <b>Fax:</b> <span class="details">0223052416</span>
                                 <br>
-                                <b>Email:</b> <span class="details">info@elnahass.com</span>
+                                <b>Email:</b> <span class="details">info@elnahass-sonsgroup.com</span>
                             </p>
                         </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -50,7 +51,7 @@
                 const animateStart = windowHeight * 0.3;
 
                 // Check each element to see if it should be animated
-                $(".contact-title, #googleMap, .sec2").each(function () {
+                $(".contact-title, #googleMap, .contact-row").each(function () {
                     const elementOffset = $(this).offset().top;
 
                     if (elementOffset < scrollPosition + windowHeight - animateStart) {

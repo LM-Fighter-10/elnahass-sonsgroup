@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.contrib.admin.models import *
 from django.db.models import *
 from .models import *
+from webApp import views
 
 
 @receiver(post_save, sender=Project)

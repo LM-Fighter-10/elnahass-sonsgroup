@@ -7,7 +7,7 @@
     <title>Elnahass Sons Group</title>
     <!-- Bootstrap CSS -->
 
-    <link rel="stylesheet" href="{% static '/bootstrap-4.5.3-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.5.3-dist/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'bootstrap-3.3.5-dist/css/bootstrap.min.css' %}">
 
     <!-- Font Awesome -->
@@ -26,13 +26,18 @@
     {% if nav %}
         <nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top bg-transparent" style="position: absolute;">
             <div id="nav" class="container">
-                <a href="{% url 'homePage' %}"><img draggable="false" src="{% static 'Media/logo.webp' %}" width="80"/></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav" style="flex-grow: 0;width: inherit;">
-                    <div id="nav-tabs" class="container" style="width: max-content">
-                        <ul class="navbar-nav ml-auto" id="nav-list" style="font-size: larger">
+                <a href="{% url 'homePage' %}"><img draggable="false" class="nav-logo-img" src="{% static 'Media/logo.webp' %}" width="80"/></a>
+                <div class="background">
+                  <button type="button" class="navbar-toggler menu__icon" data-toggle="collapse" data-target="#navbarNav"
+                          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </button>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div id="nav-tabs" class="container">
+                        <ul class="navbar-nav ml-auto mr-auto" id="nav-list" style="font-size: larger">
                             {% if request.user.is_superuser %}
                                 <li class="nav-item">
                                     <a target="_blank" draggable="false" id="navbtn" class="nav-link" href="/admin/">Admin</a>
@@ -47,7 +52,7 @@
                             <li class="nav-item">
                                 <a draggable="false" id="navbtn" class="nav-link" href="{% url 'contactPage' %}">Contact</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" id="join-button-li">
                                 <a draggable="false" id="join-btn" class="nav-link">Join Us
                                     <i id="arrow"  class="fa-solid fa-arrow-right fa-sm arrow-icon"></i>
                                 </a>
@@ -56,7 +61,7 @@
                     </div>
                 </div>
             </div>
-        </nav>
+
         <form autocomplete="off" id="contact-form" method="POST" action="{% url 'sendPage' %}">
             <div id="contact-bdy">
                 <div class="loader" id="loading">
@@ -107,57 +112,52 @@
                 </div>
             </div>
         </form>
+        </nav>
     {% endif %}
 {% block content %}{% endblock content %}
     {% if footer %}
     <footer id="footer-sec" class="footer-distributed">
-        <div class="container">
+        <div class="container footer-container">
             <div class="footer-center">
-
-                <div>
+                <div class="location">
                     <a href="https://goo.gl/maps/gmeL1TZerMb9RJ8e6" target="_blank">
-                        <i id="loc-ico" class="fa-solid fa-location-dot"></i>
+                        <i id="loc-ico" class="fa-solid fa-location-dot footer-icon"></i>
                     </a>
                     <p><span>18 Omaraat Emdaad wy Tamween</span> Makram-Ebid Ext, Nasr City, Cairo, Egypt</p>
                 </div>
-
-                <div>
+                <div class="telephone">
                     <a href="tel:+201000026223" target="_blank">
-                        <i id="phone-ico" class="fa-solid fa-phone fa-2xs"></i>
+                        <i id="phone-ico" class="fa-solid fa-phone fa-2xs footer-icon"></i>
                     </a>
                     <p>+201000026223</p>
                 </div>
-
-                <div>
-                    <a href="mailto:info@elnahass.com" target="_blank">
-                        <i id="mail-ico" style="font-size: 20px;" class="fa fa-envelope"></i>
+                <div class="mail">
+                    <a href="mailto:info@elnahass-sonsgroup.com" target="_blank">
+                        <i id="mail-ico" style="font-size: 20px;" class="fa fa-envelope footer-icon"></i>
                     </a>
-                    <p>info@elnahass.com</p>
+                    <p>info@elnahass-sonsgroup.com</p>
                 </div>
-
             </div>
-            <div class="footer-right" style="margin-left: 44%;">
-
+            <div class="footer-right">
                 <p class="footer-company-about">
                     <span style="font-size: 16px">About the company</span>
-                <div id="footer-about">Elnahass Sons Group: A top player in Construction,
-                    Mechanical & Computer Projects. Committed to excellence, innovation, and client satisfaction.</div>
                 </p>
-
+                <div id="footer-about">Elnahass Sons Group: A top player in Construction,
+                    Mechanical & Computer Projects. Committed to excellence, innovation, and client satisfaction.
+                </div>
                 <div class="footer-icons">
-                    <div class="container" style="width: max-content;margin-left: 30px;">
+                    <div class="container">
                         <a href="#">
-                            <i id="fa-ico" class="fab fa-facebook-f"></i>
+                            <i id="fa-ico" class="fab fa-facebook-f footer-icon"></i>
                         </a>
                         <a href="https://wa.me/+201000026223" target="_blank" style="margin-left: 20px">
                             <i id="what-ico" style="display: inline-table; font-size: 30px"
-                               class="fa-brands fa-whatsapp fa-lg"></i>
+                               class="fa-brands fa-whatsapp fa-lg footer-icon"></i>
                         </a>
                     </div>
                 </div>
-
             </div>
-            <div><p id="copyRights">All rights reserved © Elnahass Sons Group 2023</p></div>
+            <div class="all-rights"><p id="copyRights">All rights reserved © Elnahass Sons Group</p></div>
         </div>
     </footer>
     {% endif %}
@@ -169,10 +169,12 @@
     <script>
         // {#---- For Loading Screen Delay ----#}
         function resetSlider(){
-            $(".swiper").hide();
             setTimeout(function () {
-                $(".swiper").show();
-            }, 200)
+                $(".swiper-button-next").trigger('click');
+                setTimeout(function () {
+                    $(".swiper-button-prev").trigger('click')
+                }, 10)
+            }, 100)
         }
         // {#----------------------------------#}
     </script>
@@ -181,6 +183,13 @@
     {% block additional %}{% endblock additional %}
     {% if nav %}
         <script>
+            const today = new Date()
+            $("#copyRights").text("All rights reserved © Elnahass Sons Group " + today.getFullYear());
+            $(".menu__icon").on('click', function (){
+                $(this).find("span:nth-child(1)").toggleClass('firstSpan-animation')
+                $(this).find("span:nth-child(2)").toggleClass('secondSpan-animation')
+                $(this).find("span:nth-child(3)").toggleClass('thirdSpan-animation')
+            })
             var startTime = 0, lastTime = 0;
             startTime = performance.now();
             $(".spinner").css({
@@ -193,6 +202,13 @@
                         return false;
                     }
                 }
+                {% if page == "Project View" %}
+                    $(".swiper-carousel-animate-opacity").find('img').each(function () {
+                        if (!$(this).complete){
+                            return false
+                        }
+                    })
+                {% endif %}
                 return true;
             }
             var images = document.querySelectorAll('img')
@@ -211,9 +227,18 @@
                             {% endif %}
 
                             {% if page == "Project View" %}
+                                pView_script();
                                 setTimeout(function () {
                                     resetSlider();
                                 }, 200)
+                            {% endif %}
+
+                            {% if page == "home" %}
+                                home_script();
+                            {% endif %}
+
+                            {% if page == "Projects" %}
+                                projects_script()
                             {% endif %}
                         }, 2000 - (lastTime - startTime))
                     }else{
@@ -225,15 +250,25 @@
                         {% if page == "contact" %}
                             contact_script()
                         {% endif %}
+
                         {% if page == "Project View" %}
+                            pView_script();
                             setTimeout(function () {
                                 resetSlider();
                             }, 200)
                         {% endif %}
+
+                        {% if page == "home" %}
+                                home_script();
+                        {% endif %}
+
+                        {% if page == "Projects" %}
+                            projects_script()
+                        {% endif %}
                     }
                 } else {
                     // Wait and check again in 100 milliseconds
-                    setTimeout(checkImages, 100);
+                    setTimeout(checkImages, 50);
                 }
             }
             checkImages();
@@ -652,19 +687,19 @@
                         const contactForm = $("#contact-form");
                         if (contactForm.width() > 10 && !html) {
                             contactForm.animate({
-                                width: "2%" // Shrinking the form
+                                width: "0" // Shrinking the form
                             }, 400);
                             contactForm.hide(250);
                             $("#contact-bdy").hide(300);
                         } else if (html && contactForm.width() > 10) {
                             contactForm.animate({
-                                width: "2%" // Shrinking the form
+                                width: "0" // Shrinking the form
                             }, 400);
                             contactForm.hide(250);
                             $("#contact-bdy").hide(300);
                         } else if (!html) {
                             contactForm.animate({
-                                width: "28%" // Expanding the form
+                                width: "420px" // Expanding the form
                             }, 280);
                             contactForm.show(200);
                             $("#contact-bdy").show(200);

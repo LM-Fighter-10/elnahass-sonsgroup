@@ -10,12 +10,13 @@
     <div class="image-cover">
         {% for i in project.images.all %}
             {% if i.thumbnail %}
-                <img draggable="false" class="project-cover" src="/{{ i.url }}">
+                <img draggable="false" class="project-cover" src="{{ i.url }}">
             {% endif %}
         {% endfor %}
-    </div>
-    <div class="container title-container">
-        <h3 id="title">{{ project.name }}</h3>
+        <div class="overlay"></div>
+        <div class="container pView-title-container">
+            <h3 class="pView-title">{{ project.name }}</h3>
+        </div>
     </div>
     <div class="main-img">
             <div class="container p-container">
@@ -62,42 +63,42 @@
                     <div class="swiper-wrapper" style="cursor: grab; transition-duration: 0ms; transform: translate3d(-770.477px, 0px, 0px);">
                         <div class="swiper-slide swiper-slide-visible swiper-slide-next" data-swiper-slide-index="0" style="transform: translateX(-50.0034%) scale(0.79999); z-index: 6; opacity: 1; transition-duration: 0ms;">
                             <div class="swiper-carousel-animate-opacity" style="opacity: 0.666649; transition-duration: 0ms;">
-                                <img src="{% static 'database/p2.jpg' %}">
+                                <img src="{% static 'database/p2.webp' %}">
                             </div>
                         </div>
                         <div class="swiper-slide" data-swiper-slide-index="1" style="transform: translateX(-130.007%) scale(0.599986); z-index: 5; opacity: 1; transition-duration: 0ms;">
                             <div class="swiper-carousel-animate-opacity" style="opacity: 0.33331; transition-duration: 0ms;">
-                                <img src="{% static 'database/p1.jpg' %}">
+                                <img src="{% static 'database/p1.webp' %}">
                             </div>
                         </div>
                         <div class="swiper-slide" data-swiper-slide-index="2" style="transform: translateX(-240.011%) scale(0.399983); z-index: 4; opacity: 0; transition-duration: 0ms;">
                             <div class="swiper-carousel-animate-opacity" style="opacity: -2.88467e-05; transition-duration: 0ms;">
-                                <img src="{% static 'database/p2.jpg' %}">
+                                <img src="{% static 'database/p2.webp' %}">
                             </div>
                         </div>
                         <div class="swiper-slide" data-swiper-slide-index="3" style="transform: translateX(-380.016%) scale(0.199979); z-index: 3; opacity: 0; transition-duration: 0ms;">
                             <div class="swiper-carousel-animate-opacity" style="opacity: -0.333368; transition-duration: 0ms;">
-                                <img src="{% static 'database/p1.jpg' %}">
+                                <img src="{% static 'database/p1.webp' %}">
                             </div>
                         </div>
                         <div class="swiper-slide" data-swiper-slide-index="4" style="transform: translateX(130%) scale(0.6); z-index: 5; opacity: 1; transition-duration: 0ms;">
                             <div class="swiper-carousel-animate-opacity" style="opacity: 0.333333; transition-duration: 0ms;">
-                                <img src="{% static 'database/p1.jpg' %}">
+                                <img src="{% static 'database/p1.webp' %}">
                             </div>
                         </div>
                         <div class="swiper-slide swiper-slide-visible swiper-slide-prev" data-swiper-slide-index="5" style="transform: translateX(49.9991%) scale(0.800003); z-index: 6; opacity: 1; transition-duration: 0ms;">
                             <div class="swiper-carousel-animate-opacity" style="opacity: 0.666672; transition-duration: 0ms;">
-                                <img src="{% static 'database/p2.jpg' %}">
+                                <img src="{% static 'database/p2.webp' %}">
                             </div>
                         </div>
                         <div class="swiper-slide swiper-slide-visible swiper-slide-active" data-swiper-slide-index="6" style="transform: translateX(-0.0017308%) scale(0.999993); z-index: 7; opacity: 1; transition-duration: 0ms;">
                             <div class="swiper-carousel-animate-opacity" style="opacity: 0.999988; transition-duration: 0ms;">
-                                <img src="{% static 'database/p1.jpg' %}">
+                                <img src="{% static 'database/p1.webp' %}">
                             </div>
                         </div>
                         <div class="swiper-slide swiper-slide-visible swiper-slide-active" data-swiper-slide-index="7" style="transform: translateX(-0.0017308%) scale(0.999993); z-index: 7; opacity: 1; transition-duration: 0ms;">
                             <div class="swiper-carousel-animate-opacity" style="opacity: 0.999988; transition-duration: 0ms;">
-                                <img src="{% static 'database/p1.jpg' %}">
+                                <img src="{% static 'database/p1.webp' %}">
                             </div>
                         </div>
                     </div>
@@ -110,7 +111,7 @@
 {% block additional %}
     <script type="module" src="{% static 'JS/slider1.mjs' %}"></script>
     <script type='text/javascript'>
-        $(document).ready(function(){
+        function pView_script() {
             let x = 0;
             const desc = "{{ project.description }}";
             $(".p-desc").empty();
@@ -136,38 +137,38 @@
                         (parseInt("{{ i.get_Image_num }}")-1).toString() + "\" " +
                         "style=\"transform: translateX(-50.0034%) scale(0.79999); z-index: 6; opacity: 1; transition-duration: 0ms;\">" +
                         "<div class=\"swiper-carousel-animate-opacity\" style=\"opacity: 0.666649; transition-duration: 0ms;\">" +
-                        "<img src=/" + "{{ i.url }}" + "></div></div>"
+                        "<img src=" + "{{ i.url }}" + "></div></div>"
                     )
-                    // {# Test Data #}
-                    sliderList.push(
-                        "<div class=\"swiper-slide swiper-slide-visible swiper-slide-next\" data-swiper-slide-index=\"" +
-                        (parseInt("{{ i.get_Image_num }}")).toString() + "\" " +
-                        "style=\"transform: translateX(-50.0034%) scale(0.79999); z-index: 6; opacity: 1; transition-duration: 0ms;\">" +
-                        "<div class=\"swiper-carousel-animate-opacity\" style=\"opacity: 0.666649; transition-duration: 0ms;\">" +
-                        "<img src=/" + "{{ i.url }}" + "></div></div>"
-                    )
-                    sliderList.push(
-                        "<div class=\"swiper-slide swiper-slide-visible swiper-slide-next\" data-swiper-slide-index=\"" +
-                        (parseInt("{{ i.get_Image_num }}")+1).toString() + "\" " +
-                        "style=\"transform: translateX(-50.0034%) scale(0.79999); z-index: 6; opacity: 1; transition-duration: 0ms;\">" +
-                        "<div class=\"swiper-carousel-animate-opacity\" style=\"opacity: 0.666649; transition-duration: 0ms;\">" +
-                        "<img src=/" + "{{ i.url }}" + "></div></div>"
-                    )
-                    sliderList.push(
-                        "<div class=\"swiper-slide swiper-slide-visible swiper-slide-next\" data-swiper-slide-index=\"" +
-                        (parseInt("{{ i.get_Image_num }}")+2).toString() + "\" " +
-                        "style=\"transform: translateX(-50.0034%) scale(0.79999); z-index: 6; opacity: 1; transition-duration: 0ms;\">" +
-                        "<div class=\"swiper-carousel-animate-opacity\" style=\"opacity: 0.666649; transition-duration: 0ms;\">" +
-                        "<img src=/" + "{{ i.url }}" + "></div></div>"
-                    )
-                    sliderList.push(
-                        "<div class=\"swiper-slide swiper-slide-visible swiper-slide-next\" data-swiper-slide-index=\"" +
-                        (parseInt("{{ i.get_Image_num }}")+3).toString() + "\" " +
-                        "style=\"transform: translateX(-50.0034%) scale(0.79999); z-index: 6; opacity: 1; transition-duration: 0ms;\">" +
-                        "<div class=\"swiper-carousel-animate-opacity\" style=\"opacity: 0.666649; transition-duration: 0ms;\">" +
-                        "<img src=/" + "{{ i.url }}" + "></div></div>"
-                    )
-                    // {#-----------#}
+                    // // {# Test Data #}
+                    // sliderList.push(
+                    //     "<div class=\"swiper-slide swiper-slide-visible swiper-slide-next\" data-swiper-slide-index=\"" +
+                    //     (parseInt("{{ i.get_Image_num }}")).toString() + "\" " +
+                    //     "style=\"transform: translateX(-50.0034%) scale(0.79999); z-index: 6; opacity: 1; transition-duration: 0ms;\">" +
+                    //     "<div class=\"swiper-carousel-animate-opacity\" style=\"opacity: 0.666649; transition-duration: 0ms;\">" +
+                    //     "<img src=" + "{{ i.url }}" + "></div></div>"
+                    // )
+                    // sliderList.push(
+                    //     "<div class=\"swiper-slide swiper-slide-visible swiper-slide-next\" data-swiper-slide-index=\"" +
+                    //     (parseInt("{{ i.get_Image_num }}")+1).toString() + "\" " +
+                    //     "style=\"transform: translateX(-50.0034%) scale(0.79999); z-index: 6; opacity: 1; transition-duration: 0ms;\">" +
+                    //     "<div class=\"swiper-carousel-animate-opacity\" style=\"opacity: 0.666649; transition-duration: 0ms;\">" +
+                    //     "<img src=" + "{{ i.url }}" + "></div></div>"
+                    // )
+                    // sliderList.push(
+                    //     "<div class=\"swiper-slide swiper-slide-visible swiper-slide-next\" data-swiper-slide-index=\"" +
+                    //     (parseInt("{{ i.get_Image_num }}")+2).toString() + "\" " +
+                    //     "style=\"transform: translateX(-50.0034%) scale(0.79999); z-index: 6; opacity: 1; transition-duration: 0ms;\">" +
+                    //     "<div class=\"swiper-carousel-animate-opacity\" style=\"opacity: 0.666649; transition-duration: 0ms;\">" +
+                    //     "<img src=" + "{{ i.url }}" + "></div></div>"
+                    // )
+                    // sliderList.push(
+                    //     "<div class=\"swiper-slide swiper-slide-visible swiper-slide-next\" data-swiper-slide-index=\"" +
+                    //     (parseInt("{{ i.get_Image_num }}")+3).toString() + "\" " +
+                    //     "style=\"transform: translateX(-50.0034%) scale(0.79999); z-index: 6; opacity: 1; transition-duration: 0ms;\">" +
+                    //     "<div class=\"swiper-carousel-animate-opacity\" style=\"opacity: 0.666649; transition-duration: 0ms;\">" +
+                    //     "<img src=" + "{{ i.url }}" + "></div></div>"
+                    // )
+                    // // {#-----------#}
                 {% endfor %}
             function sortWithMiddleFirst(arr) {
                 // Ensure the array has at least one element
@@ -192,6 +193,6 @@
             for (let i = 0; i < sortedList.length; i++) {
                 $(".swiper-wrapper").append(sortedList[i]);
             }
-        });
+        }
     </script>
 {% endblock additional %}

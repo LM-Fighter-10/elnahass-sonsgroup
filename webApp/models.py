@@ -2,6 +2,11 @@ from django.contrib.admin.models import *
 from django.db import models
 
 
+def correctImagePath(obj):
+    obj.url = str(obj.url).replace('elnahass-sonsgroup', '').replace('staticfiles', 'static')
+    obj.save()
+
+
 class Client(models.Model):
     my_projects = models.ManyToManyField('Project', related_name='projects', blank=True, editable=False)
     name = models.CharField(max_length=50)
@@ -47,6 +52,15 @@ class Project(models.Model):
                 self.project_id = 1
         super().save(*args, **kwargs)  # Save the project first
 
+
+    def hasThumbnail(self):
+        for i in self.images.all():
+            if i.thumbnail:
+                return True
+
+        return False
+
+
     class Meta:
         ordering = ['project_id']
 
@@ -68,8 +82,9 @@ class Image(models.Model):
         project_name = self.projects.first().name if self.projects.exists() else 'No Project'
         if not self.projects.first() is None:
             if self.projects.first().get_img_index(self) == 1:
-                self.thumbnail = True
-                self.save()
+                if not self.projects.first().hasThumbnail():
+                    self.thumbnail = True
+                    self.save()
             image_number = self.projects.first().get_img_index(self)
             return f"{project_name} ({image_number})"
         else:
@@ -84,6 +99,7 @@ class Image(models.Model):
 
     def __str__(self):
         LogEntry.objects.all().delete()
+        correctImagePath(self)
         return self.Image_name
 
 

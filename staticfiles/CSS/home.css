@@ -8,20 +8,67 @@ body {
 .lead{
     user-select: text!important;
 }
-.tcb-bs-fullscreen{
-    height: 100vh;
-}
+ /*### Nav Button CSS ###*/
+    .menu__icon {
+        outline: none !important;
+        border: none;
+        background: none;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        font-family: inherit;
+    }
+    .background {
+        border-radius: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .menu__icon {
+        cursor: pointer;
+        width: 32px;
+        height: 27px;
+        padding: 2px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .menu__icon span {
+        width: 100%;
+        height: 0.125rem;
+        border-radius: 0.125rem;
+        background-color: black;
+        box-shadow: 0 0 0 0.3px black;
+        transition: transform .4s, background-color .4s, opacity .4s;
+    }
+
+    .firstSpan-animation{
+        background-color: rgb(255, 59, 48);
+        transform: translateY(10px) rotate(-45deg);
+    }
+    .secondSpan-animation{
+        transform: translate(-50%);
+        opacity: 0;
+    }
+    .thirdSpan-animation{
+        background-color: rgb(255, 59, 48);
+        transform: translateY(-11px) rotate(45deg);
+    }
+ /*######################*/
 .carousel, .item, .active {
     height: 100%;
 }
 .carousel-inner {
-    height: 100%;
+    height: 100vh;
 }
 .project{
     margin: 40px -15px !important;
 }
 /******* Main Loader *******/
 .webPage{
+    overflow-x: hidden;
     background-color: white !important;
     opacity: 0;
 }
@@ -345,6 +392,7 @@ body {
     background-image: url("/static/Media/joinus-cover.webp");
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: top;
 }
 #contact-form2 {
     width: 100%;
@@ -497,11 +545,18 @@ input::placeholder {
 USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 *****************************/
 .item {
-    background-color: rgba(255, 255, 255, 0);
+    background-color: black;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     min-height: 360px;
+}
+.item-img{
+    position: initial !important;
+    padding: 0;
+    height: 100% !important;
+    width: 100%;
+    opacity: 0.6;
 }
 /*--------------End-Slider--------------*/
 
@@ -531,6 +586,12 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 
 #navbtn, #join-btn {
     color: #ff883d;
+}
+
+#navbtn{
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
 }
 
 /* Hamburger Icon Color */
@@ -645,6 +706,7 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 #nav:before, #nav:after{
     content: none !important;
 }
+
 #join-section, #footer, #join_sec{
     position: relative;
     z-index: 5;
@@ -655,7 +717,8 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 }
 
 #joinUs-title{
-    width: 40%;
+    width: fit-content;
+    padding: 0 30px;
     margin: auto auto 20px;
     color: white;
     background-color: #eb7e39;
@@ -738,7 +801,7 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     transition: height 0.2s ease-in-out;
 }
 
-.desc{
+.desc, .desc2{
     resize: none;
 }
 
@@ -769,14 +832,23 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     justify-content: center !important;
     align-items: center !important;
 }
-
+.order-md-1{
+    order: 1 !important;
+}
+.order-md-2{
+    order: 2 !important;
+}
 #welcome-box {
     text-align: center;
-    position: absolute;
-    top: 40%;
     background-color: #3a3a3aa3;
     border-radius: 50px;
     padding: 15px 60px;
+}
+
+.welcome-box-container{
+    position: absolute;
+    top: 350px;
+    z-index: 3;
 }
 
 #welcome {
@@ -786,13 +858,15 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     color: white;
 }
 
-#slider-pics{
-    position: fixed;
+#welcome-box>p{
+    font-size: 17px;
 }
 
 #nav-tabs {
+    width: max-content;
     background-color: #252525d9;
     border-radius: 50px;
+    background-size: auto 100%;
     margin-right: 0;
     transition: width 220ms;
 }
@@ -820,6 +894,7 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 }
 
 .footer-distributed{
+    overflow-x: hidden;
     position: relative;
     z-index: 5;
     background: #666;
@@ -829,6 +904,17 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     text-align: left;
     font: bold 16px sans-serif;
     padding: 30px 50px;
+}
+
+.footer-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    justify-content: center;
+}
+
+.all-rights{
+    grid-column: span 4;
 }
 
 .footer-left{
@@ -849,6 +935,10 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 .footer-distributed .footer-right{
     display: inline-block;
     vertical-align: top;
+}
+.footer-right{
+    grid-column: div 1;
+    width: 254px;
 }
 
 /* Footer left */
@@ -905,10 +995,6 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     transform: rotate(0);
 }
 
-.footer-distributed .footer-center{
-    width: 35%;
-}
-
 .footer-distributed .footer-center i{
     background-color:  #33383b;
     color: #ffffff;
@@ -920,6 +1006,10 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     line-height: 42px;
     margin: 10px 15px;
     vertical-align: middle;
+}
+
+.footer-center{
+    width: max-content;
 }
 
 .footer-distributed .footer-center i.fa-envelope{
@@ -938,7 +1028,7 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     display:block;
     font-weight: normal;
     font-size:14px;
-    line-height:2;
+    line-height:1;
 }
 
 .footer-distributed .footer-center p a{
@@ -960,11 +1050,11 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     content: none;
 }
 
-/* Footer Right */
-
-.footer-distributed .footer-right{
-    width: 20%;
+.footer-container:before{
+    content: none !important;
 }
+
+/* Footer Right */
 
 .footer-distributed .footer-company-about{
     line-height: 20px;
@@ -972,6 +1062,10 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     font-size: 13px;
     font-weight: normal;
     margin: 0;
+}
+
+.footer-company-about{
+    text-align: center;
 }
 
 .footer-distributed .footer-company-about span{
@@ -984,6 +1078,13 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 
 .footer-distributed .footer-icons{
     margin-top: 25px;
+}
+
+.footer-distributed .footer-icons .container{
+    display: flex;
+    align-items: center;
+    width: max-content;
+    gap: 10px;
 }
 
 .footer-distributed .footer-icons a{
@@ -1071,25 +1172,584 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 }
 /***********************/
 
-/* If you don't want the footer to be responsive, remove these media queries */
+/* Media Queries For Making Website Responsive */
 
-@media (max-width: 880px) {
-
-    .footer-distributed{
-        font: bold 14px sans-serif;
+@media (min-width: 1200px){
+    .welcome-box-container{
+        left: calc(50% - 1170px/2)!important;
     }
-
-    .footer-distributed .footer-left,
-    .footer-distributed .footer-center,
-    .footer-distributed .footer-right{
-        display: block;
+    .project-cover {
+        height: 130%;
+    }
+    .criteria-notch-container {
+        flex-direction: row !important;
+    }
+    .project-container {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+@media (min-width: 992px){
+    .welcome-box-container{
+        left: calc(50% - 970px/2);
+    }
+    .contact-us-container{
+        width: 85%;
+    }
+}
+@media (min-width: 768px) {
+    .work-body{
+        font-size: 2rem;
+    }
+    #section1-body {
+        width: 630px;
+        margin: 30px auto;
+    }
+    #section2-body{
+        width: 650px;
+    }
+}
+@media (min-width: 575px) {
+    .about-title-container{
+        width: 72%;
+        padding: 20px 40px 25px;
+    }
+}
+@media (max-width: 1200px){
+    .about-img{
+        height: 67vh;
+    }
+    .projects-title{
+        font-size: 6rem;
+    }
+    .projects-title-container{
+        width: max-content;
+        top: 36%;
+    }
+    .image-cover{
+        height: 65vh;
+    }
+}
+@media (max-width: 992px){
+    #nav-tabs{
         width: 100%;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
+        margin-top: 15px;
+    }
+    #join-button-li{
+        display: none;
+    }
+    .projects-img{
+        order: 1 !important;
+        height: 100% !important;
+    }
+    .projects-txt{
+        order: 2 !important;
+    }
+    .projects-sections{
+        max-width: 630px !important;
+    }
+    .col-md-6 {
+        max-width: 1500px !important;
+    }
+    .row-edited {
+        margin: 25px -15px 0;
+    }
+    .welcome-box-container{
+        left: calc(50% - 750px/2);
+    }
+    #welcome-box > h1{
+        font-size: 50px;
+    }
+    #welcome-box>p{
+        font-size: 15px;
+    }
+    .join-sentence{
+        padding: 0 40px !important;
+    }
+    .contact-row{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    .contact-row .col-sm-5{
+        width: 100%;
+        max-width: 490px;
+    }
+    .contact-row .col-sm-7{
+        width: 100%;
+        max-width: none;
+    }
+    .contact-img{
+        height: 50vh;
+    }
+    .about-img{
+        height: 48vh;
+    }
+    .about-title{
+        font-size: 5rem !important;
+    }
+    .pView-title-container{
+        width: max-content;
+        padding: 15px 50px 25px;
+    }
+    .pView-title{
+        font-size: 5.2rem !important;
+        margin: 0 !important;
+    }
+    .image-cover2{
+        height: 60vh;
+    }
+    .projects-title {
+        font-size: 5rem;
+    }
+}
+@media (max-width: 768px) {
+    .nav-logo-img{
+        width: 68px !important;
+    }
+    #welcome-box > h1{
+        font-size: 38px;
+    }
+    #welcome-box>p{
+        font-size: 12px;
+    }
+    .form-row2 {
+        width: auto;
+    }
+    .welcome-box-container{
+        left: calc(50% - 560px/2);
+        top: 240px;
+    }
+    .carousel-inner {
+        height: 85vh;
+    }
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 0;
+        row-gap: 30px;
+    }
+    .footer-right {
+        display: grid !important;
+        grid-column: 1;
+        width: fit-content;
+    }
+    .footer-center{
+        display: grid !important;
+        text-align: center;
+        grid-template-columns: 1fr 1fr 1fr;
+        width: fit-content;
+    }
+    .footer-center > .location, .telephone, .mail{
+        display: grid;
+        margin-left: auto;
+        margin-right: auto;
+        grid-template-columns: 2fr;
+        width: fit-content;
+    }
+    .footer-center > .location, .location  p  span{
+        font-size: 11px !important;
+    }
+    .telephone p, .mail p{
+        font-size: 14px;
+    }
+    .footer-company-about span{
+        margin-bottom: 10px !important;
+    }
+    #footer-about{
         text-align: center;
     }
-
-    .footer-distributed .footer-center i{
-        margin-left: 0;
+    .footer-icons{
+        margin-top: 25px !important;
     }
-
+    .footer-icons .container{
+        margin-left: auto !important;
+    }
+    .all-rights{
+        display: grid !important;
+    }
+    #copyRights{
+        font-size: 12px;
+    }
+    .footer-container:after {
+        content: none !important;
+    }
+    .contact-img{
+        height: 40vh;
+    }
+    .contact-us-title{
+        font-size: 45px !important;
+    }
+    .contact-us-container{
+        max-width: 490px;
+    }
+    .contact-title{
+        font-size: 3.2rem;
+    }
+    .work-title {
+        font-size: 3rem;
+    }
+    .work-subtitle{
+        font-size: 2rem;
+    }
+    .work-body{
+        font-size: 1.6rem;
+    }
+    #section1-body{
+        margin: 30px auto;
+    }
+    .work-section{
+        margin-top: 35px;
+    }
+    .work-section1{
+        margin-top: 0;
+    }
+    .work-data-layout-row-div {
+        min-height: auto;
+    }
+    .pView-title-container{
+        top: 30%;
+    }
+    .pView-title{
+        font-size: 4.1rem !important;
+    }
+    .image-cover {
+        height: 45vh;
+    }
+    .p-detail-title{
+        font-size: 1.5rem;
+    }
+    .p-detail-description {
+        font-size: 1.3rem;
+    }
+    .image-cover2{
+        height: 76vw;
+    }
+    .projects-title-container {
+        top: 26%;
+    }
+    .projects-title {
+        font-size: 4.5rem;
+    }
+    .image-cover2{
+        height: 45vh;
+    }
+    .cta{
+        height: 320px;
+        width: 450px;
+    }
+}
+@media (max-width: 575px) {
+    #welcome-box > h1{
+        font-size: 32px;
+    }
+    #welcome-box>p{
+        font-size: 11px;
+    }
+    .welcome-box-container{
+        left: 0;
+    }
+    .carousel-inner {
+        height: 68vh;
+    }
+    #joinUs-title, #projects-title{
+        font-size: 35px;
+    }
+    .project-title{
+        font-size: 3.5rem;
+    }
+    .contact-img{
+        height: 36vh;
+    }
+    .contact-us-title{
+        font-size: 30px !important;
+    }
+    .contact-us-container{
+        max-width: 380px;
+        margin-top: 35px;
+        padding: 10px 60px 15px;
+    }
+    .contact-title{
+        font-size: 2.8rem;
+    }
+    .about-title{
+        font-size: 4.5rem !important;
+    }
+    .about-img{
+        height: 40vh;
+    }
+    .work-data-layout-row-container-num {
+        font-size: 3.5rem;
+    }
+    .work-title{
+        font-size: 2.5rem;
+    }
+    .image-cover {
+        height: 42vh;
+    }
+    .pView-title-container{
+        top: 25%;
+    }
+    .pView-title{
+        font-size: 3.3rem !important;
+    }
+    /*.image-cover2{*/
+    /*    height: 42vh;*/
+    /*}*/
+    .project-cover {
+        height: 111%;
+    }
+    .p-arabic-container .p-title{
+        font-size: 4rem;
+    }
+    .p-desc .text-lines{
+        font-size: 1.6rem;
+    }
+    .projects-title-container{
+        padding: 15px 45px 20px;
+        top: 22%;
+    }
+    .projects-title {
+        font-size: 3.2rem;
+    }
+    .image-cover2 {
+        height: 35vh;
+    }
+    .criteria-card{
+        width: 200px;
+    }
+    .criteria-card p{
+        font-size: 1.8rem;
+    }
+    .sortby{
+        font-size: 1.7rem;
+    }
+    #criteria-selected{
+        font-size: 1.6rem;
+    }
+}
+@media (max-width: 516px) {
+    .footer-icon{
+        font-size: 18px;
+        width: 40px;
+        height: 40px;
+    }
+    .footer-center > .location, .location  p  span{
+        font-size: 11px !important;
+    }
+    .telephone p, .mail p{
+        font-size: 12px;
+    }
+    #phone-ico, #mail-ico, #loc-ico{
+        margin-top: 0;
+    }
+    .contact-row.col-sm-5{
+        max-width: 350px;
+    }
+    .contact-row .col-sm-7 iframe{
+        border-radius: 0 !important;
+    }
+    .about-title{
+        font-size: 4rem !important;
+    }
+    .about-img{
+        height: 35vh;
+    }
+    .work-body{
+        font-size: 1.2rem;
+    }
+    .work-subtitle{
+        font-size: 1.8rem;
+    }
+    .work-title{
+        font-size: 2.2rem;
+    }
+    .pView-title-container{
+        top: 20%;
+    }
+    .pView-title{
+        font-size: 2.3rem !important;
+    }
+    .image-cover {
+        height: 35vh;
+    }
+    .p-arabic-container .p-title{
+        font-size: 3.3rem;
+    }
+    .p-desc .text-lines{
+        font-size: 1.3rem;
+    }
+    .cta {
+        height: 258px;
+        width: 400px;
+    }
+    .p_body {
+        bottom: -60%;
+    }
+}
+@media (max-width: 445px) {
+    #footer-sec{
+        padding: 30px 15px;
+    }
+    #welcome-box > h1{
+        font-size: 24px;
+    }
+    #welcome-box>p{
+        font-size: 9px;
+    }
+    .welcome-box-container{
+        top: 130px;
+    }
+    .carousel-inner {
+        height: 58vh;
+    }
+    .project-title{
+        font-size: 3rem;
+    }
+    #joinUs-title, #projects-title{
+        font-size: 25px;
+    }
+    .join-sentence, .project-desc{
+        font-size: 14px;
+    }
+    .detailsbtn {
+        font-size: 13px;
+    }
+    .joinus-btn{
+        font-size: 14px;
+    }
+    #contact-title2{
+        font-size: 40px;
+    }
+    .phoneLable2, .nameLable2, .emailLable2, .descLable2{
+        font-size: 11px;
+    }
+    .footer-center{
+        grid-template-rows: 1fr 1fr 1fr;
+        text-align: left;
+    }
+    .location{
+        grid-column: span 2;
+    }
+    .telephone{
+        grid-column: span 3;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr !important;
+    }
+    .telephone p{
+        width: auto !important;
+    }
+    .footer-center > .location, .telephone, .mail{
+        grid-template-columns: 1fr 1fr 1fr;
+        width: 100%;
+    }
+    .location a{
+        width: fit-content;
+    }
+    .location p, .telephone p, .mail p{
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        width: 229px;
+        margin: auto;
+        font-size: 12px;
+    }
+    .mail{
+        grid-template-columns: 1fr 1fr;
+    }
+    .mail p{
+        width: max-content;
+    }
+    .telephone p, .mail p{
+        font-size: 14px !important;
+    }
+    .location p span{
+        font-size: 11px;
+        line-height: 1.2;
+    }
+    #phone-ico, #mail-ico, #loc-ico {
+        margin: 10px 15px !important;
+    }
+    .contact-img{
+        height: 30vh;
+    }
+    .contact-row .col-sm-5{
+        max-width: 330px;
+    }
+    .contact-title{
+        font-size: 2.4rem;
+    }
+    .findUs{
+        font-size: 2.8rem;
+    }
+    .contact-body b{
+        font-size: 2rem;
+    }
+    .contact-body span{
+        font-size: 1.6rem;
+    }
+    .about-title {
+        font-size: 3rem !important;
+    }
+    .about-img {
+        height: 30vh;
+    }
+    .about-title-container{
+        margin-top: 20px;
+    }
+    .pView-title-container{
+        padding: 10px 50px 15px;
+    }
+    .pView-title{
+        font-size: 2rem !important;
+    }
+    .image-cover {
+        height: 32vh;
+    }
+    .project-cover {
+        height: 115%;
+    }
+    .p-arabic-container .p-title{
+        font-size: 3rem;
+    }
+    .p-desc .text-lines{
+        font-size: 1.1rem;
+    }
+    .projects-title {
+        font-size: 2.5rem;
+    }
+    .projects-cover {
+        height: 86vw;
+        width: 105vw;
+    }
+    .projects-title-container {
+        top: 21%;
+    }
+    .image-cover2 {
+        height: 33vh;
+    }
+    .criteria-card{
+        width: 225px;
+    }
+    .criteria-card p{
+        font-size: 1.8rem;
+    }
+    .p_body{
+        bottom: -58%;
+    }
+    .p_title{
+        font-size: 2.5rem;
+    }
+    .p_desc{
+        font-size: 1rem;
+    }
+    .cta {
+        height: 220px;
+        width: 325px;
+    }
+    .project-container {
+        margin: 40px 0;
+    }
+    .sort-criteria {
+        font-size: 13px;
+    }
 }

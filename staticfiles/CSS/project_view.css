@@ -23,21 +23,34 @@ body {
 
 .project-cover{
     opacity: 0.6;
-    position: fixed;
+    position: relative;
+    z-index: 4;
     width: 100%;
+    height: 108%;
 }
 
-#title{
+.overlay{
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+}
+
+.pView-title{
     text-align: center;
     margin-top: 20px;
     margin-bottom: 30px;
     font-size: 65px;
     font-weight: 900;
 }
-.title-container{
+.pView-title-container{
     position: absolute;
+    z-index: 5;
     color: white;
-    top: 45%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #3a3a3aa3;
@@ -45,7 +58,6 @@ body {
 }
 
 .image-cover{
-    background-color: black;
     height: 68vh;
 }
 .p-detail-wrapper{

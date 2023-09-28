@@ -149,3 +149,7 @@ def fetchCustomer(request):
         duplicated = False
     data = [{'duplicated': duplicated}]
     return JsonResponse({'customers': data})
+
+
+def handle404(request, exception):
+    return render(request, '404Page.html')

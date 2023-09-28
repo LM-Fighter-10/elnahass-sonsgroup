@@ -7,16 +7,17 @@
 #googleMap .place-card-large {
     display: none !important;
 }
-#title{
+.contact-us-title{
     text-align: center;
-    margin-top: 20px;
-    margin-bottom: 30px;
+    margin: 0;
     font-size: 65px;
     font-weight: 900;
 }
-.title-container{
+.contact-us-container{
     position: absolute;
     color: white;
+    padding: 20px 80px 25px;
+    width: auto;
     background-color: #3a3a3aa3;
     border-radius: 50px;
 }
@@ -35,7 +36,7 @@
     text-align: center;
     background: #eb7e39;
     border-radius: 50px;
-    width: 325px;
+    padding: 5px 30px;
     color: white;
     font-weight: bold;
     font-size: 40px;
@@ -70,7 +71,7 @@
 }
 .contact-title,
 #googleMap,
-.sec2{
+.contact-row{
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s, transform 0.5s ;

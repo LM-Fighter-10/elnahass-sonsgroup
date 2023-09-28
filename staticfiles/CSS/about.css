@@ -1,23 +1,23 @@
 .about-img{
     width: 100%;
 }
-#title{
+.about-title{
     text-align: center;
-    margin-top: 20px;
-    margin-bottom: 30px;
+    margin: 0;
     font-size: 65px;
     font-weight: 900;
 }
-.title-container{
+.about-title-container{
     position: absolute;
     color: white;
+    width: auto;
+    padding: 10px 40px 15px;
     background-color: #3a3a3aa3;
     border-radius: 50px;
 }
 .work-title{
     background: #eb7e39;
     border-radius: 50px;
-    width: 480px;
     color: white;
     font-weight: bold;
     font-size: 40px;
@@ -25,7 +25,6 @@
 }
 .work-title2{
     margin-top: 0;
-    width: 825px;
 }
 .work-subtitle{
     margin-top: 25px !important;
@@ -45,11 +44,11 @@
 }
 .work-body{
     font-size: 21px;
-    width: 740px;
+    width: 76%;
     margin: 40px auto;
 }
 .work-body2{
-    width: 762px;
+    width: 84%;
     margin-top: 10px;
     margin-bottom: 85px;
 }
@@ -68,8 +67,6 @@
 }
 .work-data-layout-row-div{
     flex: 0 0 25%;
-    max-width: 25%;
-    min-width: 25%;
     min-height: 263px;
     border: 10px solid transparent;
     position: relative;
@@ -79,6 +76,7 @@
     max-height: 100%;
 }
 .work-data-layout-row-container{
+    width: max-content;
     padding: 20px 30px;
     justify-content: center;
     display: flex;
@@ -95,6 +93,8 @@
     line-height: 1.1;
 }
 .work-data-layout-row-container-lable{
+    width: 100%;
+    text-align: center;
     text-transform: uppercase;
     font-size: 1.7rem;
     letter-spacing: 2px;
@@ -104,7 +104,7 @@
     margin-bottom: 5px;
 }
 #section1-title, #section2-title{
-    height: 52px;
+    padding: 5px 25px;
 }
 #section1-title,
 #section1-body,

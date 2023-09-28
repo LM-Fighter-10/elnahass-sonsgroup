@@ -5,18 +5,18 @@
 {% endblock head %}
 {% block content %}
 <!-- Welcome Box -->
-<div class="container">
-    <div id="welcome-box" class="container" style="z-index: 1">
-        <!-- Your home page content here -->
-        <h1 id="welcome" class="display-5">Elnahass Sons Group</h1>
-        <p style="margin-bottom: 5px; font-size: 17px; color: white">Empowering Progress with Expertise - Elnahass Sons Group</p>
-        <p style="font-size: 17px; color: white">Where Vision Meets Precision, Building Dreams and Redefining Success.</p>
-    </div>
-</div>
 
 <!-- Slider -->
 <div class="tcb-bs-fullscreen">
     <div id="carousel-example-generic" class="carousel slide carousel-bg">
+        <div class="container welcome-box-container">
+            <div id="welcome-box" class="container" style="z-index: 1">
+                <!-- Your home page content here -->
+                <h1 id="welcome" class="display-5">Elnahass Sons Group</h1>
+                <p style="margin-bottom: 5px; color: white">Empowering Progress with Expertise - Elnahass Sons Group</p>
+                <p style="color: white">Where Vision Meets Precision, Building Dreams and Redefining Success.</p>
+            </div>
+        </div>
         <!-- Indicators -->
         <ol class="carousel-indicators" id="nav-slider">
 
@@ -40,20 +40,20 @@
 
 <!-- Projects Section -->
 <section id="projects" class="bg-white py-3">
-    <div class="container">
+    <div class="container projects-section">
         <div class="container" id="projects-div-title" ><h1 id="projects-title" class="text-center">Our Work</h1></div>
         <!-- Projects Row -->
         {% for item in  items %}
             <div class="project row" id="p{{ item.project_id }}" >
                 {% for img in item.images.all %}
                     {% if img.thumbnail %}
-                        <div class="col-md-6" id="p{{ item.project_id }}-img">
+                        <div class="col-md-6 projects-img" id="p{{ item.project_id }}-img">
                             <img draggable="false" src="{{ img.url }}" alt="" class="project-img w-100" />
                         </div>
                     {% endif %}
                 {% endfor %}
                 <!-- /.col-md-6 -->
-                <div class="col-md-6" id="p{{ item.project_id }}-txt">
+                <div class="col-md-6 projects-txt" id="p{{ item.project_id }}-txt">
                     <div class="row row-edited align-items-center">
                         <div class="project-txt col">
                             <h1 class="display-3">{{ item.name }}</h1>
@@ -79,7 +79,7 @@
             <div id="join-section"  class="col-sm">
                 <h2 id="joinUs-title" class="display-4">Get Your Work Done!</h2>
                 <div class="row row-edited" id="joinUs-body">
-                    <p class="lead" style="text-align: center; width: 100%">Embark on a Journey of Excellence:
+                    <p class="lead join-sentence" style="text-align: center; width: 100%">Embark on a Journey of Excellence:
                         Let Elnahass Sons Group Build Your Dream Project</p>
                 </div>
                 <div class="row row-edited d-flex justify-content-center joinus-btn-div">
@@ -148,27 +148,24 @@
 
 {% block additional %}
 <script>
-        $(document).ready(function () {
+        function home_script() {
+            console.log($(window).width())
             let counter = 0;
             const onScrollArray = ["#projects-title", "#join-section", "#footer-sec", ".expand-form"], arr = [];
             {% for i in items %}
                 $("#showbtn{{ i.project_id }}").click(function () {
-                    window.open("/project_view/{{ i.project_id }}")
+                    window.open("/project_view/{{ i.project_id }}", '_self')
                 })
-                {% if i.isHome %}
                 {% for j in i.images.all %}
                     {% if j.thumbnail %}
                         arr.push("{{ j.url }}");
                     {% endif %}
                 {% endfor %}
                     if (counter%2 !== 0){
-                        $("#p{{ i.project_id }}-img").addClass('order-md-6');
+                        $("#p{{ i.project_id }}-img").addClass('order-md-2');
                         $("#p{{ i.project_id }}-txt").addClass('order-md-1');
                     }
-                    if (counter === 0){
-                        $("#p{{ i.project_id }}-img").css('order', '1');
-                        $("#p{{ i.project_id }}-txt").css('order', '2');
-                    }
+
                     $("#p{{ i.project_id }}-img").css({
                         'opacity': '0',
                         'flex-basis': '100%',
@@ -187,8 +184,8 @@
                     });
                     onScrollArray.push("#p{{ i.project_id }}-img", "#p{{ i.project_id }}-txt");
                     counter++;
-                {% endif %}
             {% endfor %}
+
 
             // Function to handle animations on scroll
             function animateDivs() {
@@ -247,24 +244,24 @@
             });
         $("#prev").hide();
         $("#next").hide();
-        for(let i=0;i<arr.length;i++){
-            if(i === 0){
+        for (let i = 0; i < arr.length; i++) {
+            if (i === 0) {
                 $("#slider-pics").append(
-                    "<div class=\"item active\" style=\"background: linear-gradient(rgba(0, 0, 0, 0.45),rgba(0, 0, 0, 0.45), " +
-                    "rgba(0, 0, 0, 0.45)), url(" + arr[i] + ") fixed no-repeat; background-size: cover\">" +
+                    "<div class=\"item active\">" +
+                    "<img draggable='false' class='item-img' src='" + arr[i] + "'" +
                     "<div class=\"carousel-caption\"></div></div>"
                 );
                 $("#nav-slider").append(
-                    "<li id=\"nav-slider" + (i+1) + "\" data-target=\"#carousel-example-generic\" data-slide-to=\"" + i + "\" class=\"active\"></li>"
+                    "<li id=\"nav-slider" + (i + 1) + "\" data-target=\"#carousel-example-generic\" data-slide-to=\"" + i + "\" class=\"active\"></li>"
                 );
-            }else{
+            } else {
                 $("#slider-pics").append(
-                    "<div class=\"item\" style=\"background: linear-gradient(rgba(0, 0, 0, 0.45),rgba(0, 0, 0, 0.45), " +
-                    "rgba(0, 0, 0, 0.45)), url(" + arr[i] + ") fixed no-repeat; background-size: cover\">" +
+                    "<div class=\"item\">" +
+                    "<img draggable='false' class='item-img' src='" + arr[i] + "'" +
                     "<div class=\"carousel-caption\"></div></div>"
                 );
                 $("#nav-slider").append(
-                    "<li id=\"nav-slider" + (i+1) + "\" data-target=\"#carousel-example-generic\" data-slide-to=\"" + i + "\"></li>"
+                    "<li id=\"nav-slider" + (i + 1) + "\" data-target=\"#carousel-example-generic\" data-slide-to=\"" + i + "\"></li>"
                 );
             }
         }
@@ -289,7 +286,6 @@
                     slideInterval = setInterval(changeSlide, 8000);
                 }
             });
-        });
         $("#joinBTN2").on('click', function () {
             if ($(".expand-form").css('height') === "0px"){
                 $(".expand-form").animate({
@@ -729,6 +725,7 @@
                     }, mailSentTime2)
                 }
             })
+        }
     // ############################
 </script>
 {% endblock additional %}
