@@ -1,4 +1,3 @@
-from django.contrib.admin.models import *
 from django.db import models
 
 
@@ -6,20 +5,11 @@ def correctImagePath(obj):
     obj.url = str(obj.url).replace('elnahass-sonsgroup', '').replace('staticfiles', 'static')
     obj.save()
 
-
 class Client(models.Model):
-    my_projects = models.ManyToManyField('Project', related_name='projects', blank=True, editable=False)
     name = models.CharField(max_length=50)
 
     def __str__(self):
-        LogEntry.objects.all().delete()
-        proj = "("
-        for i in self.my_projects.all():
-            proj += i.name + ', '
-        if proj[len(proj) - 2:] == ', ':
-            proj = proj[:len(proj) - 2]
-        proj += ')'
-        return f"{self.name} {proj}"
+        return self.name
 
 
 class Project(models.Model):
@@ -52,7 +42,6 @@ class Project(models.Model):
                 self.project_id = 1
         super().save(*args, **kwargs)  # Save the project first
 
-
     def hasThumbnail(self):
         for i in self.images.all():
             if i.thumbnail:
@@ -60,17 +49,11 @@ class Project(models.Model):
 
         return False
 
-
     class Meta:
         ordering = ['project_id']
 
     def __str__(self):
-        LogEntry.objects.all().delete()
-        for i in Client.objects.all():
-            if i.my_projects.contains(self) and self.client != i:
-                i.my_projects.remove(self)
-                i.save()
-        return str(self.project_id) + ". " + self.name
+        return f"{self.project_id}. {self.name}"
 
 
 class Image(models.Model):
@@ -90,15 +73,7 @@ class Image(models.Model):
         else:
             return "New Image"
 
-    @property
-    def get_Image_num(self):
-        project_name = self.projects.first().name if self.projects.exists() else 'No Project'
-        if not self.projects.first() is None:
-            return self.projects.first().get_img_index(self)
-        return None
-
     def __str__(self):
-        LogEntry.objects.all().delete()
         correctImagePath(self)
         return self.Image_name
 
@@ -110,5 +85,4 @@ class Customer(models.Model):
     outline_Desc = models.TextField(max_length=200)
 
     def __str__(self):
-        LogEntry.objects.all().delete()
         return self.name

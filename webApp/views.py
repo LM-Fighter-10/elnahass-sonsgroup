@@ -1,4 +1,5 @@
 import hmac
+import random
 from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import *
@@ -24,9 +25,17 @@ def home(request):
     #     sector="",  # Construction Landscape Repair
     #     location="",
     # )
+    items = []
+    counter = 0
+    for i in Project.objects.filter(isHome=True).order_by('-year'):
+        if counter < 4:
+            items.append(i)
+        else:
+            break
+        counter += 1
     context = {
         'page': "home",
-        'items': Project.objects.filter(isHome=True),
+        'items': random.sample(items, len(items)),
         'nav': True,
         'footer': True,
     }
@@ -87,6 +96,13 @@ def project_view(request, id):
     }
     if Project.objects.get(project_id=id):
         context['project'] = Project.objects.get(project_id=id)
+        images = []
+        for j in Project.objects.get(project_id=id).images.all():
+            images.append(j)
+        if len(images) >= 2:
+            first_item = images.pop(0)  # Remove and store the first item
+            images.insert(1, first_item)  # Insert it as the second item
+        context['images'] = images
     return render(request, "project_view.html", context)
 
 

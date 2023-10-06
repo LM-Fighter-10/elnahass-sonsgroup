@@ -56,8 +56,8 @@
                 <div class="col-md-6 projects-txt" id="p{{ item.project_id }}-txt">
                     <div class="row row-edited align-items-center">
                         <div class="project-txt col">
-                            <h1 class="display-3">{{ item.name }}</h1>
-                            <p class="lead">{{ item.shortDesc }}
+                            <h1 class="display-3 project-title">{{ item.name }}</h1>
+                            <p class="lead project-desc">{{ item.shortDesc }}
                                 <br /><br />
                             <div id="p-details"><button class="detailsbtn" id="showbtn{{ item.project_id }}">
                                 Show Details
@@ -95,7 +95,7 @@
                             <div class="justify-content-center jimu-primary-loading"></div>
                         </div>
                         <div class="loader" id="done2" style="display: none">
-                            <div class="container">
+                            <div class="container loader-container">
                                 <svg id="checkmark2" class="checkmark justify-content-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" style="display: none">
                                     <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
                                     <path class="checkmark__check" fill="none" d="M14.1 29.5l7.1 7.2L37.9 17.4"/>
@@ -149,7 +149,6 @@
 {% block additional %}
 <script>
         function home_script() {
-            console.log($(window).width())
             let counter = 0;
             const onScrollArray = ["#projects-title", "#join-section", "#footer-sec", ".expand-form"], arr = [];
             {% for i in items %}
@@ -161,29 +160,29 @@
                         arr.push("{{ j.url }}");
                     {% endif %}
                 {% endfor %}
-                    if (counter%2 !== 0){
-                        $("#p{{ i.project_id }}-img").addClass('order-md-2');
-                        $("#p{{ i.project_id }}-txt").addClass('order-md-1');
-                    }
+                if (counter % 2 !== 0) {
+                    $("#p{{ i.project_id }}-img").addClass('order-md-2');
+                    $("#p{{ i.project_id }}-txt").addClass('order-md-1');
+                }
 
-                    $("#p{{ i.project_id }}-img").css({
-                        'opacity': '0',
-                        'flex-basis': '100%',
-                        'transform': 'translateY(20px)',
-                        'transition': 'opacity 0.5s, transform 0.5s',
-                    });
-                    $("#p{{ i.project_id }}-txt").css({
-                        'opacity': '0',
-                        'flex-basis': '100%',
-                        'transform': 'translateY(20px)',
-                        'transition': 'opacity 0.5s, transform 0.5s',
-                    });
-                    $("#p{{ item.project_id }}").css({
-                        'display': 'flex',
-                        'flex-wrap': 'wrap',
-                    });
-                    onScrollArray.push("#p{{ i.project_id }}-img", "#p{{ i.project_id }}-txt");
-                    counter++;
+                $("#p{{ i.project_id }}-img").css({
+                    'opacity': '0',
+                    'flex-basis': '100%',
+                    'transform': 'translateY(20px)',
+                    'transition': 'opacity 0.5s, transform 0.5s',
+                });
+                $("#p{{ i.project_id }}-txt").css({
+                    'opacity': '0',
+                    'flex-basis': '100%',
+                    'transform': 'translateY(20px)',
+                    'transition': 'opacity 0.5s, transform 0.5s',
+                });
+                $("#p{{ item.project_id }}").css({
+                    'display': 'flex',
+                    'flex-wrap': 'wrap',
+                });
+                onScrollArray.push("#p{{ i.project_id }}-img", "#p{{ i.project_id }}-txt");
+                counter++;
             {% endfor %}
 
 
@@ -193,14 +192,14 @@
                 const scrollPosition = $(window).scrollTop();
 
                 // Calculate the position at which the animation should start (85% from the top of the window)
-                var animateStart = windowHeight * 0.3;
+                var animateStart = windowHeight * 0.05;
 
                 var animationOnScroll = "";
 
-                for(let j=0;j<onScrollArray.length;j++){
-                    if (j !== onScrollArray.length-1){
+                for (let j = 0; j < onScrollArray.length; j++) {
+                    if (j !== onScrollArray.length - 1) {
                         animationOnScroll += onScrollArray[j] + ', ';
-                    }else{
+                    } else {
                         animationOnScroll += onScrollArray[j];
                     }
                 }
@@ -208,27 +207,27 @@
                 // Check each element to see if it should be animated
                 $(animationOnScroll).each(function () {
                     const elementOffset = $(this).offset().top;
-                    if ($(this).attr('class') === "container expand-form"){
+                    if ($(this).attr('class') === "container expand-form") {
                         animateStart = windowHeight * 0.1;
                         if (elementOffset < scrollPosition + windowHeight - animateStart) {
-                            if (!$(this).hasClass("animated")){
+                            if (!$(this).hasClass("animated")) {
                                 $(this).addClass("animated");
                             }
-                        }else {
-                            if ($("#joinBTN2").text() === "Cancel"){
+                        } else {
+                            if ($("#joinBTN2").text() === "Cancel") {
                                 $("#joinBTN2").trigger('click');
                             }
                         }
-                    }else{
+                    } else {
                         if (elementOffset < scrollPosition + windowHeight - animateStart) {
-                            if (!$(this).hasClass("animated")){
+                            if (!$(this).hasClass("animated")) {
                                 $(this).addClass("animated");
                             }
-                        }else {
-                            if ($(this).attr('class') === "container expand-form" && $("#joinBTN2").text() === "Cancel"){
+                        } else {
+                            if ($(this).attr('class') === "container expand-form" && $("#joinBTN2").text() === "Cancel") {
                                 $("#joinBTN2").trigger('click');
                             }
-                            if ($(this).hasClass("animated")){
+                            if ($(this).hasClass("animated")) {
                                 $(this).removeClass("animated");
                             }
                         }
@@ -242,39 +241,41 @@
             $(window).on("scroll", function () {
                 animateDivs();
             });
-        $("#prev").hide();
-        $("#next").hide();
-        for (let i = 0; i < arr.length; i++) {
-            if (i === 0) {
-                $("#slider-pics").append(
-                    "<div class=\"item active\">" +
-                    "<img draggable='false' class='item-img' src='" + arr[i] + "'" +
-                    "<div class=\"carousel-caption\"></div></div>"
-                );
-                $("#nav-slider").append(
-                    "<li id=\"nav-slider" + (i + 1) + "\" data-target=\"#carousel-example-generic\" data-slide-to=\"" + i + "\" class=\"active\"></li>"
-                );
-            } else {
-                $("#slider-pics").append(
-                    "<div class=\"item\">" +
-                    "<img draggable='false' class='item-img' src='" + arr[i] + "'" +
-                    "<div class=\"carousel-caption\"></div></div>"
-                );
-                $("#nav-slider").append(
-                    "<li id=\"nav-slider" + (i + 1) + "\" data-target=\"#carousel-example-generic\" data-slide-to=\"" + i + "\"></li>"
-                );
+            $("#prev").hide();
+            $("#next").hide();
+            for (let i = 0; i < arr.length; i++) {
+                if (i === 0) {
+                    $("#slider-pics").append(
+                        "<div class=\"item active\">" +
+                        "<img class='item-img' src='" + arr[i] + "'" +
+                        "<div class=\"carousel-caption\"></div></div>"
+                    );
+                    $("#nav-slider").append(
+                        "<li id=\"nav-slider" + (i + 1) + "\" data-target=\"#carousel-example-generic\" data-slide-to=\"" + i + "\"nav-sliderBtn class=\"active\"></li>"
+                    );
+                } else {
+                    $("#slider-pics").append(
+                        "<div class=\"item\">" +
+                        "<img class='item-img' src='" + arr[i] + "'" +
+                        "<div class=\"carousel-caption\"></div></div>"
+                    );
+                    $("#nav-slider").append(
+                        "<li id=\"nav-slider" + (i + 1) + "\" data-target=\"#carousel-example-generic\" data-slide-to=\"" + i + "\"></li>"
+                    );
+                }
             }
-        }
-        let slideInterval;
-        let click_count = 2;
+            let slideInterval;
+            let click_count = 2;
+
             function changeSlide() {
                 $("#nav-slider" + click_count).click();
-                if (click_count < arr.length){
+                if (click_count < arr.length) {
                     click_count++;
-                }else{
+                } else {
                     click_count = 1;
                 }
             }
+
             // Set the initial slide interval
             slideInterval = setInterval(changeSlide, 8000);
 
@@ -286,35 +287,35 @@
                     slideInterval = setInterval(changeSlide, 8000);
                 }
             });
-        $("#joinBTN2").on('click', function () {
-            if ($(".expand-form").css('height') === "0px"){
-                $(".expand-form").animate({
-                    height: "615.91px"
-                }, 400, function () {
-                    $(".expand-form").css('height', 'auto')
-                })
-            }else{
-                resetErrorMsgs();
-                $(".expand-form").animate({
-                    height: "0"
-                }, 400)
-            }
-            if (!$(this).hasClass('joinus-btn-cancel')){
-                $(this).text("Cancel");
-            }else{
-                $(this).text("Join Us");
-            }
-            $(this).toggleClass('joinus-btn-cancel');
-        });
-        // {##### 2nd Join Us Form #####}
+            $("#joinBTN2").on('click', function () {
+                if ($(".expand-form").css('height') === "0px") {
+                    $(".expand-form").animate({
+                        height: "615.91px"
+                    }, 400, function () {
+                        $(".expand-form").css('height', 'auto')
+                    })
+                } else {
+                    resetErrorMsgs();
+                    $(".expand-form").animate({
+                        height: "0"
+                    }, 400)
+                }
+                if (!$(this).hasClass('joinus-btn-cancel')) {
+                    $(this).text("Cancel");
+                } else {
+                    $(this).text("Join Us");
+                }
+                $(this).toggleClass('joinus-btn-cancel');
+            });
+            // {##### 2nd Join Us Form #####}
 
-            $(".phone2, .phoneLable2").on('click', function (){
+            $(".phone2, .phoneLable2").on('click', function () {
                 $(".phoneLable2").css({
                     'top': '-4px',
                     'color': 'white'
                 });
                 $(".phone2").css('height', '46px');
-                $(document).on('mousedown', function (ev){
+                $(document).on('mousedown', function (ev) {
                     if (!$(ev.target).closest('.phone2, .phoneLable2').length && $(".phone2").val() === "") {
                         $(".phoneLable2").css({
                             'top': '29.56px',
@@ -325,20 +326,20 @@
                 })
             });
 
-            $(".phoneLable2, .nameLable2, .emailLable2, .descLable2").each(function (){
-                $(this).on('click', function (){
-                    var selectedInput = "." + $(this).attr('class').replace("Lable","");
+            $(".phoneLable2, .nameLable2, .emailLable2, .descLable2").each(function () {
+                $(this).on('click', function () {
+                    var selectedInput = "." + $(this).attr('class').replace("Lable", "");
                     $(selectedInput).focus();
                 })
             });
 
-            $(".name2, .nameLable2").on('click', function (){
+            $(".name2, .nameLable2").on('click', function () {
                 $(".nameLable2").css({
                     'top': '-4px',
                     'color': 'white'
                 });
                 $(".name2").css('height', '46px');
-                $(document).on('mousedown', function (ev){
+                $(document).on('mousedown', function (ev) {
                     if (!$(ev.target).closest('.name2, .nameLable2').length && $(".name2").val() === "") {
                         $(".nameLable2").css({
                             'top': '29.5px',
@@ -349,13 +350,13 @@
                 })
             });
 
-            $(".email2, .emailLable2").on('click', function (){
+            $(".email2, .emailLable2").on('click', function () {
                 $(".emailLable2").css({
                     'top': '-4px',
                     'color': 'white'
                 });
                 $(".email2").css('height', '46px');
-                $(document).on('mousedown', function (ev){
+                $(document).on('mousedown', function (ev) {
                     if (!$(ev.target).closest('.email2, .emailLable2').length && $(".email2").val() === "") {
                         $(".emailLable2").css({
                             'top': '29.5px',
@@ -366,19 +367,19 @@
                 })
             });
 
-            $(".name2, .email2, .phone2, .desc2").on("mousedown", function (){
-                $(this).each(function (){
+            $(".name2, .email2, .phone2, .desc2").on("mousedown", function () {
+                $(this).each(function () {
                     $("." + $(this).attr('class').replace("2", "") + "Lable2").trigger('click');
                 })
             })
 
-            $(".desc2, .descLable2").on('click', function (){
+            $(".desc2, .descLable2").on('click', function () {
                 $(".descLable2").css({
                     'top': '-4px',
                     'color': 'white'
                 });
                 $(".desc2").css('height', '150px');
-                $(document).on('mousedown', function (ev){
+                $(document).on('mousedown', function (ev) {
                     if (!$(ev.target).closest('.desc2, .descLable2').length && $(".desc2").val() === "") {
                         $(".descLable2").css({
                             'top': '29.5px',
@@ -412,7 +413,7 @@
                     return true;
                 }
 
-                if (/\d/.test(name)){
+                if (/\d/.test(name)) {
                     nameError.text("Name must not contains numbers").show();
                     nameError.css('margin-bottom', '10px');
                     return false;
@@ -459,7 +460,7 @@
                     return true;
                 }
 
-                if (isNaN(phone)){
+                if (isNaN(phone)) {
                     phoneError.text("Phone number must be numeric only").show();
                     phoneError.css('margin-bottom', '10px');
                     return false;
@@ -492,51 +493,51 @@
                 return true;
             }
 
-            $(".name2, .email2, .phone2, .desc2").on("input", function (){
-                $(this).each(function (){
-                    if ($(this).attr('class') === "name2"){
-                        if(!validateName2()){
+            $(".name2, .email2, .phone2, .desc2").on("input", function () {
+                $(this).each(function () {
+                    if ($(this).attr('class') === "name2") {
+                        if (!validateName2()) {
                             $(this).css({
                                 'border-color': 'red',
                                 'margin-bottom': '0',
                             });
-                        }else{
+                        } else {
                             $(this).css({
                                 'border-color': '',
                                 'margin-bottom': '15px',
                             });
                         }
-                    }else if ($(this).attr('class') === "email2"){
-                        if(!validateEmail2()){
+                    } else if ($(this).attr('class') === "email2") {
+                        if (!validateEmail2()) {
                             $(this).css({
                                 'border-color': 'red',
                                 'margin-bottom': '0',
                             });
-                        }else{
+                        } else {
                             $(this).css({
                                 'border-color': '',
                                 'margin-bottom': '15px',
                             });
                         }
-                    }else if ($(this).attr('class') === "phone2"){
-                        if(!validatePhone2()){
+                    } else if ($(this).attr('class') === "phone2") {
+                        if (!validatePhone2()) {
                             $(this).css({
                                 'border-color': 'red',
                                 'margin-bottom': '0',
                             });
-                        }else{
+                        } else {
                             $(this).css({
                                 'border-color': '',
                                 'margin-bottom': '15px',
                             });
                         }
-                    }else{
-                        if(!validateDescription2()){
+                    } else {
+                        if (!validateDescription2()) {
                             $(this).css({
                                 'border-color': 'red',
                                 'margin-bottom': '0',
                             });
-                        }else{
+                        } else {
                             $(this).css({
                                 'border-color': '',
                                 'margin-bottom': '15px',
@@ -547,36 +548,36 @@
             })
 
             // Validate if Any Field is Left Blank
-            function isBlank2(){
+            function isBlank2() {
                 var nameBlank = false,
                     emailBlank = false,
                     phoneBlank = false,
                     descBlank = false;
-                $(".name2, .email2, .phone2, .desc2").each(function (){
-                    if ($(this).val() === ""){
+                $(".name2, .email2, .phone2, .desc2").each(function () {
+                    if ($(this).val() === "") {
                         $("." + $(this).attr('class').replace("2", "") + "-error2").text("This field is required").show();
                         $("." + $(this).attr('class').replace("2", "") + "-error2").css('margin-bottom', '10px');
                         $(this).css('margin-bottom', '0');
-                        if ($(this).attr('class') === 'name2'){
+                        if ($(this).attr('class') === 'name2') {
                             nameBlank = true;
-                        }else if ($(this).attr('class') === 'email2'){
+                        } else if ($(this).attr('class') === 'email2') {
                             emailBlank = true;
-                        }else if ($(this).attr('class') === 'phone2'){
+                        } else if ($(this).attr('class') === 'phone2') {
                             phoneBlank = true;
-                        }else{
+                        } else {
                             descBlank = true;
                         }
-                    }else{
+                    } else {
                         $("." + $(this).attr('class').replace("2", "") + "-error2").text("").hide();
                         $("." + $(this).attr('class').replace("2", "") + "-error2").css('margin-bottom', '0');
                         $(this).css('margin-bottom', '15px');
-                        if ($(this).attr('class') === 'name2'){
+                        if ($(this).attr('class') === 'name2') {
                             nameBlank = false;
-                        }else if ($(this).attr('class') === 'email2'){
+                        } else if ($(this).attr('class') === 'email2') {
                             emailBlank = false;
-                        }else if ($(this).attr('class') === 'phone2'){
+                        } else if ($(this).attr('class') === 'phone2') {
                             phoneBlank = false;
-                        }else{
+                        } else {
                             descBlank = false;
                         }
                     }
@@ -645,7 +646,7 @@
                             }
                         })
                     setTimeout(function () {
-                        if (duplicated2){
+                        if (duplicated2) {
                             $("#loading2").css('opacity', '0');
                             $("#done2").css({
                                 'opacity': '1',
@@ -657,7 +658,7 @@
                                     $("#crossmark2").show();
                                 })
                             })
-                        }else if (failed2){
+                        } else if (failed2) {
                             $("#loading2").css('opacity', '0');
                             $("#done2").css({
                                 'opacity': '1',
@@ -669,7 +670,7 @@
                                     $("#crossmark2").show();
                                 })
                             })
-                        }else{
+                        } else {
                             $("#loading2").css('opacity', '0');
                             $("#done2").css({
                                 'opacity': '1',
@@ -688,7 +689,7 @@
                             $("#success_msg2").attr('class', 'alert alert-danger');
                         }
                     }, mailSentTime2 / 2)
-                    $(".name2, .email2, .phone2, .desc2").each(function (){
+                    $(".name2, .email2, .phone2, .desc2").each(function () {
                         $(this).val("");
                         $("#contact-form2").trigger('mousedown');
                     })
@@ -717,7 +718,7 @@
                             'opacity': '1',
                         });
                         setTimeout(function () {
-                            $("#success_msg2").css({'opacity': '0', }).text("");
+                            $("#success_msg2").css({'opacity': '0',}).text("");
                             $("#form_content2").animate({
                                 marginTop: '-52px'
                             }, 200)

@@ -28,7 +28,7 @@
             <div id="nav" class="container">
                 <a href="{% url 'homePage' %}"><img draggable="false" class="nav-logo-img" src="{% static 'Media/logo.webp' %}" width="80"/></a>
                 <div class="background">
-                  <button type="button" class="navbar-toggler menu__icon" data-toggle="collapse" data-target="#navbarNav"
+                  <button id="burgerBtn" type="button" class="navbar-toggler menu__icon" data-toggle="collapse" data-target="#navbarNav"
                           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span></span>
                     <span></span>
@@ -68,7 +68,7 @@
                     <div class="justify-content-center jimu-primary-loading"></div>
                 </div>
                 <div class="loader" id="done" style="display: none">
-                    <div class="container">
+                    <div class="container loader-container">
                         <svg id="checkmark1" class="checkmark justify-content-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" style="display: none">
                             <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
                             <path class="checkmark__check" fill="none" d="M14.1 29.5l7.1 7.2L37.9 17.4"/>
@@ -173,8 +173,8 @@
                 $(".swiper-button-next").trigger('click');
                 setTimeout(function () {
                     $(".swiper-button-prev").trigger('click')
-                }, 10)
-            }, 100)
+                }, 5)
+            }, 10)
         }
         // {#----------------------------------#}
     </script>
@@ -203,11 +203,12 @@
                     }
                 }
                 {% if page == "Project View" %}
-                    $(".swiper-carousel-animate-opacity").find('img').each(function () {
-                        if (!$(this).complete){
-                            return false
+                    var test = document.querySelectorAll('.slider-images');
+                    test.forEach((image) => {
+                        if (!image.complete) {
+                            return false;
                         }
-                    })
+                    });
                 {% endif %}
                 return true;
             }
@@ -268,11 +269,16 @@
                     }
                 } else {
                     // Wait and check again in 100 milliseconds
-                    setTimeout(checkImages, 50);
+                    setTimeout(checkImages, 10);
                 }
             }
             checkImages();
             function base_script() {
+                $(document).on('click', function (event) {
+                    if (!$(event.target).closest('.background, #nav-slider').length && $(".navbar-collapse").hasClass('in')) {
+                        $("#burgerBtn").trigger('click');
+                    }
+                })
                 $(".spinner").css({
                     'opacity': '0',
                 }).hide();
@@ -681,36 +687,66 @@
                     $("#join-btn").on("click", function () {
                         animateContactForm(false);
                     });
-                    let contactFormWidth = "";
+
+                    $("#contact-form").css('overflow', 'hidden');
 
                     function animateContactForm(html) {
                         const contactForm = $("#contact-form");
-                        if (contactForm.width() > 10 && !html) {
-                            contactForm.animate({
-                                width: "0" // Shrinking the form
-                            }, 400);
-                            contactForm.hide(250);
-                            $("#contact-bdy").hide(300);
-                        } else if (html && contactForm.width() > 10) {
-                            contactForm.animate({
-                                width: "0" // Shrinking the form
-                            }, 400);
-                            contactForm.hide(250);
-                            $("#contact-bdy").hide(300);
+                        if (contactForm.height() > 10 && !html) {
+                            if ($("#contact-bdy").css('opacity') == '1') {
+                                $("#contact-bdy").css('opacity', '0');
+                                setTimeout(function () {
+                                    contactForm.animate({
+                                        height: "0",
+                                        width: "0",
+                                        padding: '0'
+                                    }, 330);
+                                    setTimeout(function () {
+                                        contactForm.css({
+                                            'z-index': '-1',
+                                            'opacity': '0',
+                                        });
+                                    }, 310);
+                                }, 30)
+                            }
+                        } else if (html && contactForm.height() > 10) {
+                            if ($("#contact-bdy").css('opacity') == '1') {
+                                console.log("scrolling")
+                                $("#contact-bdy").css('opacity', '0');
+                                setTimeout(function () {
+                                    contactForm.animate({
+                                        height: "0",
+                                        width: "0",
+                                        padding: '0'
+                                    }, 330);
+                                    setTimeout(function () {
+                                        contactForm.css({
+                                            'z-index': '-1',
+                                            'opacity': '0',
+                                        });
+                                    }, 310);
+                                }, 30)
+                            }
                         } else if (!html) {
-                            contactForm.animate({
-                                width: "420px" // Expanding the form
-                            }, 280);
-                            contactForm.show(200);
-                            $("#contact-bdy").show(200);
-                            setTimeout(function () {
-                                contactFormWidth = contactForm.css("width");
-                            }, 500);
+                            if (contactForm.css('opacity') == '0') {
+                                contactForm.css({
+                                    'opacity': '1',
+                                    'z-index': '',
+                                });
+                                contactForm.animate({
+                                    height: "493px",
+                                    width: "420px",
+                                    padding: '25px'
+                                }, 250);
+                                setTimeout(function () {
+                                    $("#contact-bdy").css('opacity', '1');
+                                }, 250)
+                            }
                         }
                     }
 
                     $(document).on('mousedown', function (e) {
-                        if (!$(e.target).closest('#contact-form, .carousel-indicators').length) {
+                        if (!$(e.target).closest('#contact-form, .carousel-indicators, #join-btn').length) {
                             resetErrorMsgs();
                             animateContactForm(true);
                             $(".phone, .name, .email, .desc").each(function () {
@@ -734,16 +770,14 @@
                             const elementOffset = $(this).offset().top;
 
                             if (elementOffset < scrollPosition + windowHeight - animateStart) {
-                                if ($("#contact-form").css('display') === "block") {
-                                    animateContactForm(true);
-                                }
+                                animateContactForm(true);
                             }
                         });
                     }
 
                     animateHoverForm();
                     $(window).on("scroll", function () {
-                        if ($("#contact-form").css('width') === contactFormWidth) {
+                        if ($("#contact-form").height() > 400) {
                             animateHoverForm();
                         }
                     });
