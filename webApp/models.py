@@ -19,7 +19,7 @@ class Project(models.Model):
     year = models.IntegerField()
     sector = models.CharField(max_length=50, blank=True)
     location = models.CharField(max_length=50, blank=True)
-    shortDesc = models.TextField(max_length=300, blank=True)
+    shortDesc = models.TextField(max_length=500, blank=True)
     description = models.TextField(default="", blank=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True, blank=True)
     isHome = models.BooleanField(default=False)

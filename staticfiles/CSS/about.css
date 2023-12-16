@@ -77,7 +77,7 @@
 }
 .work-data-layout-row-container{
     width: max-content;
-    padding: 20px 30px;
+    padding: 20px 15px;
     justify-content: center;
     display: flex;
     flex-direction: column;

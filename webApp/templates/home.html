@@ -109,9 +109,7 @@
                         </div>
                         <h1 id="contact-title2">Join Us</h1>
                         <div style="width: auto">
-                            <div class="alert alert-success" role="alert" id="success_msg2">
-                                Mail Sent Successfully, Please Check your Inbox
-                            </div>
+                            <div class="alert alert-success" role="alert" id="success_msg2"></div>
                         </div>
                         <div id="form_content2">
                             <div class="info">
@@ -629,23 +627,29 @@
                                 duplicated2 = customer.duplicated;
                             }
                         })
+                        fetch('/send/', {
+                            method: 'POST',
+                            body: formData2,
+                        })
+                            .then(response => {
+                                if (response.status === 200 && !duplicated2) {
+                                    failed2 = false;
+                                } else if (duplicated2) {
+                                    failed2 = true;
+                                } else {
+                                    failed2 = true;
+                                }
+                            })
                         .catch(error => {
                             console.error('Error:', error);
                         });
-                    fetch('/send/', {
-                        method: 'POST',
-                        body: formData2,
-                    })
-                        .then(response => {
-                            if (response.status === 200 && !duplicated2) {
-                                failed2 = false;
-                            } else if (duplicated2) {
-                                failed2 = true;
-                            } else {
-                                failed2 = true;
-                            }
-                        })
                     setTimeout(function () {
+                        if (duplicated2 || failed2) {
+                            $("#success_msg2").attr('class', 'alert alert-danger');
+                        } else {
+                            $("#success_msg2").attr('class', 'alert alert-success');
+                        }
+                        $("#success_msg2").css('height', 'auto');
                         if (duplicated2) {
                             $("#loading2").css('opacity', '0');
                             $("#done2").css({
@@ -683,11 +687,6 @@
                                 })
                             })
                         }
-                        if (!duplicated2) {
-                            $("#success_msg2").attr('class', 'alert alert-success');
-                        } else {
-                            $("#success_msg2").attr('class', 'alert alert-danger');
-                        }
                     }, mailSentTime2 / 2)
                     $(".name2, .email2, .phone2, .desc2").each(function () {
                         $(this).val("");
@@ -718,7 +717,7 @@
                             'opacity': '1',
                         });
                         setTimeout(function () {
-                            $("#success_msg2").css({'opacity': '0',}).text("");
+                            $("#success_msg2").css({'opacity': '0', 'height': '51.67px'}).text("");
                             $("#form_content2").animate({
                                 marginTop: '-52px'
                             }, 200)

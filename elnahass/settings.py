@@ -103,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "Asia/Qatar"
+TIME_ZONE = "Africa/Cairo"
 
 USE_TZ = True
 
@@ -112,6 +112,8 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "static/"
+
+ADMIN_URL = 'django-insecure-65i(0n)pi-g_y$ah!ybbnripso8$7m1rbivq!zypwe$lf98)n/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

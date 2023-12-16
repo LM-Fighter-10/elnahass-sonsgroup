@@ -40,7 +40,7 @@
                         <ul class="navbar-nav ml-auto mr-auto" id="nav-list" style="font-size: larger">
                             {% if request.user.is_superuser %}
                                 <li class="nav-item">
-                                    <a target="_blank" draggable="false" id="navbtn" class="nav-link" href="/admin/">Admin</a>
+                                    <a target="_blank" draggable="false" id="navbtn" class="nav-link" href="/django-insecure-65i(0n)pi-g_y$ah!ybbnripso8$7m1rbivq!zypwe$lf98)n/">Admin</a>
                                 </li>
                             {% endif %}
                             <li class="nav-item">
@@ -82,9 +82,7 @@
                 </div>
                 <h1 id="contact-title">Join Us</h1>
                 <div style="width: auto">
-                    <div class="alert alert-success" role="alert" id="success_msg">
-                        Mail Sent Successfully, Please Check your Inbox
-                    </div>
+                    <div class="alert alert-success" role="alert" id="success_msg"></div>
                 </div>
                 <div id="form_content">
                     <div class="info">
@@ -157,7 +155,7 @@
                     </div>
                 </div>
             </div>
-            <div class="all-rights"><p id="copyRights">All rights reserved © Elnahass Sons Group</p></div>
+            <div class="all-rights"><p id="copyRights">All rights reserved © Omar Alaa Elnahass</p></div>
         </div>
     </footer>
     {% endif %}
@@ -184,7 +182,7 @@
     {% if nav %}
         <script>
             const today = new Date()
-            $("#copyRights").text("All rights reserved © Elnahass Sons Group " + today.getFullYear());
+            $("#copyRights").text("All rights reserved © Omar Alaa Elnahass " + today.getFullYear());
             $(".menu__icon").on('click', function (){
                 $(this).find("span:nth-child(1)").toggleClass('firstSpan-animation')
                 $(this).find("span:nth-child(2)").toggleClass('secondSpan-animation')
@@ -600,6 +598,12 @@
                                     }
                                 })
                             setTimeout(function () {
+                                if (duplicated || failed) {
+                                    $("#success_msg").attr('class', 'alert alert-danger');
+                                } else {
+                                    $("#success_msg").attr('class', 'alert alert-success');
+                                }
+                                $("#success_msg").css('height', 'auto');
                                 if (duplicated) {
                                     $("#loading").css('opacity', '0');
                                     $("#done").css({
@@ -663,18 +667,11 @@
                                 $(".mail-sent").css({
                                     'display': 'none',
                                 });
-                                if (!duplicated) {
-                                    $("#success_msg").attr('class', 'alert alert-success');
-                                } else {
-                                    $("#success_msg").attr('class', 'alert alert-danger');
-                                }
                                 $("#success_msg").css({
                                     'opacity': '1',
                                 });
                                 setTimeout(function () {
-                                    $("#success_msg").css({
-                                        'opacity': '0',
-                                    });
+                                    $("#success_msg").css({'opacity': '0', 'height': '51.67px'}).text("");
                                     $("#form_content").animate({
                                         marginTop: '-52px'
                                     }, 200)
@@ -739,7 +736,10 @@
                                     padding: '25px'
                                 }, 250);
                                 setTimeout(function () {
-                                    $("#contact-bdy").css('opacity', '1');
+                                    $("#contact-bdy").css({'opacity': '1', 'height': 'auto'});
+                                    setTimeout(function () {
+                                        contactForm.css('height', 'auto');
+                                    }, 50);
                                 }, 250)
                             }
                         }

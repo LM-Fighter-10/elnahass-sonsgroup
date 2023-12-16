@@ -242,6 +242,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     width: auto;
+    height: 51.67px;
     margin-bottom: 0 !important;
     opacity: 0;
     z-index: -1;
@@ -1016,6 +1017,7 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 
 .footer-center{
     width: max-content;
+    user-select: text !important;
 }
 
 .footer-distributed .footer-center i.fa-envelope{
@@ -1111,6 +1113,14 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     color: #ffffffd1 !important;
     font-size: 12px !important;
     font-weight: lighter !important;
+}
+
+.telephone p{
+    color: white !important;
+}
+.telephone p > a{
+    text-decoration: none;
+    color: white !important;
 }
 
 /*    Join US Form    */
@@ -1530,6 +1540,9 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     #criteria-selected{
         font-size: 1.6rem;
     }
+    #section1-body{
+        margin-bottom: 10px;
+    }
 }
 @media (max-width: 516px) {
     .footer-icon{
@@ -1560,12 +1573,16 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     }
     .work-body{
         font-size: 1.2rem;
+        margin-top: 15px !important;
+        margin-bottom: 32px;
     }
     .work-subtitle{
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        margin-top: 15px !important;
+        margin-bottom: 0;
     }
     .work-title{
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
     .pView-title-container{
         top: 20%;
@@ -1753,5 +1770,17 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
     }
     .sort-criteria {
         font-size: 13px;
+    }
+    .work-subtitle{
+        font-size: 1.4rem;
+    }
+    .work-title{
+        font-size: 1.7rem;
+    }
+    .work-body{
+        font-size: 1.1rem;
+    }
+    #section1-body{
+        margin-top: 14px !important;
     }
 }
