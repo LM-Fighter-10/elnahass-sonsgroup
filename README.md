@@ -21,10 +21,6 @@ The website is hosted and can be accessed at [Elnahass Sons Group](https://www.e
 
 We welcome contributions to enhance the website. Please fork the repository and submit a pull request with your changes. Ensure your code adheres to the project's coding standards.
 
-## **License**
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ## **Creator**
 
 This website was created by **Omar Alaa Elnahass**. For any questions or further information, please contact [omaralaaelnahass@gmail.com](mailto:omaralaaelnahass@gmail.com).
