@@ -20,7 +20,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     {% block head %}{% endblock head %}
 </head>
-<body style="position: relative; background-color: black; overflow: hidden">
+<body oncontextmenu="return false" style="position: relative; background-color: black; overflow: hidden">
     <div class="spinner"></div>
     <div class="webPage">
     {% if nav %}
@@ -827,5 +827,13 @@
         });
     </script>
     {% endif %}
+    <script>
+        document.onkeydown = (e) => {
+            if ((e.key == 123) || (e.ctrlKey && e.shiftKey && e.key == 'I') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'C') || (e.ctrlKey && e.shiftKey && e.key == 'J')
+                || (e.ctrlKey && e.key == 'U') || (e.key == 'F12'))
+                e.preventDefault();
+        };
+    </script>
 </body>
 </html>

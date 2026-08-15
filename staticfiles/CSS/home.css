@@ -398,6 +398,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
+    transition: opacity 0.5s, transform 0.5s, height 0.3s ease-in-out;
 }
 #contact-form2 {
     width: 100%;
@@ -615,8 +616,7 @@ USE BACKGROUND IMAGES IN CAROUSEL SLIDER
 }
 
 #projects-title,
-#join-section,
-.expand-form{
+#join-section{
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s, transform 0.5s ;

@@ -205,7 +205,7 @@
                 // Check each element to see if it should be animated
                 $(animationOnScroll).each(function () {
                     const elementOffset = $(this).offset().top;
-                    if ($(this).attr('class') === "container expand-form") {
+                    if ($(this).attr('class').includes("expand-form")) {
                         animateStart = windowHeight * 0.1;
                         if (elementOffset < scrollPosition + windowHeight - animateStart) {
                             if (!$(this).hasClass("animated")) {
@@ -214,6 +214,7 @@
                         } else {
                             if ($("#joinBTN2").text() === "Cancel") {
                                 $("#joinBTN2").trigger('click');
+                                resetErrorMsgs();
                             }
                         }
                     } else {
@@ -222,9 +223,6 @@
                                 $(this).addClass("animated");
                             }
                         } else {
-                            if ($(this).attr('class') === "container expand-form" && $("#joinBTN2").text() === "Cancel") {
-                                $("#joinBTN2").trigger('click');
-                            }
                             if ($(this).hasClass("animated")) {
                                 $(this).removeClass("animated");
                             }
@@ -285,25 +283,34 @@
                     slideInterval = setInterval(changeSlide, 8000);
                 }
             });
-            $("#joinBTN2").on('click', function () {
-                if ($(".expand-form").css('height') === "0px") {
-                    $(".expand-form").animate({
-                        height: "615.91px"
-                    }, 400, function () {
-                        $(".expand-form").css('height', 'auto')
-                    })
-                } else {
-                    resetErrorMsgs();
-                    $(".expand-form").animate({
-                        height: "0"
-                    }, 400)
+            document.querySelector('.expand-form').addEventListener('mousedown', function () {
+                this.classList.add('h-auto');
+            });
+            document.getElementById('joinBTN2').addEventListener('click', function () {
+                let form = document.querySelector('.expand-form');
+                if (form.classList.contains('expand-form-active')) {
+                    form.classList.remove('h-auto');
+                    setTimeout(function () {
+                        form.classList.add('expand-form-inactive');
+                        form.classList.remove('expand-form-active');
+                        form.style.height = '0px'
+                        document.getElementById('joinBTN2').innerHTML = "Join Us";
+                        document.getElementById('joinBTN2').classList.remove('joinus-btn-cancel');
+                        resetErrorMsgs();
+                    }, 0);
+                } else{
+                    form.classList.remove('expand-form-inactive');
+                    form.classList.add('expand-form-active');
+                    form.style.height = '615px'
+                    this.classList.add('joinus-btn-cancel');
+                    this.innerHTML = "Cancel";
                 }
-                if (!$(this).hasClass('joinus-btn-cancel')) {
-                    $(this).text("Cancel");
+                {#form.classList.toggle('expand-form-active');#}
+                if (document.querySelector('.expand-form').style.height === '0') {
+                    document.getElementById('joinBTN2').textContent = "Join Us";
                 } else {
-                    $(this).text("Join Us");
+                    document.getElementById('joinBTN2').textContent = "Cancel";
                 }
-                $(this).toggleClass('joinus-btn-cancel');
             });
             // {##### 2nd Join Us Form #####}
 
